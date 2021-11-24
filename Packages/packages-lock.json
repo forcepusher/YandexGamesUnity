@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.agava.yandexgames": {
+      "version": "file:com.agava.yandexgames",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.ext.nunit": {
       "version": "1.0.6",
       "depth": 1,
