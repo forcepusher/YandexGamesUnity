@@ -1,0 +1,16 @@
+{
+    "name": "Agava.YandexGames.Tests",
+    "rootNamespace": "",
+    "references": [
+        "Agava.YandexGames"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
