@@ -4,5 +4,5 @@
   "displayName": "Yandex Games",
   "type": "library",
   "unity": "2020.3",
-  "description": "Yandex Games SDK for the WebGL platform."
+  "description": "Yandex Games Unity SDK for the WebGL platform."
 }
