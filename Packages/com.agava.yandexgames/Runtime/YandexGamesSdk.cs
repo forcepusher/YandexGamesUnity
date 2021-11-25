@@ -5,7 +5,7 @@ using UnityEngine.Scripting;
 [assembly: AlwaysLinkAssembly]
 namespace YandexGames
 {
-    internal sealed class InitializeOnLoad
+    public static class YandexGamesSdk
     {
         [RuntimeInitializeOnLoadMethod]
         [DllImport("__Internal")]

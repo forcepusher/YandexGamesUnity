@@ -1,26 +1,31 @@
-const YandexGamesLibrary = {
+const library = {
+  $yandexGames: {
+    sdk: undefined,
+  },
+
   // External C# call.
   Initialize: function() {
-    const yandexGamesSdkScript = document.createElement("script");
-    yandexGamesSdkScript.src = "https://yandex.ru/games/sdk/v2";
-    document.head.appendChild(yandexGamesSdkScript);
+    const sdkScript = document.createElement("script");
+    sdkScript.src = "https://yandex.ru/games/sdk/v2";
+    document.head.appendChild(sdkScript);
 
-    yandexGamesSdkScript.onload = function() {
-      window['YaGames'].init().then(function(yandexGamesSdk) {
-        window['YandexGamesSdk'] = yandexGamesSdk;
+    sdkScript.onload = function() {
+      window['YaGames'].init().then(function(sdk) {
+        yandexGames.sdk = sdk;
       });
     }
   },
 
   // External C# call.
   ShowInterestialAd: function() {
-    window['YandexGamesSdk'].showFullscreenAdv();
+    yandexGames.sdk.showFullscreenAdv();
   },
 
   // External C# call.
   ShowVideoAd: function() {
-    window['YandexGamesSdk'].showRewardedVideo();
+    yandexGames.sdk.showRewardedVideo();
   },
 }
 
-mergeInto(LibraryManager.library, YandexGamesLibrary);
+autoAddDeps(library, '$yandexGames');
+mergeInto(LibraryManager.library, library);
