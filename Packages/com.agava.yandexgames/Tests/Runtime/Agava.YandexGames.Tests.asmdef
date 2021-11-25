@@ -2,7 +2,7 @@
     "name": "Agava.YandexGames.Tests",
     "rootNamespace": "",
     "references": [
-        "Agava.YandexGames"
+        "GUID:ef7e0e3eb213f324c87b70a782844fb6"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
