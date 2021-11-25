@@ -17,6 +17,11 @@ const library = {
   },
 
   // External C# call.
+  IsInitialized: function() {
+    return yandexGames.sdk !== undefined;
+  },
+
+  // External C# call.
   ShowInterestialAd: function() {
     yandexGames.sdk.adv.showFullscreenAdv();
   },
