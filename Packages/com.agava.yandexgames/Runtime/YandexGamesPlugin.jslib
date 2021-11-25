@@ -18,12 +18,12 @@ const library = {
 
   // External C# call.
   ShowInterestialAd: function() {
-    yandexGames.sdk.showFullscreenAdv();
+    yandexGames.sdk.adv.showFullscreenAdv();
   },
 
   // External C# call.
   ShowVideoAd: function() {
-    yandexGames.sdk.showRewardedVideo();
+    yandexGames.sdk.adv.showRewardedVideo();
   },
 }
 
