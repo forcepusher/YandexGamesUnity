@@ -6,7 +6,7 @@ const yandexGamesLibrary = {
     document.head.appendChild(yandexGamesSdkScript);
 
     yandexGamesSdkScript.onload = function() {
-      YaGames.init().then(function(yandexGamesSdk) {
+      window['YaGames'].init().then(function(yandexGamesSdk) {
         window['YandexGamesSdk'] = yandexGamesSdk;
       });
     }
