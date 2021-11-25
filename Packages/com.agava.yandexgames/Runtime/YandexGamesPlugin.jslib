@@ -4,30 +4,45 @@ const library = {
   },
 
   // External C# call.
-  Initialize: function() {
+  Initialize: function () {
     const sdkScript = document.createElement('script');
     sdkScript.src = 'https://yandex.ru/games/sdk/v2';
     document.head.appendChild(sdkScript);
 
-    sdkScript.onload = function() {
-      window['YaGames'].init().then(function(sdk) {
+    sdkScript.onload = function () {
+      window['YaGames'].init().then(function (sdk) {
         yandexGames.sdk = sdk;
       });
     }
   },
 
   // External C# call.
-  IsInitialized: function() {
+  IsInitialized: function () {
     return yandexGames.sdk !== undefined;
   },
 
   // External C# call.
-  ShowInterestialAd: function() {
-    yandexGames.sdk.adv.showFullscreenAdv();
+  ShowInterestialAd: function () {
+    yandexGames.sdk.adv.showFullscreenAdv({
+      callbacks: {
+        onOpen: function () {
+
+        },
+        onClose: function (wasShown) {
+          
+        },
+        onError: function (error) {
+          
+        },
+        onOffline: function () {
+          
+        },
+      }
+    });
   },
 
   // External C# call.
-  ShowVideoAd: function() {
+  ShowVideoAd: function () {
     yandexGames.sdk.adv.showRewardedVideo();
   },
 }
