@@ -5,14 +5,9 @@ using UnityEngine.Scripting;
 [assembly: AlwaysLinkAssembly]
 namespace YandexGames
 {
-    public class YandexGamesLibrary
+    internal sealed class Initialization
     {
         [RuntimeInitializeOnLoadMethod]
-        private static void Initialize()
-        {
-            InitializeLibrary();
-        }
-
         [DllImport("__Internal")]
         private static extern bool InitializeLibrary();
     }
