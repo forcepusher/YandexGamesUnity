@@ -7,7 +7,7 @@ namespace YandexGames
 {
     public static class YandexGamesSdk
     {
-        [RuntimeInitializeOnLoadMethod]
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
         [DllImport("__Internal")]
         private static extern bool Initialize();
     }
