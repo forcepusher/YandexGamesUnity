@@ -5,10 +5,10 @@ using UnityEngine.Scripting;
 [assembly: AlwaysLinkAssembly]
 namespace YandexGames
 {
-    internal sealed class Initialization
+    internal sealed class InitializeOnLoad
     {
         [RuntimeInitializeOnLoadMethod]
         [DllImport("__Internal")]
-        private static extern bool InitializeYandexGames();
+        private static extern bool Initialize();
     }
 }

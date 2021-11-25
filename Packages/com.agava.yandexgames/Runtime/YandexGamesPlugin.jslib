@@ -1,6 +1,6 @@
-const initializationLibrary = {
+const YandexGamesLibrary = {
   // External C# call.
-  InitializeYandexGames: function() {
+  Initialize: function() {
     const yandexGamesSdkScript = document.createElement("script");
     yandexGamesSdkScript.src = "https://yandex.ru/games/sdk/v2";
     document.head.appendChild(yandexGamesSdkScript);
@@ -11,6 +11,16 @@ const initializationLibrary = {
       });
     }
   },
+
+  // External C# call.
+  ShowInterestialAd: function() {
+    window['YandexGamesSdk'].showFullscreenAdv();
+  },
+
+  // External C# call.
+  ShowVideoAd: function() {
+    window['YandexGamesSdk'].showRewardedVideo();
+  },
 }
 
-mergeInto(LibraryManager.library, initializationLibrary);
+mergeInto(LibraryManager.library, YandexGamesLibrary);
