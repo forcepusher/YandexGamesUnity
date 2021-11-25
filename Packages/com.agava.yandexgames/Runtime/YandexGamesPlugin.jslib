@@ -5,8 +5,8 @@ const library = {
 
   // External C# call.
   Initialize: function() {
-    const sdkScript = document.createElement("script");
-    sdkScript.src = "https://yandex.ru/games/sdk/v2";
+    const sdkScript = document.createElement('script');
+    sdkScript.src = 'https://yandex.ru/games/sdk/v2';
     document.head.appendChild(sdkScript);
 
     sdkScript.onload = function() {

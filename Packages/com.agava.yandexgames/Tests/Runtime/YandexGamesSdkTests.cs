@@ -1,11 +1,13 @@
 using NUnit.Framework;
-using YandexGames;
 
-public class YandexGamesSdkTests
+namespace YandexGames.Tests
 {
-    [Test]
-    public void InitializationTest()
+    public class YandexGamesSdkTests
     {
-        Assert.IsTrue(YandexGamesSdk.Initialized);
+        [Test]
+        public void InitializationTest()
+        {
+            Assert.IsTrue(YandexGamesSdk.Initialized);
+        }
     }
 }
