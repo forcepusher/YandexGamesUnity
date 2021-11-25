@@ -1,8 +1,4 @@
 const yandexGamesLibrary = {
-  $yandexGamesState: {
-    
-  },
-
   // External C# call.
   InitializeLibrary: function() {
     const yandexGamesSdkScript = document.createElement("script");
@@ -17,5 +13,4 @@ const yandexGamesLibrary = {
   },
 }
 
-autoAddDeps(yandexGamesLibrary, '$yandexGamesState');
 mergeInto(LibraryManager.library, yandexGamesLibrary);
