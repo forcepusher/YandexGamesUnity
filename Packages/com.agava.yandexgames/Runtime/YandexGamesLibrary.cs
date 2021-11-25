@@ -1,18 +1,19 @@
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.Scripting;
 
+[assembly: AlwaysLinkAssembly]
 namespace YandexGames
 {
     public class YandexGamesLibrary
     {
         [RuntimeInitializeOnLoadMethod]
-        static void Initialize()
+        private static void Initialize()
         {
-            Debug.Log("HELLOOOOOOOOO ??? ASJD POASJDOP JSOPAD");
-            InitializeSdk();
+            InitializeLibrary();
         }
 
         [DllImport("__Internal")]
-        private static extern bool InitializeSdk();
+        private static extern bool InitializeLibrary();
     }
 }
