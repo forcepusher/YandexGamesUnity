@@ -1,6 +1,6 @@
-const yandexGamesLibrary = {
+const initializationLibrary = {
   // External C# call.
-  InitializeLibrary: function() {
+  InitializeYandexGames: function() {
     const yandexGamesSdkScript = document.createElement("script");
     yandexGamesSdkScript.src = "https://yandex.ru/games/sdk/v2";
     document.head.appendChild(yandexGamesSdkScript);
@@ -13,4 +13,4 @@ const yandexGamesLibrary = {
   },
 }
 
-mergeInto(LibraryManager.library, yandexGamesLibrary);
+mergeInto(LibraryManager.library, initializationLibrary);

@@ -1,18 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System.Runtime.InteropServices;
 
-public class InterestialAd : MonoBehaviour
+namespace YandexGames
 {
-    // Start is called before the first frame update
-    void Start()
+    public class InterestialAd
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        [DllImport("__Internal")]
+        private static extern bool ShowInterestialAd();
     }
 }

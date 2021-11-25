@@ -9,6 +9,6 @@ namespace YandexGames
     {
         [RuntimeInitializeOnLoadMethod]
         [DllImport("__Internal")]
-        private static extern bool InitializeLibrary();
+        private static extern bool InitializeYandexGames();
     }
 }
