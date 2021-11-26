@@ -40,7 +40,7 @@ namespace YandexGames
         private static void OnOpenCallback()
         {
             if (YandexGamesSdk.CallbackLogging)
-                Debug.Log("OnOpenCallback invoked");
+                Debug.Log($"{nameof(InterestialAd)}.{nameof(OnOpenCallback)} invoked");
 
             s_onOpenCallback?.Invoke();
         }
@@ -49,7 +49,7 @@ namespace YandexGames
         private static void OnCloseCallback(bool wasShown)
         {
             if (YandexGamesSdk.CallbackLogging)
-                Debug.Log("OnCloseCallback invoked, wasShown = " + wasShown);
+                Debug.Log($"{nameof(InterestialAd)}.{nameof(OnCloseCallback)} invoked, wasShown = {wasShown}");
 
             s_onCloseCallback?.Invoke(wasShown);
         }
@@ -62,7 +62,7 @@ namespace YandexGames
             string errorMessage = Encoding.UTF8.GetString(errorMessageBuffer);
 
             if (YandexGamesSdk.CallbackLogging)
-                Debug.Log("OnErrorCallback invoked, errorMessage = " + errorMessage);
+                Debug.Log($"{nameof(InterestialAd)}.{nameof(OnErrorCallback)} invoked, errorMessage = {errorMessage}");
 
             s_onErrorCallback?.Invoke(errorMessage);
         }
@@ -71,7 +71,7 @@ namespace YandexGames
         private static void OnOfflineCallback()
         {
             if (YandexGamesSdk.CallbackLogging)
-                Debug.Log("OnOfflineCallback invoked");
+                Debug.Log($"{nameof(InterestialAd)}.{nameof(OnOfflineCallback)} invoked");
 
             s_onOfflineCallback?.Invoke();
         }
