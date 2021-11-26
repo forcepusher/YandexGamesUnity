@@ -29,7 +29,7 @@ const library = {
           dynCall('v', openCallbackPtr, []);
         },
         onClose: function (wasShown) {
-          dynCall('vb', closeCallbackPtr, [wasShown]);
+          dynCall('vi', closeCallbackPtr, [wasShown]);
         },
         onError: function (error) {
           dynCall('vii', errorCallbackPtr);
