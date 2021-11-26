@@ -43,7 +43,7 @@ const library = {
 
   // External C# call.
   ShowVideoAd: function (openCallbackPtr, rewardedCallbackPtr, closeCallbackPtr, errorCallbackPtr) {
-    yandexGames.sdk.adv.showFullscreenAdv({
+    yandexGames.sdk.adv.showRewardedVideo({
       callbacks: {
         onOpen: function () {
           dynCall('v', openCallbackPtr, []);
