@@ -15,7 +15,7 @@ namespace YandexGames
     /// </remarks>
     public static class InterestialAd
     {
-        // This is so ugly.
+        // Mutable static fields. Disgusting.
         private static Action s_onOpenCallback;
         private static Action<bool> s_onCloseCallback;
         private static Action<string> s_onErrorCallback;
@@ -24,7 +24,7 @@ namespace YandexGames
         public static void Show(Action onOpenCallback = null, Action<bool> onCloseCallback = null,
             Action<string> onErrorCallback = null, Action onOfflineCallback = null)
         {
-            // Disgusting.
+            // You should be ashamed of yourself.
             s_onOpenCallback = onOpenCallback;
             s_onCloseCallback = onCloseCallback;
             s_onErrorCallback = onErrorCallback;
