@@ -12,17 +12,17 @@ const library = {
   
       sdkScript.onload = function () {
         window['YaGames'].init().then(function (sdk) {
-          this.sdk = sdk;
+          yandexGames.sdk = sdk;
         });
       }
     },
 
     verifyInitialization: function () {
-      return this.sdk !== undefined;
+      return yandexGames.sdk !== undefined;
     },
 
     showInterestialAd: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
-      this.sdk.adv.showFullscreenAdv({
+      yandexGames.sdk.adv.showFullscreenAdv({
         callbacks: {
           onOpen: function () {
             dynCall('v', openCallbackPtr, []);
@@ -31,7 +31,7 @@ const library = {
             dynCall('vi', closeCallbackPtr, [wasShown]);
           },
           onError: function (error) {
-            this.invokeErrorCallback(error, errorCallbackPtr);
+            yandexGames.invokeErrorCallback(error, errorCallbackPtr);
           },
           onOffline: function () {
             dynCall('v', offlineCallbackPtr, []);
@@ -41,7 +41,7 @@ const library = {
     },
 
     showVideoAd: function (openCallbackPtr, rewardedCallbackPtr, closeCallbackPtr, errorCallbackPtr) {
-      this.sdk.adv.showRewardedVideo({
+      yandexGames.sdk.adv.showRewardedVideo({
         callbacks: {
           onOpen: function () {
             dynCall('v', openCallbackPtr, []);
@@ -53,7 +53,7 @@ const library = {
             dynCall('v', closeCallbackPtr, []);
           },
           onError: function (error) {
-            this.invokeErrorCallback(error, errorCallbackPtr);
+            yandexGames.invokeErrorCallback(error, errorCallbackPtr);
           },
         }
       });
