@@ -8,15 +8,16 @@ namespace YandexGames
     public static class YandexGamesSdk
     {
         /// <summary>
-        /// SDK is initialized automatically on load. If something fails, this will return false.
+        /// Think of this as a static constructor.
         /// </summary>
-        public static bool Initialized => IsInitialized();
-
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         [DllImport("__Internal")]
         private static extern bool Initialize();
 
+        /// <summary>
+        /// SDK is initialized automatically on load. If something fails, this will return false.
+        /// </summary>
         [DllImport("__Internal")]
-        private static extern bool IsInitialized();
+        public static extern bool VerifyInitialization();
     }
 }

@@ -17,7 +17,7 @@ const library = {
   },
 
   // External C# call.
-  IsInitialized: function () {
+  VerifyInitialization: function () {
     return yandexGames.sdk !== undefined;
   },
 

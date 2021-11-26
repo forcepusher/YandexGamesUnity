@@ -5,9 +5,9 @@ namespace YandexGames.Tests
     public class YandexGamesSdkTests
     {
         [Test]
-        public void InitializationTest()
+        public void SdkShouldInitializeAutomatically()
         {
-            Assert.IsTrue(YandexGamesSdk.Initialized);
+            Assert.IsTrue(YandexGamesSdk.VerifyInitialization());
         }
     }
 }
