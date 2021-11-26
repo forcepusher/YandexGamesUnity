@@ -1,4 +1,5 @@
 using System.Runtime.InteropServices;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Scripting;
 
@@ -7,6 +8,8 @@ namespace YandexGames
 {
     public static class YandexGamesSdk
     {
+        public static LogLevel LogLevel = LogLevel.Error;
+
         /// <summary>
         /// Think of this as a static constructor.
         /// </summary>
