@@ -2,6 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 using AOT;
+using UnityEngine;
 
 namespace YandexGames
 {
@@ -38,8 +39,8 @@ namespace YandexGames
         [MonoPInvokeCallback(typeof(Action))]
         private static void OnOpenCallback()
         {
-            if (YandexGamesSdk.LogLevel >= UnityEditor.PackageManager.LogLevel.Info)
-                UnityEngine.Debug.Log("OnOpenCallback invoked");
+            if (YandexGamesSdk.CallbackLogging)
+                Debug.Log("OnOpenCallback invoked");
 
             s_onOpenCallback?.Invoke();
         }
@@ -47,8 +48,8 @@ namespace YandexGames
         [MonoPInvokeCallback(typeof(Action<bool>))]
         private static void OnCloseCallback(bool wasShown)
         {
-            if (YandexGamesSdk.LogLevel >= UnityEditor.PackageManager.LogLevel.Info)
-                UnityEngine.Debug.Log("OnCloseCallback invoked, wasShown = " + wasShown);
+            if (YandexGamesSdk.CallbackLogging)
+                Debug.Log("OnCloseCallback invoked, wasShown = " + wasShown);
 
             s_onCloseCallback?.Invoke(wasShown);
         }
@@ -60,7 +61,8 @@ namespace YandexGames
             Marshal.Copy(errorMessageBufferPtr, errorMessageBuffer, 0, errorMessageBufferLength);
             string errorMessage = Encoding.UTF8.GetString(errorMessageBuffer);
 
-            UnityEngine.Debug.Log("OnErrorCallback invoked, errorMessage = " + errorMessage);
+            if (YandexGamesSdk.CallbackLogging)
+                Debug.Log("OnErrorCallback invoked, errorMessage = " + errorMessage);
 
             s_onErrorCallback?.Invoke(errorMessage);
         }
@@ -68,7 +70,8 @@ namespace YandexGames
         [MonoPInvokeCallback(typeof(Action))]
         private static void OnOfflineCallback()
         {
-            UnityEngine.Debug.Log("OnOfflineCallback invoked");
+            if (YandexGamesSdk.CallbackLogging)
+                Debug.Log("OnOfflineCallback invoked");
 
             s_onOfflineCallback?.Invoke();
         }
