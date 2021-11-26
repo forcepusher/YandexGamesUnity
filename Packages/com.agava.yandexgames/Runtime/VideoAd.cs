@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using AOT;
 using UnityEngine;
+using YandexGames.Utility;
 
 namespace YandexGames
 {
@@ -66,9 +67,7 @@ namespace YandexGames
         [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
         private static void OnErrorCallback(IntPtr errorMessageBufferPtr, int errorMessageBufferLength)
         {
-            byte[] errorMessageBuffer = new byte[errorMessageBufferLength];
-            Marshal.Copy(errorMessageBufferPtr, errorMessageBuffer, 0, errorMessageBufferLength);
-            string errorMessage = Encoding.UTF8.GetString(errorMessageBuffer);
+            string errorMessage = new StringBuffer(errorMessageBufferPtr, errorMessageBufferLength).ToString();
 
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(VideoAd)}.{nameof(OnErrorCallback)} invoked, errorMessage = {errorMessage}");
