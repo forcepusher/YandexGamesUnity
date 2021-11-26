@@ -47,9 +47,29 @@ const library = {
   },
 
   // External C# call.
-  ShowVideoAd: function () {
-    yandexGames.sdk.adv.showRewardedVideo();
-  },
+  ShowVideoAd: function (openCallbackPtr, rewardedCallbackPtr, closeCallbackPtr, errorCallbackPtr) {
+    yandexGames.sdk.adv.showFullscreenAdv({
+      callbacks: {
+        onOpen: function () {
+          dynCall('v', openCallbackPtr, []);
+        },
+        onRewarded: function () {
+          dynCall('v', rewardedCallbackPtr, []);
+        },
+        onClose: function () {
+          dynCall('v', closeCallbackPtr, []);
+        },
+        onError: function (error) {
+          const errorMessage = error.message;
+          const errorMessageBufferSize = lengthBytesUTF8(errorMessage) + 1;
+          const errorMessageBufferPtr = _malloc(errorMessageBufferSize);
+          stringToUTF8(errorMessage, errorMessageBufferPtr, errorMessageBufferSize);
+          dynCall('vii', errorCallbackPtr, [errorMessageBufferPtr, errorMessageBufferSize]);
+          _free(errorMessageBufferPtr);
+        },
+      }
+    });
+  }
 }
 
 autoAddDeps(library, '$yandexGames');
