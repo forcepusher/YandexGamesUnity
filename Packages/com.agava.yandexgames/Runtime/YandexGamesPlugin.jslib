@@ -25,18 +25,18 @@ const library = {
   ShowInterestialAd: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
     yandexGames.sdk.adv.showFullscreenAdv({
       callbacks: {
-        onOpen: function () {
-          dynCall('v', openCallbackPtr, []);
-        },
+        // onOpen: function () {
+        //   dynCall('v', openCallbackPtr, []);
+        // },
         onClose: function (wasShown) {
           dynCall('vi', closeCallbackPtr, [wasShown]);
         },
-        onError: function (error) {
-          dynCall('vii', errorCallbackPtr);
-        },
-        onOffline: function () {
-          dynCall('v', offlineCallbackPtr, []);
-        },
+        // onError: function (error) {
+        //   dynCall('vii', errorCallbackPtr);
+        // },
+        // onOffline: function () {
+        //   dynCall('v', offlineCallbackPtr, []);
+        // },
       }
     });
   },
