@@ -1,10 +1,12 @@
 using UnityEngine;
-using YandexGames;
 
-public class PlaytestingCanvas : MonoBehaviour
+namespace YandexGames.Samples
 {
-    public void OnShowInterestialButtonClick()
+    public class PlaytestingCanvas : MonoBehaviour
     {
-        InterestialAd.Show();
+        public void OnShowInterestialButtonClick()
+        {
+            InterestialAd.Show();
+        }
     }
 }
