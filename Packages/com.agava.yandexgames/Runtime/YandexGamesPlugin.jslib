@@ -32,12 +32,7 @@ const library = {
           dynCall('vi', closeCallbackPtr, [wasShown]);
         },
         onError: function (error) {
-          const errorMessage = error.message;
-          const errorMessageBufferSize = lengthBytesUTF8(errorMessage) + 1;
-          const errorMessageBufferPtr = _malloc(errorMessageBufferSize);
-          stringToUTF8(errorMessage, errorMessageBufferPtr, errorMessageBufferSize);
-          dynCall('vii', errorCallbackPtr, [errorMessageBufferPtr, errorMessageBufferSize]);
-          _free(errorMessageBufferPtr);
+          invokeErrorCallback(error, errorCallbackPtr);
         },
         onOffline: function () {
           dynCall('v', offlineCallbackPtr, []);
@@ -60,16 +55,20 @@ const library = {
           dynCall('v', closeCallbackPtr, []);
         },
         onError: function (error) {
-          const errorMessage = error.message;
-          const errorMessageBufferSize = lengthBytesUTF8(errorMessage) + 1;
-          const errorMessageBufferPtr = _malloc(errorMessageBufferSize);
-          stringToUTF8(errorMessage, errorMessageBufferPtr, errorMessageBufferSize);
-          dynCall('vii', errorCallbackPtr, [errorMessageBufferPtr, errorMessageBufferSize]);
-          _free(errorMessageBufferPtr);
+          invokeErrorCallback(error, errorCallbackPtr);
         },
       }
     });
-  }
+  },
+
+  invokeErrorCallback: function (error, errorCallbackPtr) {
+    const errorMessage = error.message;
+    const errorMessageBufferSize = lengthBytesUTF8(errorMessage) + 1;
+    const errorMessageBufferPtr = _malloc(errorMessageBufferSize);
+    stringToUTF8(errorMessage, errorMessageBufferPtr, errorMessageBufferSize);
+    dynCall('vii', errorCallbackPtr, [errorMessageBufferPtr, errorMessageBufferSize]);
+    _free(errorMessageBufferPtr);
+  },
 }
 
 autoAddDeps(library, '$yandexGames');
