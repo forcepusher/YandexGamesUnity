@@ -10,8 +10,8 @@ namespace YandexGames.Tests
         [UnityTest]
         public IEnumerator SdkShouldInitializeAutomatically()
         {
-            // Needs a couple seconds to download the script.
-            yield return new WaitForSecondsRealtime(3f);
+            // Needs a second to download the script.
+            yield return new WaitForSecondsRealtime(1f);
             Assert.IsTrue(YandexGamesSdk.VerifyInitialization());
         }
     }
