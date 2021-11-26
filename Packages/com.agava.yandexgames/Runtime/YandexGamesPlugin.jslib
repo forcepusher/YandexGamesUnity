@@ -33,11 +33,11 @@ const library = {
         },
         onError: function (error) {
           const errorMessage = error.message;
-          const errorMessageStringBufferSize = lengthBytesUTF8(errorMessage);
-          const errorMessageStringBufferPtr = _malloc(errorMessageStringBufferSize);
-          stringToUTF8(errorMessage, errorMessageStringBufferPtr, errorMessageStringBufferSize);
-          dynCall('vii', errorCallbackPtr, [errorMessageStringBufferPtr, errorMessageStringBufferSize]);
-          _free(errorMessageStringBufferPtr);
+          const errorMessageBufferSize = lengthBytesUTF8(errorMessage) + 1;
+          const errorMessageBufferPtr = _malloc(errorMessageBufferSize);
+          stringToUTF8(errorMessage, errorMessageBufferPtr, errorMessageBufferSize);
+          dynCall('vii', errorCallbackPtr, [errorMessageBufferPtr, errorMessageBufferSize]);
+          _free(errorMessageBufferPtr);
         },
         onOffline: function () {
           dynCall('v', offlineCallbackPtr, []);

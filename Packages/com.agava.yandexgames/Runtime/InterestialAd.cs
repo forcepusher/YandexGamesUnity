@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using System.Text;
 using AOT;
 
 namespace YandexGames
@@ -27,9 +28,12 @@ namespace YandexGames
         }
 
         [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
-        private static void OnErrorCallback(IntPtr errorMessage, int messageByteLength)
+        private static void OnErrorCallback(IntPtr errorMessageBufferPtr, int errorMessageBufferLength)
         {
-            UnityEngine.Debug.Log("OnErrorCallback");
+            byte[] errorMessageBuffer = new byte[errorMessageBufferLength];
+            Marshal.Copy(errorMessageBufferPtr, errorMessageBuffer, 0, errorMessageBufferLength);
+            string errorMessage = Encoding.UTF8.GetString(errorMessageBuffer);
+            UnityEngine.Debug.Log("OnErrorCallback " + errorMessage);
         }
 
         [MonoPInvokeCallback(typeof(Action))]
