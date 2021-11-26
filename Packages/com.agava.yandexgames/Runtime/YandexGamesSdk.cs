@@ -7,6 +7,9 @@ namespace YandexGames
 {
     public static class YandexGamesSdk
     {
+        /// <summary>
+        /// SDK is initialized automatically on load. If something fails, this will return false.
+        /// </summary>
         public static bool Initialized => IsInitialized();
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
