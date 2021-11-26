@@ -13,5 +13,10 @@ namespace YandexGames.Samples
         {
             InterestialAd.Show();
         }
+
+        public void OnShowVideoButtonClick()
+        {
+            VideoAd.Show();
+        }
     }
 }
