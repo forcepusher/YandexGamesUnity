@@ -11,6 +11,6 @@ Yandex Games doesn't support SDK unit testing outside of their platform, so we h
 Make a regular build and upload it to Yandex Games according to documentation:<br>
 https://yandex.ru/dev/games/doc/dg/concepts/about.html<br>
 <br>
-Before publishing a new version, don't forget to rename "Samples" folder to "Samples~".<br>
+Before publishing a new version, rename "Samples" folder to "Samples~" and remove the meta file for the folder.<br>
 https://forum.unity.com/threads/samples-in-packages-manual-setup.623080/#post-4991561<br>
 This is stupid, but that's Unity. Not the worst thing they've done so far.<br>
