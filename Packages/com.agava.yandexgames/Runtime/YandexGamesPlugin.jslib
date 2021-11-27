@@ -84,8 +84,12 @@ const library = {
     yandexGames.initialize();
   },
 
-  VerifyInitialization: function () {
-    return yandexGames.verifyInitialization();
+  VerifySdkInitialization: function () {
+    return yandexGames.verifySdkInitialization();
+  },
+
+  VerifyLeaderboardInitialization: function () {
+    return yandexGames.verifyLeaderboardInitialization();
   },
 
   ShowInterestialAd: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
