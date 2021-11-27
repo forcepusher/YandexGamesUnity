@@ -28,7 +28,7 @@ namespace YandexGames
         /// If either something fails or called way too early, this will return false.
         /// </summary>
         public static bool IsInitialized => VerifySdkInitialization();
-        
+
         [DllImport("__Internal")]
         private static extern bool VerifySdkInitialization();
     }

@@ -7,6 +7,8 @@ const library = {
 
     leaderboard: undefined,
 
+    // playerIdentity: undefined,
+
     initialize: function () {
       const sdkScript = document.createElement('script');
       sdkScript.src = 'https://yandex.ru/games/sdk/v2';
@@ -16,6 +18,10 @@ const library = {
         window['YaGames'].init().then(function (sdk) {
           yandexGames.sdk = sdk;
 
+          // sdk.getPlayer({ scopes: false }).then(function (playerIdentity) {
+          //   yandexGames.playerIdentity = playerIdentity;
+          //   console.log(playerIdentity);
+          // });
           sdk.getLeaderboards().then(function (leaderboard) { yandexGames.leaderboard = leaderboard; });
         });
       }
@@ -91,6 +97,10 @@ const library = {
   VerifyLeaderboardServiceInitialization: function () {
     return yandexGames.verifyLeaderboardServiceInitialization();
   },
+
+  // RequestPlayerAccount: function () {
+
+  // },
 
   ShowInterestialAd: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
     yandexGames.showInterestialAd(openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr);
