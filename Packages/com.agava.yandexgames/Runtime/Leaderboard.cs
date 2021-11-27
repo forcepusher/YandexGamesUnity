@@ -8,7 +8,9 @@ namespace YandexGames
         /// Leaderboard is initialized automatically on load.
         /// If either something fails or called way too early, this will return false.
         /// </summary>
+        public static bool IsInitialized => VerifyLeaderboardInitialization();
+        
         [DllImport("__Internal")]
-        public static extern bool VerifyLeaderboardInitialization();
+        private static extern bool VerifyLeaderboardInitialization();
     }
 }

@@ -24,9 +24,12 @@ namespace YandexGames
         private static extern bool Initialize();
 
         /// <summary>
-        /// SDK is initialized automatically on load. If something fails, this will return false.
+        /// Leaderboard is initialized automatically on load.
+        /// If either something fails or called way too early, this will return false.
         /// </summary>
+        public static bool IsInitialized => VerifySdkInitialization();
+        
         [DllImport("__Internal")]
-        public static extern bool VerifySdkInitialization();
+        private static extern bool VerifySdkInitialization();
     }
 }

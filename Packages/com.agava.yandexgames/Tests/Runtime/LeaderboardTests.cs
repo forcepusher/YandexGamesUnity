@@ -7,7 +7,7 @@ namespace YandexGames.Tests
         [Test]
         public void ShouldInitializeAutomatically()
         {
-            Assert.IsTrue(Leaderboard.VerifyLeaderboardInitialization());
+            Assert.IsTrue(Leaderboard.IsInitialized);
         }
     }
 }
