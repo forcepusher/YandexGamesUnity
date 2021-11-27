@@ -16,13 +16,13 @@ namespace YandexGames.Utility.Tests
                 "go code in javascript ugly\n";
 
             byte[] testStringBytes = Encoding.UTF8.GetBytes(testString);
-            IntPtr stringBufferPointer = Marshal.AllocHGlobal(testStringBytes.Length);
-            Marshal.Copy(testStringBytes, 0, stringBufferPointer, testStringBytes.Length);
+            IntPtr testStringBufferPointer = Marshal.AllocHGlobal(testStringBytes.Length);
+            Marshal.Copy(testStringBytes, 0, testStringBufferPointer, testStringBytes.Length);
 
-            var stringBuffer = new StringBuffer(stringBufferPointer, testStringBytes.Length);
+            var stringBuffer = new StringBuffer(testStringBufferPointer, testStringBytes.Length);
             Assert.AreEqual(testString, stringBuffer.ToString());
 
-            Marshal.FreeHGlobal(stringBufferPointer);
+            Marshal.FreeHGlobal(testStringBufferPointer);
         }
     }
 }
