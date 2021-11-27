@@ -1,5 +1,7 @@
 using System.Runtime.InteropServices;
+#if UNITY_WEBGL && !UNITY_EDITOR
 using UnityEngine;
+#endif
 using UnityEngine.Scripting;
 
 [assembly: AlwaysLinkAssembly]
