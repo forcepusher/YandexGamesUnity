@@ -9,7 +9,7 @@
     {
       "displayName": "Playtesting Sample",
       "description": "Contains sample for uploading to Yandex Games and manually testing the SDK.",
-      "path": "Samples/Playtesting"
+      "path": "Samples~/Playtesting"
     }
   ]
 }
