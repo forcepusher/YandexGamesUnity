@@ -8,7 +8,7 @@ namespace YandexGames.Utility.Tests
     public class StringBufferTests
     {
         [Test]
-        public void ShouldConvertString()
+        public void ToStringShouldNotGiveCorruptedResult()
         {
             string testString =
                 "henlo developer\n" +

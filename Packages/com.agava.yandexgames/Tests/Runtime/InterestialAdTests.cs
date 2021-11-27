@@ -8,7 +8,7 @@ namespace YandexGames.Tests
     public class InterestialAdTests
     {
         [UnityTest]
-        public IEnumerator InterestialAdShouldInvokeErrorCallback()
+        public IEnumerator ShowShouldInvokeErrorCallback()
         {
             bool callbackInvoked = false;
             InterestialAd.Show(onErrorCallback: (message) => {

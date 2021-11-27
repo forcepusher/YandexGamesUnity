@@ -8,7 +8,7 @@ namespace YandexGames.Tests
     public class VideoAdTests
     {
         [UnityTest]
-        public IEnumerator VideoAdShouldInvokeErrorCallback()
+        public IEnumerator ShowShouldInvokeErrorCallback()
         {
             bool callbackInvoked = false;
             VideoAd.Show(onErrorCallback: (message) => {
