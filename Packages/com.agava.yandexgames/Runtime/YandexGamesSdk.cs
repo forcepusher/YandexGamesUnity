@@ -27,6 +27,6 @@ namespace YandexGames
         /// SDK is initialized automatically on load. If something fails, this will return false.
         /// </summary>
         [DllImport("__Internal")]
-        public static extern bool VerifyInitialization();
+        public static extern bool VerifySdkInitialization();
     }
 }

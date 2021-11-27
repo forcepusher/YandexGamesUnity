@@ -5,20 +5,28 @@ const library = {
   $yandexGames: {
     sdk: undefined,
 
+    leaderboard: undefined,
+
     initialize: function () {
       const sdkScript = document.createElement('script');
       sdkScript.src = 'https://yandex.ru/games/sdk/v2';
       document.head.appendChild(sdkScript);
-  
+
       sdkScript.onload = function () {
         window['YaGames'].init().then(function (sdk) {
           yandexGames.sdk = sdk;
+
+          sdk.getLeaderboards().then(function (leaderboard) { yandexGames.leaderboard = leaderboard; });
         });
       }
     },
 
-    verifyInitialization: function () {
+    verifySdkInitialization: function () {
       return yandexGames.sdk !== undefined;
+    },
+
+    verifyLeaderboardInitialization: function () {
+      return yandexGames.leaderboard !== undefined;
     },
 
     showInterestialAd: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
