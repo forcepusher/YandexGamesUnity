@@ -2,12 +2,12 @@ using NUnit.Framework;
 
 namespace YandexGames.Tests
 {
-    public class LeaderboardTests
+    public class LeaderboardServiceTests
     {
         [Test]
         public void ShouldInitializeAutomatically()
         {
-            Assert.IsTrue(Leaderboard.IsInitialized);
+            Assert.IsTrue(LeaderboardService.IsInitialized);
         }
     }
 }

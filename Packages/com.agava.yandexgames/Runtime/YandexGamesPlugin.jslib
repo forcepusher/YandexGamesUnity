@@ -25,7 +25,7 @@ const library = {
       return yandexGames.sdk !== undefined;
     },
 
-    verifyLeaderboardInitialization: function () {
+    verifyLeaderboardServiceInitialization: function () {
       return yandexGames.leaderboard !== undefined;
     },
 
@@ -88,8 +88,8 @@ const library = {
     return yandexGames.verifySdkInitialization();
   },
 
-  VerifyLeaderboardInitialization: function () {
-    return yandexGames.verifyLeaderboardInitialization();
+  VerifyLeaderboardServiceInitialization: function () {
+    return yandexGames.verifyLeaderboardServiceInitialization();
   },
 
   ShowInterestialAd: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
