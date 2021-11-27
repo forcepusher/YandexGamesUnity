@@ -14,7 +14,7 @@ namespace YandexGames
     /// </remarks>
     public static class VideoAd
     {
-        // Mutable static fields - disgusting.
+        // Mutable static fields - absolutely disgusting.
         private static Action s_onOpenCallback;
         private static Action s_onRewardedCallback;
         private static Action s_onCloseCallback;
