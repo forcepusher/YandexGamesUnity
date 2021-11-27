@@ -1,6 +1,6 @@
 # YandexGamesUnity
 
-This is a development repository. To install the package, use this instead:<br>
+This is a development repository. To install the package, use this repo instead:<br>
 https://github.com/forcepusher/com.agava.yandexgames<br>
 <br>
 To run unit tests: in Unity, go to "Window" -> "General" -> "Test Runner".<br>
