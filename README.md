@@ -8,7 +8,7 @@ Make sure your target platform is set to WebGL in build settings.<br>
 Switch to "PlayMode" and click "Run All Tests (WebGL)". It'll take a while.<br>
 <br>
 Yandex Games doesn't support SDK unit testing outside of their platform, so we have to run manual tests as well.<br>
-Make a regular build and upload it according to Yandex Games according to documentation:<br>
+Make a regular build and upload it to Yandex Games according to documentation:<br>
 https://yandex.ru/dev/games/doc/dg/concepts/about.html<br>
 <br>
 Before publishing a new version, don't forget to rename "Samples" folder to "Samples~".<br>
