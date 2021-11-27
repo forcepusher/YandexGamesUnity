@@ -11,8 +11,8 @@ namespace YandexGames.Utility.Tests
         public void ShouldConvertString()
         {
             string testString =
-                "henlo programmer\n" +
-                "helllo you STINKY PROGRAMMER\n" +
+                "henlo developer\n" +
+                "helllo you STINKY DEVELOPER\n" +
                 "go code in javascript ugly\n";
 
             byte[] testStringBytes = Encoding.UTF8.GetBytes(testString);
