@@ -8,14 +8,19 @@ namespace YandexGames.Tests
     public class InterestialAdTests
     {
         [UnityTest]
-        public IEnumerator ShouldInvokeErrorCallback()
+        public IEnumerator InterestialAdShouldInvokeErrorCallback()
         {
             while (!YandexGamesSdk.VerifyInitialization())
                 yield return null;
 
-            InterestialAd.Show(onErrorCallback: (message) => Assert.Pass());
+            bool callbackInvoked = false;
+            InterestialAd.Show(onErrorCallback: (message) => {
+                callbackInvoked = true;
+            });
+
             yield return new WaitForSecondsRealtime(1);
-            Assert.Fail();
+
+            Assert.IsTrue(callbackInvoked);
         }
     }
 }

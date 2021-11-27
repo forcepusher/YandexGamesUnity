@@ -8,14 +8,19 @@ namespace YandexGames.Tests
     public class VideoAdTests
     {
         [UnityTest]
-        public IEnumerator ShouldInvokeErrorCallback()
+        public IEnumerator VideoAdShouldInvokeErrorCallback()
         {
             while (!YandexGamesSdk.VerifyInitialization())
                 yield return null;
 
-            VideoAd.Show(onErrorCallback: (message) => Assert.Pass());
+            bool callbackInvoked = false;
+            VideoAd.Show(onErrorCallback: (message) => {
+                callbackInvoked = true;
+            });
+
             yield return new WaitForSecondsRealtime(1);
-            Assert.Fail();
+
+            Assert.IsTrue(callbackInvoked);
         }
     }
 }
