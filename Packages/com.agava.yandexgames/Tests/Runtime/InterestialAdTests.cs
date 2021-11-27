@@ -10,9 +10,6 @@ namespace YandexGames.Tests
         [UnityTest]
         public IEnumerator InterestialAdShouldInvokeErrorCallback()
         {
-            while (!YandexGamesSdk.VerifyInitialization())
-                yield return null;
-
             bool callbackInvoked = false;
             InterestialAd.Show(onErrorCallback: (message) => {
                 callbackInvoked = true;

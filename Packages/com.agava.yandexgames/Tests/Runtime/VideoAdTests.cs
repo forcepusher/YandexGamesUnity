@@ -10,9 +10,6 @@ namespace YandexGames.Tests
         [UnityTest]
         public IEnumerator VideoAdShouldInvokeErrorCallback()
         {
-            while (!YandexGamesSdk.VerifyInitialization())
-                yield return null;
-
             bool callbackInvoked = false;
             VideoAd.Show(onErrorCallback: (message) => {
                 callbackInvoked = true;
