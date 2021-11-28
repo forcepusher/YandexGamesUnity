@@ -51,7 +51,7 @@ const library = {
       }
 
       getPlayerAndInvokeCallback().catch(function () {
-        yandexGames.sdk.openAuthDialog().then(function () {
+        yandexGames.sdk.auth.openAuthDialog().then(function () {
           getPlayerAndInvokeCallback().catch(function (error) {
             yandexGames.invokeErrorCallback(error, authenticationErrorCallbackPtr);
           });
