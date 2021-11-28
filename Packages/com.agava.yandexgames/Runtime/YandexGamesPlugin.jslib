@@ -30,11 +30,13 @@ const library = {
       return yandexGames.leaderboard !== undefined;
     },
 
-    authenticatePlayerAccount: function (requestPermissions, onAuthenticatedCallbackPtr) {
+    authenticatePlayerAccount: function (requestPermissions, onAuthenticatedCallbackPtr, errorCallbackPtr) {
       yandexGames.sdk.getPlayer({ scopes: requestPermissions }).then(function (playerAccount) {
         yandexGames.playerAccount = playerAccount;
         console.log(playerAccount);
         dynCall('v', onAuthenticatedCallbackPtr, []);
+      }).catch(function (error) {
+        yandexGames.invokeErrorCallback(error, errorCallbackPtr);
       });
     },
 
@@ -101,8 +103,8 @@ const library = {
     return yandexGames.verifyLeaderboardServiceInitialization();
   },
 
-  AuthenticatePlayerAccount: function (requestPermissions, onAuthenticatedCallbackPtr) {
-    yandexGames.authenticatePlayerAccount(requestPermissions, onAuthenticatedCallbackPtr);
+  AuthenticatePlayerAccount: function (requestPermissions, onAuthenticatedCallbackPtr, errorCallbackPtr) {
+    yandexGames.authenticatePlayerAccount(requestPermissions, onAuthenticatedCallbackPtr, errorCallbackPtr);
   },
 
   ShowInterestialAd: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
