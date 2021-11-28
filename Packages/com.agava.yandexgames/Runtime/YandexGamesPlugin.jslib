@@ -34,7 +34,7 @@ const library = {
       return yandexGames.sdk !== undefined;
     },
 
-    verifyLeaderboardServiceInitialization: function () {
+    verifyLeaderboardInitialization: function () {
       return yandexGames.leaderboard !== undefined;
     },
 
@@ -120,8 +120,8 @@ const library = {
     return yandexGames.verifySdkInitialization();
   },
 
-  VerifyLeaderboardServiceInitialization: function () {
-    return yandexGames.verifyLeaderboardServiceInitialization();
+  VerifyLeaderboardInitialization: function () {
+    return yandexGames.verifyLeaderboardInitialization();
   },
 
   VerifyPlayerAccountAuthorization: function () {
