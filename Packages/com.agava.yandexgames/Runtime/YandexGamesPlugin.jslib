@@ -129,6 +129,7 @@ const library = {
   },
 
   AuthenticatePlayerAccount: function (requestPermissions, onAuthenticatedCallbackPtr, authenticationErrorCallbackPtr) {
+    // Booleans are transferred as either 1 or 0, so using !! to convert them to true or false.
     yandexGames.authenticatePlayerAccount(!!requestPermissions, onAuthenticatedCallbackPtr, authenticationErrorCallbackPtr);
   },
 
