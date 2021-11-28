@@ -14,6 +14,11 @@ namespace YandexGames
         private static Action s_onAuthenticatedCallback;
         private static Action<string> s_onErrorCallback;
 
+        public static bool IsAuthorized => VerifyPlayerAccountAuthorization();
+
+        [DllImport("__Internal")]
+        private static extern bool VerifyPlayerAccountAuthorization();
+
         public static void Authenticate(bool requestPermissions, Action onAuthenticatedCallback = null,
             Action<string> onErrorCallback = null)
         {

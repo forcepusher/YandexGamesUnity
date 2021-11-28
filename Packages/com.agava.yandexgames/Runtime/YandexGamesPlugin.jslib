@@ -17,7 +17,13 @@ const library = {
       sdkScript.onload = function () {
         window['YaGames'].init().then(function (sdk) {
           yandexGames.sdk = sdk;
+
           sdk.getLeaderboards().then(function (leaderboard) { yandexGames.leaderboard = leaderboard; });
+
+          // Cache the playerAccount immediately so it's ready for verifyPlayerAccountAuthorization call.
+          sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
+            yandexGames.playerAccount = playerAccount;
+          }).catch(function () {});
         });
       }
     },
@@ -28,6 +34,10 @@ const library = {
 
     verifyLeaderboardServiceInitialization: function () {
       return yandexGames.leaderboard !== undefined;
+    },
+
+    verifyPlayerAccountAuthorization: function () {
+      return yandexGames.playerAccount !== undefined;
     },
 
     authenticatePlayerAccount: function (requestPermissions, onAuthenticatedCallbackPtr, errorCallbackPtr) {
@@ -101,6 +111,10 @@ const library = {
 
   VerifyLeaderboardServiceInitialization: function () {
     return yandexGames.verifyLeaderboardServiceInitialization();
+  },
+
+  VerifyPlayerAccountAuthorization: function () {
+    return yandexGames.verifyPlayerAccountAuthorization();
   },
 
   AuthenticatePlayerAccount: function (requestPermissions, onAuthenticatedCallbackPtr, errorCallbackPtr) {
