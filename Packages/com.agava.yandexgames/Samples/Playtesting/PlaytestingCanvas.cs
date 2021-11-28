@@ -24,8 +24,8 @@ namespace YandexGames.Samples
 
             while (true)
             {
-                yield return new WaitForSecondsRealtime(0.5f);
                 _isAuthorizedText.color = PlayerAccount.IsAuthorized ? Color.green : Color.red;
+                yield return new WaitForSecondsRealtime(0.25f);
             }
         }
 
