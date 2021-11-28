@@ -129,7 +129,7 @@ const library = {
   },
 
   AuthenticatePlayerAccount: function (requestPermissions, onAuthenticatedCallbackPtr, authenticationErrorCallbackPtr) {
-    yandexGames.authenticatePlayerAccount(requestPermissions, onAuthenticatedCallbackPtr, authenticationErrorCallbackPtr);
+    yandexGames.authenticatePlayerAccount(!!requestPermissions, onAuthenticatedCallbackPtr, authenticationErrorCallbackPtr);
   },
 
   ShowInterestialAd: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
