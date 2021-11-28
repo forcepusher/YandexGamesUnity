@@ -31,7 +31,7 @@ const library = {
     },
 
     authenticatePlayerAccount: function (requestPermissions, onAuthenticatedCallbackPtr) {
-      sdk.getPlayer({ scopes: requestPermissions }).then(function (playerAccount) {
+      yandexGames.sdk.getPlayer({ scopes: requestPermissions }).then(function (playerAccount) {
         yandexGames.playerAccount = playerAccount;
         console.log(playerAccount);
         dynCall('v', onAuthenticatedCallbackPtr, []);

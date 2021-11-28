@@ -21,12 +21,12 @@ namespace YandexGames.Samples
 
         public void OnAuthenticateButtonClick()
         {
-            
+            PlayerAccount.Authenticate(false);
         }
 
         public void OnAuthenticateWithPermissionsButtonClick()
         {
-            
+            PlayerAccount.Authenticate(true);
         }
     }
 }

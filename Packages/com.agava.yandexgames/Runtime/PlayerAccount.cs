@@ -12,7 +12,7 @@ namespace YandexGames
     {
         private static Action s_onAuthenticatedCallback;
 
-        private static void Authenticate(bool requestPermissions, Action onAuthenticatedCallback = null)
+        public static void Authenticate(bool requestPermissions, Action onAuthenticatedCallback = null)
         {
             s_onAuthenticatedCallback = onAuthenticatedCallback;
 
