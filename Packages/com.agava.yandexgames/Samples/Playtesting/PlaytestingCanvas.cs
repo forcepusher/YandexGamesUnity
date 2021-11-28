@@ -18,5 +18,15 @@ namespace YandexGames.Samples
         {
             VideoAd.Show();
         }
+
+        public void OnAuthenticateButtonClick()
+        {
+            
+        }
+
+        public void OnAuthenticateWithPermissionsButtonClick()
+        {
+            
+        }
     }
 }
