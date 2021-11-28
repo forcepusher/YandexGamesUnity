@@ -25,7 +25,7 @@ namespace YandexGames
             s_onAuthenticatedCallback = onAuthenticatedCallback;
             s_onErrorCallback = onErrorCallback;
 
-            AuthenticatePlayerAccount(requestPermissions, OnAuthenticatedCallback, OnErrorCallback);
+            AuthenticatePlayerAccount(requestPermissions, OnAuthenticatedCallback, OnAuthenticationErrorCallback);
         }
 
         [DllImport("__Internal")]
@@ -41,12 +41,12 @@ namespace YandexGames
         }
 
         [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
-        private static void OnErrorCallback(IntPtr errorMessageBufferPtr, int errorMessageBufferLength)
+        private static void OnAuthenticationErrorCallback(IntPtr errorMessageBufferPtr, int errorMessageBufferLength)
         {
             string errorMessage = new StringBuffer(errorMessageBufferPtr, errorMessageBufferLength).ToString();
 
             if (YandexGamesSdk.CallbackLogging)
-                Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnErrorCallback)} invoked, errorMessage = {errorMessage}");
+                Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnAuthenticationErrorCallback)} invoked, errorMessage = {errorMessage}");
 
             s_onErrorCallback?.Invoke(errorMessage);
         }
