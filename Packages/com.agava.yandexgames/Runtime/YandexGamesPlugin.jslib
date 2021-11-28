@@ -25,7 +25,7 @@ const library = {
           // https://yandex.ru/dev/games/doc/dg/sdk/sdk-player.html#sdk-player__auth
           sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
             yandexGames.playerAccount = playerAccount;
-          }).catch(function () {});
+          }).catch(function () { });
         });
       }
     },
@@ -43,12 +43,21 @@ const library = {
     },
 
     authenticatePlayerAccount: function (requestPermissions, onAuthenticatedCallbackPtr, authenticationErrorCallbackPtr) {
-      yandexGames.sdk.getPlayer({ scopes: requestPermissions }).then(function (playerAccount) {
-        yandexGames.playerAccount = playerAccount;
-        console.log(playerAccount);
-        dynCall('v', onAuthenticatedCallbackPtr, []);
-      }).catch(function (error) {
-        yandexGames.invokeErrorCallback(error, authenticationErrorCallbackPtr);
+      function getPlayerAndInvokeCallback() {
+        return yandexGames.sdk.getPlayer({ scopes: requestPermissions }).then(function (playerAccount) {
+          yandexGames.playerAccount = playerAccount;
+          dynCall('v', onAuthenticatedCallbackPtr, []);
+        });
+      }
+
+      getPlayerAndInvokeCallback().catch(function () {
+        yandexGames.sdk.openAuthDialog().then(function () {
+          getPlayerAndInvokeCallback().catch(function (error) {
+            yandexGames.invokeErrorCallback(error, authenticationErrorCallbackPtr);
+          });
+        }).catch(function (error) {
+          yandexGames.invokeErrorCallback(error, authenticationErrorCallbackPtr);
+        });
       });
     },
 
