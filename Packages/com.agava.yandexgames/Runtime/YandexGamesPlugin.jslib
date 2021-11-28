@@ -7,7 +7,7 @@ const library = {
 
     leaderboard: undefined,
 
-    // playerIdentity: undefined,
+    playerAccount: undefined,
 
     initialize: function () {
       const sdkScript = document.createElement('script');
@@ -17,11 +17,6 @@ const library = {
       sdkScript.onload = function () {
         window['YaGames'].init().then(function (sdk) {
           yandexGames.sdk = sdk;
-
-          // sdk.getPlayer({ scopes: false }).then(function (playerIdentity) {
-          //   yandexGames.playerIdentity = playerIdentity;
-          //   console.log(playerIdentity);
-          // });
           sdk.getLeaderboards().then(function (leaderboard) { yandexGames.leaderboard = leaderboard; });
         });
       }
@@ -33,6 +28,14 @@ const library = {
 
     verifyLeaderboardServiceInitialization: function () {
       return yandexGames.leaderboard !== undefined;
+    },
+
+    authenticatePlayerAccount: function (requestPermissions, onAuthenticatedCallbackPtr) {
+      sdk.getPlayer({ scopes: requestPermissions }).then(function (playerAccount) {
+        yandexGames.playerAccount = playerAccount;
+        console.log(playerAccount);
+        dynCall('v', onAuthenticatedCallbackPtr, []);
+      });
     },
 
     showInterestialAd: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
@@ -98,9 +101,9 @@ const library = {
     return yandexGames.verifyLeaderboardServiceInitialization();
   },
 
-  // RequestPlayerAccount: function () {
-
-  // },
+  AuthenticatePlayerAccount: function (requestPermissions, onAuthenticatedCallbackPtr) {
+    yandexGames.authenticatePlayerAccount(requestPermissions, onAuthenticatedCallbackPtr);
+  },
 
   ShowInterestialAd: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
     yandexGames.showInterestialAd(openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr);

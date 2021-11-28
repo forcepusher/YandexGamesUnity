@@ -10,20 +10,25 @@ namespace YandexGames
     /// </summary>
     public static class PlayerAccount
     {
-        //public 
+        private static Action s_onAuthenticatedCallback;
 
-        //private static Action<int> s_onPlayerIdentityCallback;
+        private static void Authenticate(bool requestPermissions, Action onAuthenticatedCallback = null)
+        {
+            s_onAuthenticatedCallback = onAuthenticatedCallback;
 
-        //[DllImport("__Internal")]
-        //public static extern bool RequestIdentity(Action<bool> onPlayerIdentityCallback = null);
+            AuthenticatePlayerAccount(requestPermissions, OnAuthenticatedCallback);
+        }
 
-        //[MonoPInvokeCallback(typeof(Action<int>))]
-        //private static void OnPlayerIdentityCallback(int identity)
-        //{
-        //    if (YandexGamesSdk.CallbackLogging)
-        //        Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnPlayerIdentityCallback)} invoked, identity = {identity}");
+        [DllImport("__Internal")]
+        private static extern void AuthenticatePlayerAccount(bool requestPermissions, Action onAuthenticatedCallback);
 
-        //    s_onPlayerIdentityCallback?.Invoke(identity);
-        //}
+        [MonoPInvokeCallback(typeof(Action))]
+        private static void OnAuthenticatedCallback()
+        {
+            if (YandexGamesSdk.CallbackLogging)
+                Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnAuthenticatedCallback)} invoked");
+
+            s_onAuthenticatedCallback?.Invoke();
+        }
     }
 }
