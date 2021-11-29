@@ -11,6 +11,9 @@ namespace YandexGames.Samples
         [SerializeField]
         private Text _isAuthorizedText;
 
+        [SerializeField]
+        private RectTransform _applicationAliveIndicator;
+
         private void Awake()
         {
             YandexGamesSdk.CallbackLogging = true;
@@ -39,6 +42,8 @@ namespace YandexGames.Samples
 
             //if (Input.GetMouseButton(0))
             //    Debug.Log("MOUSE DOWN");
+
+            _applicationAliveIndicator.Rotate(0f, 0f, -Time.unscaledDeltaTime * 100f);
         }
 
         public void OnShowInterestialButtonClick()
