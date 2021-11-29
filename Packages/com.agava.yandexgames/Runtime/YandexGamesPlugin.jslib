@@ -140,6 +140,10 @@ const library = {
   ShowVideoAd: function (openCallbackPtr, rewardedCallbackPtr, closeCallbackPtr, errorCallbackPtr) {
     yandexGames.showVideoAd(openCallbackPtr, rewardedCallbackPtr, closeCallbackPtr, errorCallbackPtr);
   },
+
+  // SetLeaderboardScore: function(score, ) {
+
+  // },
 }
 
 autoAddDeps(library, '$yandexGames');

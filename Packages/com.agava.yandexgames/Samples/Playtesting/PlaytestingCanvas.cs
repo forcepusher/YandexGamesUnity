@@ -29,6 +29,18 @@ namespace YandexGames.Samples
             }
         }
 
+        public void Update()
+        {
+            if (Input.touchCount > 0)
+                Debug.Log("TOUCHING. touchCOunt = " + Input.touchCount);
+
+            //if (Input.anyKey)
+            //    Debug.Log("ANY KEY DOWN.");
+
+            //if (Input.GetMouseButton(0))
+            //    Debug.Log("MOUSE DOWN");
+        }
+
         public void OnShowInterestialButtonClick()
         {
             InterestialAd.Show();
