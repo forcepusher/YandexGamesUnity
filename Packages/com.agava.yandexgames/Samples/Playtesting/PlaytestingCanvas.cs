@@ -2,6 +2,7 @@
 
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace YandexGames.Samples
@@ -13,6 +14,9 @@ namespace YandexGames.Samples
 
         [SerializeField]
         private RectTransform _applicationAliveIndicator;
+
+        [SerializeField]
+        private Text _debugText;
 
         private void Awake()
         {
@@ -35,13 +39,15 @@ namespace YandexGames.Samples
         public void Update()
         {
             if (Input.touchCount > 0)
-                Debug.Log("TOUCHING. touchCOunt = " + Input.touchCount);
+                Debug.Log("TOUCHING. touchCount = " + Input.touchCount);
 
             //if (Input.anyKey)
             //    Debug.Log("ANY KEY DOWN.");
 
             //if (Input.GetMouseButton(0))
             //    Debug.Log("MOUSE DOWN");
+
+            _debugText.text = EventSystem.current.ToString();
 
             _applicationAliveIndicator.Rotate(0f, 0f, -Time.unscaledDeltaTime * 100f);
         }
