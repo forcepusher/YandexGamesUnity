@@ -4,7 +4,7 @@ namespace YandexGames
 {
     public static class Leaderboard
     {
-        private const string DefaultLeaderboardName = "default-leaderboard";
+        private const string DefaultName = "default-leaderboard";
 
         /// <summary>
         /// LeaderboardService is initialized automatically on load.
@@ -18,12 +18,12 @@ namespace YandexGames
         /// <remarks>
         /// Use <see cref="PlayerAccount.IsAuthorized"/> to avoid automatic authorization window popup.
         /// </remarks>
-        public static void SetScore(int score, string leaderboardName = DefaultLeaderboardName, string additionalData = "")
+        public static void SetScore(int score, string leaderboardName = DefaultName, string additionalData = "")
         {
             SetLeaderboardScore(score, leaderboardName, additionalData);
         }
 
         [DllImport("__Internal")]
-        private static extern void SetLeaderboardScore(int score, string leaderboardName, string extraData);
+        private static extern void SetLeaderboardScore(int score, string leaderboardName, string additionalData);
     }
 }
