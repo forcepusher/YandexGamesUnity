@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Runtime.InteropServices;
 #if UNITY_WEBGL && !UNITY_EDITOR
 using UnityEngine;
@@ -22,6 +23,15 @@ namespace YandexGames
 #endif
         [DllImport("__Internal")]
         private static extern bool Initialize();
+
+        /// <summary>
+        /// Coroutine waiting for <see cref="IsInitialized"/> to return true.
+        /// </summary>
+        public static IEnumerator WaitForInitialization()
+        {
+            while (!IsInitialized)
+                yield return null;
+        }
 
         /// <summary>
         /// Leaderboard is initialized automatically on load.
