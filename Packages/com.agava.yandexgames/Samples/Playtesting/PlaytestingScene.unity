@@ -307,7 +307,7 @@ GameObject:
   - component: {fileID: 408170594}
   - component: {fileID: 408170593}
   m_Layer: 5
-  m_Name: SetRandomLeaderboardScoreButton
+  m_Name: SetLeaderboardScoreButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -379,7 +379,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2102737976}
         m_TargetAssemblyTypeName: YandexGames.Samples.PlaytestingCanvas, Agava.YandexGames.Samples.Playtesting
-        m_MethodName: OnAuthenticateWithPermissionsButtonClick
+        m_MethodName: OnSetLeaderboardScoreButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
