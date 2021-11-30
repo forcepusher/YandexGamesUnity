@@ -1,9 +1,12 @@
 using UnityEngine.EventSystems;
 
-/// <summary>
-/// Workaround for EventSystem bug https://trello.com/c/PjW4j3st
-/// </summary>
-public class WebEventSystem : EventSystem
+namespace YandexGames
 {
-    protected override void OnApplicationFocus(bool hasFocus) => base.OnApplicationFocus(true);
+    /// <summary>
+    /// Workaround for EventSystem bug https://trello.com/c/PjW4j3st
+    /// </summary>
+    public class WebEventSystem : EventSystem
+    {
+        protected override void OnApplicationFocus(bool hasFocus) => base.OnApplicationFocus(true);
+    }
 }
