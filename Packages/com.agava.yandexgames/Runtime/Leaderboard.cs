@@ -28,19 +28,19 @@ namespace YandexGames
         {
             s_onErrorCallback = onErrorCallback;
 
-            SetLeaderboardScore(score, leaderboardName, additionalData, OnErrorCallback);
+            SetLeaderboardScore(score, leaderboardName, additionalData, OnSetLeaderboardScoreErrorCallback);
         }
 
         [DllImport("__Internal")]
         private static extern void SetLeaderboardScore(int score, string leaderboardName, string additionalData, Action<IntPtr, int> errorCallback);
 
         [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
-        private static void OnErrorCallback(IntPtr errorMessageBufferPtr, int errorMessageBufferLength)
+        private static void OnSetLeaderboardScoreErrorCallback(IntPtr errorMessageBufferPtr, int errorMessageBufferLength)
         {
             string errorMessage = new StringBuffer(errorMessageBufferPtr, errorMessageBufferLength).ToString();
 
             if (YandexGamesSdk.CallbackLogging)
-                Debug.Log($"{nameof(Leaderboard)}.{nameof(OnErrorCallback)} invoked, errorMessage = {errorMessage}");
+                Debug.Log($"{nameof(Leaderboard)}.{nameof(OnSetLeaderboardScoreErrorCallback)} invoked, errorMessage = {errorMessage}");
 
             s_onErrorCallback?.Invoke(errorMessage);
         }
