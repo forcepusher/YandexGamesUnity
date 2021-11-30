@@ -35,8 +35,12 @@ public class WebInputModule : StandaloneInputModule
 
     public override void Process()
     {
+        Debug.Log($"Process 0 focused={eventSystem.isFocused} shouldIgnore={ShouldIgnoreEventsOnNoFocus()}");
+
         if (!eventSystem.isFocused && ShouldIgnoreEventsOnNoFocus())
             return;
+
+        Debug.Log("Process 1");
 
         bool usedEvent = SendUpdateEventToSelectedObject();
 
@@ -45,10 +49,15 @@ public class WebInputModule : StandaloneInputModule
 
         // touch needs to take precedence because of the mouse emulation layer
         if (!ProcessTouchEvents() && input.mousePresent)
+        {
+            Debug.Log("Process 2");
             ProcessMouseEvent();
+        }
 
         if (eventSystem.sendNavigationEvents)
         {
+            Debug.Log("Process 3");
+
             if (!usedEvent)
                 usedEvent |= SendMoveEventToSelectedObject();
 
@@ -59,12 +68,18 @@ public class WebInputModule : StandaloneInputModule
 
     private bool ProcessTouchEvents()
     {
+        Debug.Log("Real TouchCount=" + Input.touchCount + " Module TouchCount=" + input.touchCount);
+
         for (int i = 0; i < input.touchCount; ++i)
         {
+            Debug.Log("Touch 0");
+
             Touch touch = input.GetTouch(i);
 
             if (touch.type == TouchType.Indirect)
                 continue;
+
+            Debug.Log("Touch 1");
 
             bool released;
             bool pressed;
@@ -74,6 +89,8 @@ public class WebInputModule : StandaloneInputModule
 
             if (!released)
             {
+                Debug.Log("Touch 2");
+
                 ProcessMove(pointer);
                 ProcessDrag(pointer);
             }
