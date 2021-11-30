@@ -9,5 +9,12 @@ namespace YandexGames.Tests
         {
             Assert.IsTrue(Leaderboard.IsInitialized);
         }
+
+        [Test]
+        public void SetScoreShouldNotThrow()
+        {
+            Assert.DoesNotThrow(() => Leaderboard.SetScore(228));
+            Assert.DoesNotThrow(() => Leaderboard.SetScore(0, additionalData: "henlo"));
+        }
     }
 }

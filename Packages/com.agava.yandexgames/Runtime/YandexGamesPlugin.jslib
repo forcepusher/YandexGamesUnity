@@ -147,7 +147,7 @@ const library = {
 
   SetLeaderboardScore: function(score, leaderboardNamePtr, additionalDataPtr) {
     const leaderboardName = UTF8ToString(leaderboardNamePtr);
-    const additionalData = UTF8ToString(additionalDataPtr);
+    let additionalData = UTF8ToString(additionalDataPtr);
     if (additionalData.length === 0) { additionalData = undefined; }
     yandexGames.setLeaderboardScore(score, leaderboardName, additionalData);
   },
