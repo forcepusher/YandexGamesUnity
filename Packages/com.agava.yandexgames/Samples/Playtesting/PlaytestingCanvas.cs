@@ -49,5 +49,10 @@ namespace YandexGames.Samples
         {
             PlayerAccount.Authenticate(true);
         }
+
+        public void OnSetLeaderboardScoreButtonClick()
+        {
+            Leaderboard.SetScore(Random.Range(1, 100));
+        }
     }
 }
