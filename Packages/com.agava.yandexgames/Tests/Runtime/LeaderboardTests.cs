@@ -1,4 +1,7 @@
+using System.Collections;
 using NUnit.Framework;
+using UnityEngine;
+using UnityEngine.TestTools;
 
 namespace YandexGames.Tests
 {
@@ -15,6 +18,19 @@ namespace YandexGames.Tests
         {
             Assert.DoesNotThrow(() => Leaderboard.SetScore(228));
             Assert.DoesNotThrow(() => Leaderboard.SetScore(0, additionalData: "henlo"));
+        }
+
+        [UnityTest]
+        public IEnumerator SetScoreShouldInvokeErrorCallback()
+        {
+            bool callbackInvoked = false;
+            Leaderboard.SetScore(228, onErrorCallback: (message) => {
+                callbackInvoked = true;
+            });
+
+            yield return new WaitForSecondsRealtime(1);
+
+            Assert.IsTrue(callbackInvoked);
         }
     }
 }

@@ -99,8 +99,10 @@ const library = {
       });
     },
 
-    setLeaderboardScore: function(score, leaderboardName, additionalData) {
-      yandexGames.leaderboard.setLeaderboardScore(leaderboardName, score, additionalData);
+    setLeaderboardScore: function(score, leaderboardName, additionalData, errorCallbackPtr) {
+      yandexGames.leaderboard.setLeaderboardScore(leaderboardName, score, additionalData).catch(function (error) {
+        yandexGames.invokeErrorCallback(error, errorCallbackPtr);
+      });
     },
 
     invokeErrorCallback: function (error, errorCallbackPtr) {
