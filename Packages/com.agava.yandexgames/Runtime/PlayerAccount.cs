@@ -24,7 +24,7 @@ namespace YandexGames
         private static extern bool VerifyPlayerAccountAuthorization();
 
         /// <remarks>
-        /// Use <see cref="PlayerAccount.IsAuthorized"/> to avoid automatic authorization window popup.
+        /// Use <see cref="IsAuthorized"/> to avoid automatic authorization window popup.
         /// </remarks>
         public static void Authenticate(bool requestPermissions, Action onAuthenticatedCallback = null,
             Action<string> onErrorCallback = null)
