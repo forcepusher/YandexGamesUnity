@@ -52,7 +52,7 @@ namespace YandexGames.Samples
 
         public void OnSetLeaderboardScoreButtonClick()
         {
-            Leaderboard.SetScore(Random.Range(1, 100));
+            Leaderboard.SetScore("PlaytestBoard", Random.Range(1, 100));
         }
     }
 }

@@ -16,15 +16,15 @@ namespace YandexGames.Tests
         [Test]
         public void SetScoreShouldNotThrow()
         {
-            Assert.DoesNotThrow(() => Leaderboard.SetScore(228));
-            Assert.DoesNotThrow(() => Leaderboard.SetScore(0, additionalData: "henlo"));
+            Assert.DoesNotThrow(() => Leaderboard.SetScore("NonExistingBoard", 228));
+            Assert.DoesNotThrow(() => Leaderboard.SetScore("NonExistingBoard", 0, additionalData: "henlo"));
         }
 
         [UnityTest]
         public IEnumerator SetScoreShouldInvokeErrorCallback()
         {
             bool callbackInvoked = false;
-            Leaderboard.SetScore(228, onErrorCallback: (message) => {
+            Leaderboard.SetScore("NonExistingBoard", 228, onErrorCallback: (message) => {
                 callbackInvoked = true;
             });
 
