@@ -18,6 +18,9 @@ namespace YandexGames.Samples
         [SerializeField]
         private Text _debugText;
 
+        [SerializeField]
+        private StandaloneInputModule _standaloneInputModule;
+
         private void Awake()
         {
             YandexGamesSdk.CallbackLogging = true;
@@ -47,7 +50,9 @@ namespace YandexGames.Samples
             //if (Input.GetMouseButton(0))
             //    Debug.Log("MOUSE DOWN");
 
-            _debugText.text = EventSystem.current.ToString();
+            _debugText.text = _standaloneInputModule.ShouldActivateModule().ToString()
+                + "\n " + _standaloneInputModule.IsModuleSupported() + "\n " +
+                EventSystem.current.currentInputModule;
 
             _applicationAliveIndicator.Rotate(0f, 0f, -Time.unscaledDeltaTime * 100f);
         }
