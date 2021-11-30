@@ -1,10 +1,16 @@
+using System;
 using System.Runtime.InteropServices;
+using AOT;
+using UnityEngine;
+using YandexGames.Utility;
 
 namespace YandexGames
 {
     public static class Leaderboard
     {
         private const string DefaultName = "default-leaderboard";
+
+        private static Action<string> s_onErrorCallback;
 
         /// <summary>
         /// LeaderboardService is initialized automatically on load.
@@ -18,12 +24,25 @@ namespace YandexGames
         /// <remarks>
         /// Use <see cref="PlayerAccount.IsAuthorized"/> to avoid automatic authorization window popup.
         /// </remarks>
-        public static void SetScore(int score, string leaderboardName = DefaultName, string additionalData = "")
+        public static void SetScore(int score, string leaderboardName = DefaultName, string additionalData = "", Action<string> onErrorCallback = null)
         {
-            SetLeaderboardScore(score, leaderboardName, additionalData);
+            s_onErrorCallback = onErrorCallback;
+
+            SetLeaderboardScore(score, leaderboardName, additionalData, OnErrorCallback);
         }
 
         [DllImport("__Internal")]
-        private static extern void SetLeaderboardScore(int score, string leaderboardName, string additionalData);
+        private static extern void SetLeaderboardScore(int score, string leaderboardName, string additionalData, Action<IntPtr, int> errorCallback);
+
+        [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
+        private static void OnErrorCallback(IntPtr errorMessageBufferPtr, int errorMessageBufferLength)
+        {
+            string errorMessage = new StringBuffer(errorMessageBufferPtr, errorMessageBufferLength).ToString();
+
+            if (YandexGamesSdk.CallbackLogging)
+                Debug.Log($"{nameof(Leaderboard)}.{nameof(OnErrorCallback)} invoked, errorMessage = {errorMessage}");
+
+            s_onErrorCallback?.Invoke(errorMessage);
+        }
     }
 }

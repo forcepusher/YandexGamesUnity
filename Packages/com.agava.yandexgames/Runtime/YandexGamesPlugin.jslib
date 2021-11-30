@@ -42,7 +42,7 @@ const library = {
       return yandexGames.playerAccount !== undefined;
     },
 
-    authenticatePlayerAccount: function (requestPermissions, onAuthenticatedCallbackPtr, authenticationErrorCallbackPtr) {
+    authenticatePlayerAccount: function (requestPermissions, onAuthenticatedCallbackPtr, errorCallbackPtr) {
       function getPlayerAndInvokeCallback() {
         return yandexGames.sdk.getPlayer({ scopes: requestPermissions }).then(function (playerAccount) {
           yandexGames.playerAccount = playerAccount;
@@ -53,10 +53,10 @@ const library = {
       getPlayerAndInvokeCallback().catch(function () {
         yandexGames.sdk.auth.openAuthDialog().then(function () {
           getPlayerAndInvokeCallback().catch(function (error) {
-            yandexGames.invokeErrorCallback(error, authenticationErrorCallbackPtr);
+            yandexGames.invokeErrorCallback(error, errorCallbackPtr);
           });
         }).catch(function (error) {
-          yandexGames.invokeErrorCallback(error, authenticationErrorCallbackPtr);
+          yandexGames.invokeErrorCallback(error, errorCallbackPtr);
         });
       });
     },
@@ -132,9 +132,9 @@ const library = {
     return yandexGames.verifyPlayerAccountAuthorization();
   },
 
-  AuthenticatePlayerAccount: function (requestPermissions, onAuthenticatedCallbackPtr, authenticationErrorCallbackPtr) {
+  AuthenticatePlayerAccount: function (requestPermissions, onAuthenticatedCallbackPtr, errorCallbackPtr) {
     // Booleans are transferred as either 1 or 0, so using !! to convert them to true or false.
-    yandexGames.authenticatePlayerAccount(!!requestPermissions, onAuthenticatedCallbackPtr, authenticationErrorCallbackPtr);
+    yandexGames.authenticatePlayerAccount(!!requestPermissions, onAuthenticatedCallbackPtr, errorCallbackPtr);
   },
 
   ShowInterestialAd: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
@@ -145,11 +145,11 @@ const library = {
     yandexGames.showVideoAd(openCallbackPtr, rewardedCallbackPtr, closeCallbackPtr, errorCallbackPtr);
   },
 
-  SetLeaderboardScore: function(score, leaderboardNamePtr, additionalDataPtr) {
+  SetLeaderboardScore: function(score, leaderboardNamePtr, additionalDataPtr, errorCallbackPtr) {
     const leaderboardName = UTF8ToString(leaderboardNamePtr);
     var additionalData = UTF8ToString(additionalDataPtr);
     if (additionalData.length === 0) { additionalData = undefined; }
-    yandexGames.setLeaderboardScore(score, leaderboardName, additionalData);
+    yandexGames.setLeaderboardScore(score, leaderboardName, additionalData, errorCallbackPtr);
   },
 }
 
