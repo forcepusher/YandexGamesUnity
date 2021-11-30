@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 96017327}
   - component: {fileID: 96017329}
   - component: {fileID: 96017328}
+  - component: {fileID: 96017330}
   m_Layer: 5
   m_Name: ApplicationAliveIndicator
   m_TagString: Untagged
@@ -158,7 +159,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 20}
+  m_SizeDelta: {x: 80, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &96017328
 MonoBehaviour:
@@ -198,6 +199,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 96017326}
   m_CullTransparentMesh: 1
+--- !u!111 &96017330
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96017326}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: c7b4fc29ca628d94c9ed0dc2570cc0cd, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: c7b4fc29ca628d94c9ed0dc2570cc0cd, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &208934704
 GameObject:
   m_ObjectHideFlags: 0
@@ -1302,7 +1319,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isAuthorizedText: {fileID: 1717660117}
-  _applicationAliveIndicator: {fileID: 96017327}
 --- !u!114 &2102737977
 MonoBehaviour:
   m_ObjectHideFlags: 0

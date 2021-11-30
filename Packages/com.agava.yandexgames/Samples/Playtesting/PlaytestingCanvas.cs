@@ -12,9 +12,6 @@ namespace YandexGames.Samples
         [SerializeField]
         private Text _isAuthorizedText;
 
-        [SerializeField]
-        private RectTransform _applicationAliveIndicator;
-
         private void Awake()
         {
             YandexGamesSdk.CallbackLogging = true;
@@ -31,11 +28,6 @@ namespace YandexGames.Samples
                 _isAuthorizedText.color = PlayerAccount.IsAuthorized ? Color.green : Color.red;
                 yield return new WaitForSecondsRealtime(0.25f);
             }
-        }
-
-        public void Update()
-        {
-            _applicationAliveIndicator.Rotate(0f, 0f, -Time.unscaledDeltaTime * 100f);
         }
 
         public void OnShowInterestialButtonClick()
