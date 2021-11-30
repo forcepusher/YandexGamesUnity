@@ -2,6 +2,7 @@
 
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace YandexGames.Samples
@@ -47,6 +48,11 @@ namespace YandexGames.Samples
         public void OnAuthenticateWithPermissionsButtonClick()
         {
             PlayerAccount.Authenticate(true);
+        }
+
+        public void OnSetLeaderboardScoreButtonClick()
+        {
+            Leaderboard.SetScore("PlaytestBoard", Random.Range(1, 100));
         }
     }
 }

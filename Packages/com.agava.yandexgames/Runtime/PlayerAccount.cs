@@ -14,11 +14,18 @@ namespace YandexGames
         private static Action s_onAuthenticatedCallback;
         private static Action<string> s_onErrorCallback;
 
+        /// <summary>
+        /// Use this before calling SDK methods that require authorization,
+        /// so you can avoid unexpected authorization window popups.
+        /// </summary>
         public static bool IsAuthorized => VerifyPlayerAccountAuthorization();
 
         [DllImport("__Internal")]
         private static extern bool VerifyPlayerAccountAuthorization();
 
+        /// <remarks>
+        /// Use <see cref="PlayerAccount.IsAuthorized"/> to avoid automatic authorization window popup.
+        /// </remarks>
         public static void Authenticate(bool requestPermissions, Action onAuthenticatedCallback = null,
             Action<string> onErrorCallback = null)
         {
