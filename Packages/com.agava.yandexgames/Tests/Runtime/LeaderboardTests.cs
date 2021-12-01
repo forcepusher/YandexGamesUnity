@@ -7,8 +7,6 @@ namespace YandexGames.Tests
 {
     public class LeaderboardTests
     {
-        private const float InitializationTimeoutSeconds = 5;
-
         [UnitySetUp]
         public IEnumerator WaitForInitialization()
         {
