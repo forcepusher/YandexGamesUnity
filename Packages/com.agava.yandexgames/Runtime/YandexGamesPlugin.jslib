@@ -20,12 +20,7 @@ const library = {
 
           sdk.getLeaderboards().then(function (leaderboard) { yandexGames.leaderboard = leaderboard; });
 
-          // Cache the playerAccount immediately so it's ready for verifyPlayerAccountAuthorization call.
-          // This IS the intended way to check for player authorization, not even kidding:
-          // https://yandex.ru/dev/games/doc/dg/sdk/sdk-player.html#sdk-player__auth
-          sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
-            yandexGames.playerAccount = playerAccount;
-          }).catch(function () { });
+          yandexGames.authorizePlayerAccountIfNotAuthorized().catch(function () { });
         });
       }
     },
@@ -39,10 +34,12 @@ const library = {
     },
 
     verifyPlayerAccountAuthorization: function () {
+      // This IS the intended way to check for player authorization, not even kidding:
+      // https://yandex.ru/dev/games/doc/dg/sdk/sdk-player.html#sdk-player__auth
       return yandexGames.playerAccount !== undefined;
     },
 
-    authorizePlayerAccountIfNotAuthorized: function() {
+    authorizePlayerAccountIfNotAuthorized: function () {
       return new Promise(function (resolve, reject) {
         if (yandexGames.verifyPlayerAccountAuthorization()) {
           resolve(yandexGames.playerAccount);
@@ -118,7 +115,7 @@ const library = {
       });
     },
 
-    setLeaderboardScore: function(leaderboardName, score, additionalData, successCallbackPtr, errorCallbackPtr) {
+    setLeaderboardScore: function (leaderboardName, score, additionalData, successCallbackPtr, errorCallbackPtr) {
       yandexGames.leaderboard.setLeaderboardScore(leaderboardName, score, additionalData).then(function () {
         dynCall('v', successCallbackPtr, []);
       }).catch(function (error) {
@@ -168,7 +165,7 @@ const library = {
     yandexGames.showVideoAd(openCallbackPtr, rewardedCallbackPtr, closeCallbackPtr, errorCallbackPtr);
   },
 
-  SetLeaderboardScore: function(leaderboardNamePtr, score, additionalDataPtr, successCallbackPtr, errorCallbackPtr) {
+  SetLeaderboardScore: function (leaderboardNamePtr, score, additionalDataPtr, successCallbackPtr, errorCallbackPtr) {
     const leaderboardName = UTF8ToString(leaderboardNamePtr);
     var additionalData = UTF8ToString(additionalDataPtr);
     if (additionalData.length === 0) { additionalData = undefined; }
