@@ -8,7 +8,8 @@ namespace YandexGames
 {
     public static class Leaderboard
     {
-        private static Action<string> s_onErrorCallback;
+        private static Action s_onSetScoreSuccessCallback;
+        private static Action<string> s_onSetScoreErrorCallback;
 
         /// <summary>
         /// LeaderboardService is initialized automatically on load.
@@ -22,15 +23,25 @@ namespace YandexGames
         /// <remarks>
         /// Use <see cref="PlayerAccount.IsAuthorized"/> to avoid automatic authorization window popup.
         /// </remarks>
-        public static void SetScore(string leaderboardName, int score, string additionalData = "", Action<string> onErrorCallback = null)
+        public static void SetScore(string leaderboardName, int score, string additionalData = "", Action onSuccessCallback = null, Action<string> onErrorCallback = null)
         {
-            s_onErrorCallback = onErrorCallback;
+            s_onSetScoreSuccessCallback = onSuccessCallback;
+            s_onSetScoreErrorCallback = onErrorCallback;
 
-            SetLeaderboardScore(leaderboardName, score, additionalData, OnSetLeaderboardScoreErrorCallback);
+            SetLeaderboardScore(leaderboardName, score, additionalData, OnSetLeaderboardScoreSuccessCallback, OnSetLeaderboardScoreErrorCallback);
         }
 
         [DllImport("__Internal")]
-        private static extern void SetLeaderboardScore(string leaderboardName, int score, string additionalData, Action<IntPtr, int> errorCallback);
+        private static extern void SetLeaderboardScore(string leaderboardName, int score, string additionalData, Action successCallback, Action<IntPtr, int> errorCallback);
+
+        [MonoPInvokeCallback(typeof(Action))]
+        private static void OnSetLeaderboardScoreSuccessCallback()
+        {
+            if (YandexGamesSdk.CallbackLogging)
+                Debug.Log($"{nameof(Leaderboard)}.{nameof(OnSetLeaderboardScoreSuccessCallback)} invoked");
+
+            s_onSetScoreSuccessCallback?.Invoke();
+        }
 
         [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
         private static void OnSetLeaderboardScoreErrorCallback(IntPtr errorMessageBufferPtr, int errorMessageBufferLength)
@@ -40,7 +51,7 @@ namespace YandexGames
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(Leaderboard)}.{nameof(OnSetLeaderboardScoreErrorCallback)} invoked, errorMessage = {errorMessage}");
 
-            s_onErrorCallback?.Invoke(errorMessage);
+            s_onSetScoreErrorCallback?.Invoke(errorMessage);
         }
     }
 }
