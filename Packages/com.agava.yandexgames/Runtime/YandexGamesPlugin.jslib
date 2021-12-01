@@ -42,6 +42,18 @@ const library = {
       return yandexGames.playerAccount !== undefined;
     },
 
+    throwIfSdkNotInitialized: function () {
+      if (!yandexGames.verifySdkInitialization()) {
+        throw new Error('SDK was not fast enough to initialize. Use YandexGamesSdk.IsInitialized or WaitForInitialization.');
+      }
+    },
+
+    throwIfLeaderboardNotInitialized: function () {
+      if (!yandexGames.verifyLeaderboardInitialization()) {
+        throw new Error('Leaderboard was not fast enough to initialize. Use Leaderboard.IsInitialized or WaitForInitialization.');
+      }
+    },
+
     authorizePlayerAccountIfNotAuthorized: function () {
       return new Promise(function (resolve, reject) {
         if (yandexGames.verifyPlayerAccountAuthorization()) {
@@ -62,6 +74,8 @@ const library = {
     },
 
     authenticatePlayerAccount: function (requestPermissions, onAuthenticatedCallbackPtr, errorCallbackPtr) {
+      yandexGames.throwIfSdkNotInitialized();
+
       yandexGames.authorizePlayerAccountIfNotAuthorized().then(function () {
         yandexGames.sdk.getPlayer({ scopes: requestPermissions }).then(function (playerAccount) {
           yandexGames.playerAccount = playerAccount;
@@ -76,6 +90,8 @@ const library = {
     },
 
     showInterestialAd: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
+      yandexGames.throwIfSdkNotInitialized();
+
       yandexGames.sdk.adv.showFullscreenAdv({
         callbacks: {
           onOpen: function () {
@@ -95,6 +111,8 @@ const library = {
     },
 
     showVideoAd: function (openCallbackPtr, rewardedCallbackPtr, closeCallbackPtr, errorCallbackPtr) {
+      yandexGames.throwIfSdkNotInitialized();
+
       yandexGames.sdk.adv.showRewardedVideo({
         callbacks: {
           onOpen: function () {
@@ -114,6 +132,8 @@ const library = {
     },
 
     setLeaderboardScore: function (leaderboardName, score, additionalData, successCallbackPtr, errorCallbackPtr) {
+      yandexGames.throwIfLeaderboardNotInitialized();
+
       yandexGames.authorizePlayerAccountIfNotAuthorized().then(function () {
         yandexGames.leaderboard.setLeaderboardScore(leaderboardName, score, additionalData).then(function () {
           dynCall('v', successCallbackPtr, []);
