@@ -42,6 +42,25 @@ const library = {
       return yandexGames.playerAccount !== undefined;
     },
 
+    authorizePlayerAccountIfNotAuthorized: function() {
+      return new Promise(function (resolve, reject) {
+        if (yandexGames.verifyPlayerAccountAuthorization()) {
+          resolve(yandexGames.playerAccount);
+        } else {
+          yandexGames.sdk.auth.openAuthDialog().then(function () {
+            yandexGames.sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
+              yandexGames.playerAccount = playerAccount;
+              resolve(playerAccount);
+            }).catch(function (error) {
+              reject(error);
+            });
+          }).catch(function (error) {
+            reject(error);
+          });
+        }
+      });
+    },
+
     authenticatePlayerAccount: function (requestPermissions, onAuthenticatedCallbackPtr, errorCallbackPtr) {
       function getPlayerAndInvokeCallback() {
         return yandexGames.sdk.getPlayer({ scopes: requestPermissions }).then(function (playerAccount) {
