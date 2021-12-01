@@ -7,6 +7,12 @@ namespace YandexGames.Tests
 {
     public class InterestialAdTests
     {
+        [UnitySetUp]
+        public IEnumerator WaitForSdkInitialization()
+        {
+            yield return YandexGamesSdk.WaitForInitialization();
+        }
+
         [UnityTest]
         public IEnumerator ShowShouldInvokeErrorCallback()
         {
