@@ -59,22 +59,34 @@ const library = {
     },
 
     authenticatePlayerAccount: function (requestPermissions, onAuthenticatedCallbackPtr, errorCallbackPtr) {
-      function getPlayerAndInvokeCallback() {
-        return yandexGames.sdk.getPlayer({ scopes: requestPermissions }).then(function (playerAccount) {
+      yandexGames.authorizePlayerAccountIfNotAuthorized().then(function () {
+        yandexGames.sdk.getPlayer({ scopes: requestPermissions }).then(function (playerAccount) {
           yandexGames.playerAccount = playerAccount;
+          // TODO: It should return player profile in the callback.
           dynCall('v', onAuthenticatedCallbackPtr, []);
-        });
-      }
-
-      getPlayerAndInvokeCallback().catch(function () {
-        yandexGames.sdk.auth.openAuthDialog().then(function () {
-          getPlayerAndInvokeCallback().catch(function (error) {
-            yandexGames.invokeErrorCallback(error, errorCallbackPtr);
-          });
         }).catch(function (error) {
           yandexGames.invokeErrorCallback(error, errorCallbackPtr);
         });
+      }).catch(function (error) {
+        yandexGames.invokeErrorCallback(error, errorCallbackPtr);
       });
+
+      // function getPlayerAndInvokeCallback() {
+      //   return yandexGames.sdk.getPlayer({ scopes: requestPermissions }).then(function (playerAccount) {
+      //     yandexGames.playerAccount = playerAccount;
+      //     dynCall('v', onAuthenticatedCallbackPtr, []);
+      //   });
+      // }
+
+      // getPlayerAndInvokeCallback().catch(function () {
+      //   yandexGames.sdk.auth.openAuthDialog().then(function () {
+      //     getPlayerAndInvokeCallback().catch(function (error) {
+      //       yandexGames.invokeErrorCallback(error, errorCallbackPtr);
+      //     });
+      //   }).catch(function (error) {
+      //     yandexGames.invokeErrorCallback(error, errorCallbackPtr);
+      //   });
+      // });
     },
 
     showInterestialAd: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
@@ -116,8 +128,12 @@ const library = {
     },
 
     setLeaderboardScore: function (leaderboardName, score, additionalData, successCallbackPtr, errorCallbackPtr) {
-      yandexGames.leaderboard.setLeaderboardScore(leaderboardName, score, additionalData).then(function () {
-        dynCall('v', successCallbackPtr, []);
+      yandexGames.authorizePlayerAccountIfNotAuthorized().then(function () {
+        yandexGames.leaderboard.setLeaderboardScore(leaderboardName, score, additionalData).then(function () {
+          dynCall('v', successCallbackPtr, []);
+        }).catch(function (error) {
+          yandexGames.invokeErrorCallback(error, errorCallbackPtr);
+        });
       }).catch(function (error) {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
       });
