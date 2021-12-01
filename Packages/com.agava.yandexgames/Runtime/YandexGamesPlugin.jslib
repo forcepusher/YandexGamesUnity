@@ -73,23 +73,6 @@ const library = {
       }).catch(function (error) {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
       });
-
-      // function getPlayerAndInvokeCallback() {
-      //   return yandexGames.sdk.getPlayer({ scopes: requestPermissions }).then(function (playerAccount) {
-      //     yandexGames.playerAccount = playerAccount;
-      //     dynCall('v', onAuthenticatedCallbackPtr, []);
-      //   });
-      // }
-
-      // getPlayerAndInvokeCallback().catch(function () {
-      //   yandexGames.sdk.auth.openAuthDialog().then(function () {
-      //     getPlayerAndInvokeCallback().catch(function (error) {
-      //       yandexGames.invokeErrorCallback(error, errorCallbackPtr);
-      //     });
-      //   }).catch(function (error) {
-      //     yandexGames.invokeErrorCallback(error, errorCallbackPtr);
-      //   });
-      // });
     },
 
     showInterestialAd: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
