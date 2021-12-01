@@ -7,6 +7,12 @@ namespace YandexGames.Tests
 {
     public class PlayerAccountTests
     {
+        [UnitySetUp]
+        public IEnumerator WaitForSdkInitialization()
+        {
+            yield return YandexGamesSdk.WaitForInitialization();
+        }
+
         [Test]
         public void ShouldNotBeAuthorizedOnStart()
         {
