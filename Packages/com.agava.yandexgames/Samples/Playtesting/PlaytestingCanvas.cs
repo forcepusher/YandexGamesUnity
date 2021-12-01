@@ -23,6 +23,16 @@ namespace YandexGames.Samples
             yield break;
 #endif
 
+            // Always wait for it if invoking something immediately in the first scene.
+            yield return YandexGamesSdk.WaitForInitialization();
+
+            // Avoid unexpected authorization window popup that will freak out the user.
+            if (PlayerAccount.IsAuthorized)
+            {
+                // Authenticate silently without requesting photo and real name permissions.
+                PlayerAccount.Authenticate(false);
+            }
+
             while (true)
             {
                 _isAuthorizedText.color = PlayerAccount.IsAuthorized ? Color.green : Color.red;
