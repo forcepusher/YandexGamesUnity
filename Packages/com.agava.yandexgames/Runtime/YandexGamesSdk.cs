@@ -25,15 +25,6 @@ namespace YandexGames
         private static extern bool Initialize();
 
         /// <summary>
-        /// Coroutine waiting for <see cref="IsInitialized"/> to return true.
-        /// </summary>
-        public static IEnumerator WaitForInitialization()
-        {
-            while (!IsInitialized)
-                yield return null;
-        }
-
-        /// <summary>
         /// Leaderboard is initialized automatically on load.
         /// If either something fails or called way too early, this will return false.
         /// </summary>
@@ -41,5 +32,14 @@ namespace YandexGames
 
         [DllImport("__Internal")]
         private static extern bool VerifySdkInitialization();
+
+        /// <summary>
+        /// Coroutine waiting for <see cref="IsInitialized"/> to return true.
+        /// </summary>
+        public static IEnumerator WaitForInitialization()
+        {
+            while (!IsInitialized)
+                yield return null;
+        }
     }
 }

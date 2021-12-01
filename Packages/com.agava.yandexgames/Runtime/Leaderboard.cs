@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Runtime.InteropServices;
 using AOT;
 using UnityEngine;
@@ -19,6 +20,15 @@ namespace YandexGames
         
         [DllImport("__Internal")]
         private static extern bool VerifyLeaderboardInitialization();
+
+        /// <summary>
+        /// Coroutine waiting for <see cref="IsInitialized"/> to return true.
+        /// </summary>
+        public static IEnumerator WaitForInitialization()
+        {
+            while (!IsInitialized)
+                yield return null;
+        }
 
         /// <remarks>
         /// Use <see cref="PlayerAccount.IsAuthorized"/> to avoid automatic authorization window popup.
