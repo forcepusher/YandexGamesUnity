@@ -24,7 +24,8 @@ namespace YandexGames.Tests
         public IEnumerator SetScoreShouldInvokeErrorCallback()
         {
             bool callbackInvoked = false;
-            Leaderboard.SetScore("NonExistingBoard", 228, onErrorCallback: (message) => {
+            Leaderboard.SetScore("NonExistingBoard", 228, onErrorCallback: (message) =>
+            {
                 callbackInvoked = true;
             });
 

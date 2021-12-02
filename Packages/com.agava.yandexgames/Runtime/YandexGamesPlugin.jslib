@@ -131,7 +131,7 @@ const library = {
       });
     },
 
-    setLeaderboardScore: function (leaderboardName, score, additionalData, successCallbackPtr, errorCallbackPtr) {
+    setLeaderboardScore: function (leaderboardName, score, successCallbackPtr, errorCallbackPtr, additionalData) {
       yandexGames.throwIfLeaderboardNotInitialized();
 
       yandexGames.authorizePlayerAccountIfNotAuthorized().then(function () {
@@ -187,11 +187,11 @@ const library = {
     yandexGames.showVideoAd(openCallbackPtr, rewardedCallbackPtr, closeCallbackPtr, errorCallbackPtr);
   },
 
-  SetLeaderboardScore: function (leaderboardNamePtr, score, additionalDataPtr, successCallbackPtr, errorCallbackPtr) {
+  SetLeaderboardScore: function (leaderboardNamePtr, score, successCallbackPtr, errorCallbackPtr, additionalDataPtr) {
     const leaderboardName = UTF8ToString(leaderboardNamePtr);
     var additionalData = UTF8ToString(additionalDataPtr);
     if (additionalData.length === 0) { additionalData = undefined; }
-    yandexGames.setLeaderboardScore(leaderboardName, score, additionalData, successCallbackPtr, errorCallbackPtr);
+    yandexGames.setLeaderboardScore(leaderboardName, score, successCallbackPtr, errorCallbackPtr, additionalData);
   },
 }
 

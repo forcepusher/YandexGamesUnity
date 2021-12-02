@@ -39,16 +39,16 @@ namespace YandexGames
         /// <remarks>
         /// Use <see cref="PlayerAccount.IsAuthorized"/> to avoid automatic authorization window popup.
         /// </remarks>
-        public static void SetScore(string leaderboardName, int score, string additionalData = "", Action onSuccessCallback = null, Action<string> onErrorCallback = null)
+        public static void SetScore(string leaderboardName, int score, Action onSuccessCallback = null, Action<string> onErrorCallback = null, string additionalData = "")
         {
             s_onSetScoreSuccessCallback = onSuccessCallback;
             s_onSetScoreErrorCallback = onErrorCallback;
 
-            SetLeaderboardScore(leaderboardName, score, additionalData, OnSetLeaderboardScoreSuccessCallback, OnSetLeaderboardScoreErrorCallback);
+            SetLeaderboardScore(leaderboardName, score, OnSetLeaderboardScoreSuccessCallback, OnSetLeaderboardScoreErrorCallback, additionalData);
         }
 
         [DllImport("__Internal")]
-        private static extern void SetLeaderboardScore(string leaderboardName, int score, string additionalData, Action successCallback, Action<IntPtr, int> errorCallback);
+        private static extern void SetLeaderboardScore(string leaderboardName, int score, Action successCallback, Action<IntPtr, int> errorCallback, string additionalData);
 
         [MonoPInvokeCallback(typeof(Action))]
         private static void OnSetLeaderboardScoreSuccessCallback()
