@@ -53,7 +53,7 @@ namespace YandexGames
         [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
         private static void OnErrorCallback(IntPtr errorMessageBufferPtr, int errorMessageBufferLength)
         {
-            string errorMessage = new StringBuffer(errorMessageBufferPtr, errorMessageBufferLength).ToString();
+            string errorMessage = new UnmanagedString(errorMessageBufferPtr, errorMessageBufferLength).ToString();
 
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(InterestialAd)}.{nameof(OnErrorCallback)} invoked, errorMessage = {errorMessage}");

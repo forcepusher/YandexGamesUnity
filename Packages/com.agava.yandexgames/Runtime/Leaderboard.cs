@@ -62,7 +62,7 @@ namespace YandexGames
         [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
         private static void OnSetLeaderboardScoreErrorCallback(IntPtr errorMessageBufferPtr, int errorMessageBufferLength)
         {
-            string errorMessage = new StringBuffer(errorMessageBufferPtr, errorMessageBufferLength).ToString();
+            string errorMessage = new UnmanagedString(errorMessageBufferPtr, errorMessageBufferLength).ToString();
 
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(Leaderboard)}.{nameof(OnSetLeaderboardScoreErrorCallback)} invoked, errorMessage = {errorMessage}");
@@ -95,7 +95,7 @@ namespace YandexGames
         [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
         private static void OnGetLeaderboardEntriesErrorCallback(IntPtr errorMessageBufferPtr, int errorMessageBufferLength)
         {
-            string errorMessage = new StringBuffer(errorMessageBufferPtr, errorMessageBufferLength).ToString();
+            string errorMessage = new UnmanagedString(errorMessageBufferPtr, errorMessageBufferLength).ToString();
 
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(Leaderboard)}.{nameof(OnGetLeaderboardEntriesErrorCallback)} invoked, errorMessage = {errorMessage}");
