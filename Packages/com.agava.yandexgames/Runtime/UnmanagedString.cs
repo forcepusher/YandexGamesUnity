@@ -4,7 +4,7 @@ using System.Text;
 
 namespace YandexGames.Utility
 {
-    public class UnmanagedString
+    public struct UnmanagedString
     {
         private readonly IntPtr _bufferPtr;
         private readonly int _bufferLength;
