@@ -145,6 +145,20 @@ const library = {
       });
     },
 
+    getLeaderboardEntries: function (leaderboardName, successCallbackPtr, errorCallbackPtr, topPlayersCount, competingPlayersCount, includeSelf) {
+      yandexGames.throwIfLeaderboardNotInitialized();
+
+      // yandexGames.authorizePlayerAccountIfNotAuthorized().then(function () {
+      //   yandexGames.leaderboard.setLeaderboardScore(leaderboardName, score, additionalData).then(function () {
+      //     dynCall('v', successCallbackPtr, []);
+      //   }).catch(function (error) {
+      //     yandexGames.invokeErrorCallback(error, errorCallbackPtr);
+      //   });
+      // }).catch(function (error) {
+      //   yandexGames.invokeErrorCallback(error, errorCallbackPtr);
+      // });
+    },
+
     invokeErrorCallback: function (error, errorCallbackPtr) {
       const errorMessage = error.message;
       const errorMessageBufferSize = lengthBytesUTF8(errorMessage) + 1;
@@ -176,7 +190,8 @@ const library = {
 
   AuthenticatePlayerAccount: function (requestPermissions, onAuthenticatedCallbackPtr, errorCallbackPtr) {
     // Booleans are transferred as either 1 or 0, so using !! to convert them to true or false.
-    yandexGames.authenticatePlayerAccount(!!requestPermissions, onAuthenticatedCallbackPtr, errorCallbackPtr);
+    requestPermissions = !!requestPermissions;
+    yandexGames.authenticatePlayerAccount(requestPermissions, onAuthenticatedCallbackPtr, errorCallbackPtr);
   },
 
   ShowInterestialAd: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
@@ -192,6 +207,12 @@ const library = {
     var additionalData = UTF8ToString(additionalDataPtr);
     if (additionalData.length === 0) { additionalData = undefined; }
     yandexGames.setLeaderboardScore(leaderboardName, score, successCallbackPtr, errorCallbackPtr, additionalData);
+  },
+
+  GetLeaderboardEntries: function (leaderboardNamePtr, successCallbackPtr, errorCallbackPtr, topPlayersCount, competingPlayersCount, includeSelf) {
+    const leaderboardName = UTF8ToString(leaderboardNamePtr);
+    includeSelf = !!includeSelf;
+    yandexGames.getLeaderboardEntries(leaderboardName, successCallbackPtr, errorCallbackPtr, topPlayersCount, competingPlayersCount, includeSelf);
   },
 }
 
