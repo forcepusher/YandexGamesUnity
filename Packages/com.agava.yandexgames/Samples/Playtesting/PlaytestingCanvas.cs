@@ -70,7 +70,6 @@ namespace YandexGames.Samples
             Leaderboard.GetEntries("PlaytestBoard", onSuccessCallback: (resultJson) =>
             {
                 // Parse it and use it :D I will parse it myself later.
-                Debug.Log(resultJson);
             });
         }
     }
