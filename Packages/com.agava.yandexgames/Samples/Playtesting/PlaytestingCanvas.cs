@@ -64,5 +64,10 @@ namespace YandexGames.Samples
         {
             Leaderboard.SetScore("PlaytestBoard", Random.Range(1, 100));
         }
+
+        public void OnGetLeaderboardEntriesButtonClick()
+        {
+            Leaderboard.GetEntries("PlaytestBoard");
+        }
     }
 }
