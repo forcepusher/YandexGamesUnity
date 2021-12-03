@@ -45,7 +45,7 @@ namespace YandexGames
         private static void OnCloseCallback(bool wasShown)
         {
             if (YandexGamesSdk.CallbackLogging)
-                Debug.Log($"{nameof(InterestialAd)}.{nameof(OnCloseCallback)} invoked, wasShown = {wasShown}");
+                Debug.Log($"{nameof(InterestialAd)}.{nameof(OnCloseCallback)} invoked, {nameof(wasShown)} = {wasShown}");
 
             s_onCloseCallback?.Invoke(wasShown);
         }
@@ -56,7 +56,7 @@ namespace YandexGames
             string errorMessage = new UnmanagedString(errorMessageBufferPtr, errorMessageBufferLength).ToString();
 
             if (YandexGamesSdk.CallbackLogging)
-                Debug.Log($"{nameof(InterestialAd)}.{nameof(OnErrorCallback)} invoked, errorMessage = {errorMessage}");
+                Debug.Log($"{nameof(InterestialAd)}.{nameof(OnErrorCallback)} invoked, {nameof(errorMessage)} = {errorMessage}");
 
             s_onErrorCallback?.Invoke(errorMessage);
         }

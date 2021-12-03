@@ -65,7 +65,7 @@ namespace YandexGames
             string errorMessage = new UnmanagedString(errorMessageBufferPtr, errorMessageBufferLength).ToString();
 
             if (YandexGamesSdk.CallbackLogging)
-                Debug.Log($"{nameof(VideoAd)}.{nameof(OnErrorCallback)} invoked, errorMessage = {errorMessage}");
+                Debug.Log($"{nameof(VideoAd)}.{nameof(OnErrorCallback)} invoked, {nameof(errorMessage)} = {errorMessage}");
 
             s_onErrorCallback?.Invoke(errorMessage);
         }
