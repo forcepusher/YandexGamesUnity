@@ -151,9 +151,14 @@ const library = {
       yandexGames.authorizePlayerAccountIfNotAuthorized().then(function () {
         yandexGames.leaderboard.getLeaderboardEntries(leaderboardName, {
           includeUser: includeSelf, quantityAround: competingPlayersCount, quantityTop: topPlayersCount
-        }).then(function () {
-          // TODO: Return the actual entries
-          dynCall('v', successCallbackPtr, []);
+        }).then(function (response) {
+          // TODO: This is repetitive code. Make a class.
+          const entriesMessage = response;
+          const entriesMessageBufferSize = lengthBytesUTF8(entriesMessage) + 1;
+          const entriesMessageBufferPtr = _malloc(entriesMessageBufferSize);
+          stringToUTF8(entriesMessage, entriesMessageBufferPtr, entriesMessageBufferSize);
+          dynCall('vii', successCallbackPtr, [entriesMessageBufferPtr, entriesMessageBufferSize]);
+          _free(entriesMessageBufferPtr);
         }).catch(function (error) {
           yandexGames.invokeErrorCallback(error, errorCallbackPtr);
         });

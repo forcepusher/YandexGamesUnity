@@ -12,7 +12,7 @@ namespace YandexGames
         // This is what we deserve for using Unity.
         private static Action s_onSetScoreSuccessCallback;
         private static Action<string> s_onSetScoreErrorCallback;
-        private static Action s_onGetEntriesSuccessCallback;
+        private static Action<string> s_onGetEntriesSuccessCallback;
         private static Action<string> s_onGetEntriesErrorCallback;
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace YandexGames
         #endregion
 
         #region GetEntries
-        public static void GetEntries(string leaderboardName, Action onSuccessCallback = null, Action<string> onErrorCallback = null, int topPlayersCount = 5, int competingPlayersCount = 5, bool includeSelf = true)
+        public static void GetEntries(string leaderboardName, Action<string> onSuccessCallback = null, Action<string> onErrorCallback = null, int topPlayersCount = 5, int competingPlayersCount = 5, bool includeSelf = true)
         {
             s_onGetEntriesSuccessCallback = onSuccessCallback;
             s_onGetEntriesErrorCallback = onErrorCallback;
@@ -81,15 +81,17 @@ namespace YandexGames
         }
 
         [DllImport("__Internal")]
-        private static extern void GetLeaderboardEntries(string leaderboardName, Action successCallback, Action<IntPtr, int> errorCallback, int topPlayersCount, int competingPlayersCount, bool includeSelf);
+        private static extern void GetLeaderboardEntries(string leaderboardName, Action<IntPtr, int> successCallback, Action<IntPtr, int> errorCallback, int topPlayersCount, int competingPlayersCount, bool includeSelf);
 
-        [MonoPInvokeCallback(typeof(Action))]
-        private static void OnGetLeaderboardEntriesSuccessCallback()
+        [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
+        private static void OnGetLeaderboardEntriesSuccessCallback(IntPtr entriesMessageBufferPtr, int entriesMessageBufferLength)
         {
-            if (YandexGamesSdk.CallbackLogging)
-                Debug.Log($"{nameof(Leaderboard)}.{nameof(OnGetLeaderboardEntriesSuccessCallback)} invoked");
+            string entriesMessage = new UnmanagedString(entriesMessageBufferPtr, entriesMessageBufferLength).ToString();
 
-            s_onGetEntriesSuccessCallback?.Invoke();
+            if (YandexGamesSdk.CallbackLogging)
+                Debug.Log($"{nameof(Leaderboard)}.{nameof(OnGetLeaderboardEntriesSuccessCallback)} invoked, {nameof(entriesMessage)} = {entriesMessage}");
+
+            s_onGetEntriesSuccessCallback?.Invoke(entriesMessage);
         }
 
         [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
@@ -98,7 +100,7 @@ namespace YandexGames
             string errorMessage = new UnmanagedString(errorMessageBufferPtr, errorMessageBufferLength).ToString();
 
             if (YandexGamesSdk.CallbackLogging)
-                Debug.Log($"{nameof(Leaderboard)}.{nameof(OnGetLeaderboardEntriesErrorCallback)} invoked, errorMessage = {errorMessage}");
+                Debug.Log($"{nameof(Leaderboard)}.{nameof(OnGetLeaderboardEntriesErrorCallback)} invoked, {nameof(errorMessage)} = {errorMessage}");
 
             s_onGetEntriesErrorCallback?.Invoke(errorMessage);
         }
