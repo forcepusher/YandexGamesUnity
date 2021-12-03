@@ -153,7 +153,7 @@ const library = {
           includeUser: includeSelf, quantityAround: competingPlayersCount, quantityTop: topPlayersCount
         }).then(function (response) {
           // TODO: This is repetitive code. Make a class.
-          const entriesMessage = response;
+          const entriesMessage = JSON.stringify(response);
           const entriesMessageBufferSize = lengthBytesUTF8(entriesMessage) + 1;
           const entriesMessageBufferPtr = _malloc(entriesMessageBufferSize);
           stringToUTF8(entriesMessage, entriesMessageBufferPtr, entriesMessageBufferSize);

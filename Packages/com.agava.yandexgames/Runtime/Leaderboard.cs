@@ -72,6 +72,9 @@ namespace YandexGames
         #endregion
 
         #region GetEntries
+        /// <summary>
+        /// Returns result JSON as a string in onSuccessCallback, for now.
+        /// </summary>
         public static void GetEntries(string leaderboardName, Action<string> onSuccessCallback = null, Action<string> onErrorCallback = null, int topPlayersCount = 5, int competingPlayersCount = 5, bool includeSelf = true)
         {
             s_onGetEntriesSuccessCallback = onSuccessCallback;
