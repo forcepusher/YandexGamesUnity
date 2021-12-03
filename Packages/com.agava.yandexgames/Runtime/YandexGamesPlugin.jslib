@@ -148,15 +148,18 @@ const library = {
     getLeaderboardEntries: function (leaderboardName, successCallbackPtr, errorCallbackPtr, topPlayersCount, competingPlayersCount, includeSelf) {
       yandexGames.throwIfLeaderboardNotInitialized();
 
-      // yandexGames.authorizePlayerAccountIfNotAuthorized().then(function () {
-      //   yandexGames.leaderboard.setLeaderboardScore(leaderboardName, score, additionalData).then(function () {
-      //     dynCall('v', successCallbackPtr, []);
-      //   }).catch(function (error) {
-      //     yandexGames.invokeErrorCallback(error, errorCallbackPtr);
-      //   });
-      // }).catch(function (error) {
-      //   yandexGames.invokeErrorCallback(error, errorCallbackPtr);
-      // });
+      yandexGames.authorizePlayerAccountIfNotAuthorized().then(function () {
+        yandexGames.leaderboard.getLeaderboardEntries(leaderboardName, {
+          includeUser: includeSelf, quantityAround: competingPlayersCount, quantityTop: topPlayersCount
+        }).then(function () {
+          // TODO: Return the actual entries
+          dynCall('v', successCallbackPtr, []);
+        }).catch(function (error) {
+          yandexGames.invokeErrorCallback(error, errorCallbackPtr);
+        });
+      }).catch(function (error) {
+        yandexGames.invokeErrorCallback(error, errorCallbackPtr);
+      });
     },
 
     invokeErrorCallback: function (error, errorCallbackPtr) {

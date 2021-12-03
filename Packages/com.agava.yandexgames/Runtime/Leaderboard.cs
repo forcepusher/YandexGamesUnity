@@ -89,7 +89,7 @@ namespace YandexGames
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(Leaderboard)}.{nameof(OnGetLeaderboardEntriesSuccessCallback)} invoked");
 
-            s_onSetScoreSuccessCallback?.Invoke();
+            s_onGetEntriesSuccessCallback?.Invoke();
         }
 
         [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
@@ -100,7 +100,7 @@ namespace YandexGames
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(Leaderboard)}.{nameof(OnGetLeaderboardEntriesErrorCallback)} invoked, errorMessage = {errorMessage}");
 
-            s_onSetScoreErrorCallback?.Invoke(errorMessage);
+            s_onGetEntriesErrorCallback?.Invoke(errorMessage);
         }
         #endregion
     }

@@ -33,5 +33,19 @@ namespace YandexGames.Tests
 
             Assert.IsTrue(callbackInvoked);
         }
+
+        [UnityTest]
+        public IEnumerator GetEntriesShouldInvokeErrorCallback()
+        {
+            bool callbackInvoked = false;
+            Leaderboard.GetEntries("NonExistingBoard", onErrorCallback: (message) =>
+            {
+                callbackInvoked = true;
+            });
+
+            yield return new WaitForSecondsRealtime(1);
+
+            Assert.IsTrue(callbackInvoked);
+        }
     }
 }
