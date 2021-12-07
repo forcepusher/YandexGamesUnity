@@ -9,8 +9,17 @@ namespace YandexGames
         [field: Preserve]
         public LeaderboardDescriptionResponse leaderboard;
         [field: Preserve]
-        public LeaderboardRangeResponse[] range;
+        public Range[] ranges;
         [field: Preserve]
         public int userRank;
+    }
+
+    [Serializable]
+    public class Range
+    {
+        [field: Preserve]
+        public int start;
+        [field: Preserve]
+        public int size;
     }
 }
