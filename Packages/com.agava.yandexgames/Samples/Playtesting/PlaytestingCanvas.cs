@@ -24,7 +24,9 @@ namespace YandexGames.Samples
             responseSampleJson = responseSampleJson.Replace(@"""default"":true,", "");
 
             LeaderboardGetEntriesResponse responseSample = JsonUtility.FromJson<LeaderboardGetEntriesResponse>(responseSampleJson);
+            Debug.Log(responseSampleJson);
             Debug.Log(JsonUtility.ToJson(responseSample));
+            Debug.Log(JsonUtility.ToJson(responseSample) == responseSampleJson);
 
 #if !UNITY_WEBGL || UNITY_EDITOR
             yield break;
@@ -74,10 +76,14 @@ namespace YandexGames.Samples
 
         public void OnGetLeaderboardEntriesButtonClick()
         {
-            Leaderboard.GetEntries("PlaytestBoard", (resultJson) =>
+            Leaderboard.GetEntries("PlaytestBoard", (result) =>
             {
-                // Parse it and use it :D
-                // I will parse it myself later.
+                // Use it
+                Debug.Log($"My rank = {result.userRank}");
+                foreach (var entry in result.entries)
+                {
+                    Debug.Log(entry.player.publicName + " " + entry.score);
+                }
             });
         }
     }

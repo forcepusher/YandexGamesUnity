@@ -48,6 +48,7 @@ namespace YandexGames.Tests
             Assert.IsTrue(callbackInvoked);
         }
 
+        /*
         [Test]
         public void GetEntriesResponseParsingShouldNotGiveCorruptResult()
         {
@@ -57,9 +58,9 @@ namespace YandexGames.Tests
             responseSampleJson = responseSampleJson.Replace(@"""default"":true,", "");
 
             LeaderboardGetEntriesResponse responseSample = JsonUtility.FromJson<LeaderboardGetEntriesResponse>(responseSampleJson);
-            //Debug.Log(responseSample.userRank);
             Debug.Log(JsonUtility.ToJson(responseSample));
-            // TODO: Parse it back to string and it should be equal to the initial string.
+            // TODO: Find a way to validate it. Inconsistent JSON order kills it.
         }
+        */
     }
 }
