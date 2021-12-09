@@ -20,10 +20,10 @@ namespace YandexGames.Tests
         }
 
         [UnityTest]
-        public IEnumerator AuthenticateShouldInvokeErrorCallback()
+        public IEnumerator GetProfileDataPermissionShouldInvokeErrorCallback()
         {
             bool callbackInvoked = false;
-            PlayerAccount.Authenticate(true, onErrorCallback: (message) => {
+            PlayerAccount.GetProfileDataPermission(onErrorCallback: (message) => {
                 callbackInvoked = true;
             });
 
