@@ -169,7 +169,7 @@ const library = {
 
     ensureAuthorization: function (errorCallbackPtr) {
       if (!yandexGames.verifyPlayerAccountAuthorization()) {
-        yandexGames.invokeErrorCallback('Needs authorization.', errorCallbackPtr);
+        yandexGames.invokeErrorCallback(new Error('Needs authorization.'), errorCallbackPtr);
         return false;
       }
       return true;
@@ -205,7 +205,7 @@ const library = {
   },
 
   GetProfileDataPermission: function (onSuccessCallbackPtr, errorCallbackPtr) {
-    yandexGames.authenticatePlayerAccount(onSuccessCallbackPtr, errorCallbackPtr);
+    yandexGames.getProfileDataPermission(onSuccessCallbackPtr, errorCallbackPtr);
   },
 
   ShowInterestialAd: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {

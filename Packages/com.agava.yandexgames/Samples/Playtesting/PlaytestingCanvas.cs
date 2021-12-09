@@ -50,14 +50,9 @@ namespace YandexGames.Samples
             VideoAd.Show();
         }
 
-        public void OnAuthenticateButtonClick()
+        public void OnGetProfileDataPermissionButtonClick()
         {
-            PlayerAccount.Authenticate(false);
-        }
-
-        public void OnAuthenticateWithPermissionsButtonClick()
-        {
-            PlayerAccount.Authenticate(true);
+            PlayerAccount.GetProfileDataPermission();
         }
 
         public void OnSetLeaderboardScoreButtonClick()
