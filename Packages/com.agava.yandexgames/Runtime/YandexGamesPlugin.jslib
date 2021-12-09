@@ -131,11 +131,11 @@ const library = {
       });
     },
 
-    setLeaderboardScore: function (leaderboardName, score, successCallbackPtr, errorCallbackPtr, additionalData) {
+    setLeaderboardScore: function (leaderboardName, score, successCallbackPtr, errorCallbackPtr, extraData) {
       yandexGames.throwIfLeaderboardNotInitialized();
 
       yandexGames.authorizePlayerAccountIfNotAuthorized().then(function () {
-        yandexGames.leaderboard.setLeaderboardScore(leaderboardName, score, additionalData).then(function () {
+        yandexGames.leaderboard.setLeaderboardScore(leaderboardName, score, extraData).then(function () {
           dynCall('v', successCallbackPtr, []);
         }).catch(function (error) {
           yandexGames.invokeErrorCallback(error, errorCallbackPtr);
@@ -210,11 +210,11 @@ const library = {
     yandexGames.showVideoAd(openCallbackPtr, rewardedCallbackPtr, closeCallbackPtr, errorCallbackPtr);
   },
 
-  SetLeaderboardScore: function (leaderboardNamePtr, score, successCallbackPtr, errorCallbackPtr, additionalDataPtr) {
+  SetLeaderboardScore: function (leaderboardNamePtr, score, successCallbackPtr, errorCallbackPtr, extraDataPtr) {
     const leaderboardName = UTF8ToString(leaderboardNamePtr);
-    var additionalData = UTF8ToString(additionalDataPtr);
-    if (additionalData.length === 0) { additionalData = undefined; }
-    yandexGames.setLeaderboardScore(leaderboardName, score, successCallbackPtr, errorCallbackPtr, additionalData);
+    var extraData = UTF8ToString(extraDataPtr);
+    if (extraData.length === 0) { extraData = undefined; }
+    yandexGames.setLeaderboardScore(leaderboardName, score, successCallbackPtr, errorCallbackPtr, extraData);
   },
 
   GetLeaderboardEntries: function (leaderboardNamePtr, successCallbackPtr, errorCallbackPtr, topPlayersCount, competingPlayersCount, includeSelf) {

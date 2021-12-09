@@ -17,7 +17,7 @@ namespace YandexGames.Tests
         public void SetScoreShouldNotThrow()
         {
             Assert.DoesNotThrow(() => Leaderboard.SetScore("NonExistingBoard", 228));
-            Assert.DoesNotThrow(() => Leaderboard.SetScore("NonExistingBoard", 0, additionalData: "henlo"));
+            Assert.DoesNotThrow(() => Leaderboard.SetScore("NonExistingBoard", 0, extraData: "henlo"));
         }
 
         [UnityTest]
