@@ -54,6 +54,7 @@ const library = {
       }
     },
 
+    // TODO: This has to be deleted
     authorizePlayerAccountIfNotAuthorized: function () {
       return new Promise(function (resolve, reject) {
         if (yandexGames.verifyPlayerAccountAuthorization()) {
@@ -78,29 +79,14 @@ const library = {
 
       if (!yandexGames.ensureAuthorization(errorCallbackPtr)) { return; }
 
-      yandexGames.authorizePlayerAccountIfNotAuthorized().then(function () {
-        yandexGames.sdk.getPlayer({ scopes: requestPermissions }).then(function (playerAccount) {
-          yandexGames.playerAccount = playerAccount;
-          // TODO: It should return player profile in the callback.
-          dynCall('v', onAuthenticatedCallbackPtr, []);
-        }).catch(function (error) {
-          yandexGames.invokeErrorCallback(error, errorCallbackPtr);
-        });
+      yandexGames.sdk.getPlayer({ scopes: true }).then(function (playerAccount) {
+        // TODO: Need to check if scopes were granted
+        // Throw error if not
+        yandexGames.playerAccount = playerAccount;
+        dynCall('v', onAuthenticatedCallbackPtr, []);
       }).catch(function (error) {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
       });
-
-      // yandexGames.authorizePlayerAccountIfNotAuthorized().then(function () {
-      //   yandexGames.sdk.getPlayer({ scopes: requestPermissions }).then(function (playerAccount) {
-      //     yandexGames.playerAccount = playerAccount;
-      //     // TODO: It should return player profile in the callback.
-      //     dynCall('v', onAuthenticatedCallbackPtr, []);
-      //   }).catch(function (error) {
-      //     yandexGames.invokeErrorCallback(error, errorCallbackPtr);
-      //   });
-      // }).catch(function (error) {
-      //   yandexGames.invokeErrorCallback(error, errorCallbackPtr);
-      // });
     },
 
     showInterestialAd: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
