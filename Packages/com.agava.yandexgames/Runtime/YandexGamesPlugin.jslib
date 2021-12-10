@@ -83,12 +83,12 @@ const library = {
         switch (playerAccount._personalInfo.scopePermissions.public_name) {
           case 'forbid':
             yandexGames.invokeErrorCallback(new Error('User has refused the permission request.'), errorCallbackPtr);
-            break;
+            return;
           case 'not_set':
             yandexGames.invokeErrorCallback(new Error('User has closed the permission request.'), errorCallbackPtr);
-            break;
+            return;
           case 'allow':
-           break;
+            break;
           default:
             console.warn('Unexpected response from Yandex. Assuming personal data permissions were granted, scopePermissions = ' + JSON.stringify(scopePermissions));
         }
