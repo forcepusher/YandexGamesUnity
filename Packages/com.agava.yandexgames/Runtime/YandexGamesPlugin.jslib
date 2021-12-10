@@ -80,7 +80,12 @@ const library = {
       if (!yandexGames.ensureAuthorization(errorCallbackPtr)) { return; }
 
       yandexGames.sdk.getPlayer({ scopes: true }).then(function (playerAccount) {
-        switch (playerAccount._personalInfo.scopePermissions.public_name) {
+        var publicNamePermission;
+        if ('_personalInfo' in playerAccount && 'scopePermissions' in playerAccount._personalInfo) {
+          publicNamePermission = playerAccount._personalInfo.scopePermissions.public_name;
+        }
+
+        switch (publicNamePermission) {
           case 'forbid':
             yandexGames.invokeErrorCallback(new Error('User has refused the permission request.'), errorCallbackPtr);
             return;
@@ -90,7 +95,7 @@ const library = {
           case 'allow':
             break;
           default:
-            console.warn('Unexpected response from Yandex. Assuming personal data permissions were granted, scopePermissions = ' + JSON.stringify(scopePermissions));
+            console.warn('Unexpected response from Yandex. Assuming personal data permissions were granted. playerAccount = ' + JSON.stringify(playerAccount));
         }
 
         yandexGames.playerAccount = playerAccount;
