@@ -80,8 +80,28 @@ const library = {
       if (!yandexGames.ensureAuthorization(errorCallbackPtr)) { return; }
 
       yandexGames.sdk.getPlayer({ scopes: true }).then(function (playerAccount) {
-        // TODO: Need to check if scopes were granted
-        // Throw error if not
+        switch (playerAccount._personalInfo.scopePermissions.public_name) {
+          case 'forbid':
+            
+            break;
+          case 'not_set':
+
+            break;
+          case 'allow':
+            break;
+          default:
+            console.warn(`Unexpected response from Yandex. Assuming personal data permissions were granted. scopePermissions = ${JSON.stringify(scopePermissions)}`);
+        }
+
+        const publicNamePermission = playerAccount._personalInfo.scopePermissions.public_name;
+        if (publicNamePermission === 'forbid') {
+          yandexGames.invokeErrorCallback(error, errorCallbackPtr);
+        } else if (publicNamePermission === 'not_set') {
+          yandexGames.invokeErrorCallback(error, errorCallbackPtr);
+        } else if (publicNamePermission !== 'allow') {
+          
+        }
+
         yandexGames.playerAccount = playerAccount;
         dynCall('v', onAuthenticatedCallbackPtr, []);
       }).catch(function (error) {
