@@ -3,6 +3,10 @@ const library = {
   // Class definition.
 
   $yandexGames: {
+    initialized: false,
+
+    authorized: false,
+
     sdk: undefined,
 
     leaderboard: undefined,
@@ -18,22 +22,33 @@ const library = {
         window['YaGames'].init().then(function (sdk) {
           yandexGames.sdk = sdk;
 
-          sdk.getLeaderboards().then(function (leaderboard) { yandexGames.leaderboard = leaderboard; });
+          var leaderboardInitializationPromise = sdk.getLeaderboards().then(function (leaderboard) {
+            yandexGames.leaderboard = leaderboard;
+          }).catch(function () { });
 
           // Cache the playerAccount immediately so it's ready for verifyPlayerAccountAuthorization call.
           // This IS the intended way to check for player authorization, not even kidding:
           // https://yandex.ru/dev/games/doc/dg/sdk/sdk-player.html#sdk-player__auth
           // The { scopes: false } ensures personal data permission won't pop up,
           // but if permissions were granted before, playerAccount will contain personal data.
-          sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
+          var playerAccountinitializationPromise = sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
+            authorized = true;
             yandexGames.playerAccount = playerAccount;
           }).catch(function () { });
+
+          Promise.allSettled([leaderboardInitializationPromise, playerAccountinitializationPromise]).then(function () {
+            if (yandexGames.leaderboard === undefined) {
+              throw new Error('Leaderboard caused Yandex Games SDK to fail initialization.');
+            }
+
+            yandexGames.initialized = true;
+          });
         });
       }
     },
 
     verifySdkInitialization: function () {
-      return yandexGames.sdk !== undefined;
+      return yandexGames.initialized === true;
     },
 
     verifyLeaderboardInitialization: function () {
@@ -106,6 +121,8 @@ const library = {
       if (!yandexGames.ensureAuthorization(errorCallbackPtr)) { return; }
 
       yandexGames.sdk.getPlayer({ scopes: true }).then(function (playerAccount) {
+
+        // TODO: Remove this because it duplicates checkProfileDataPermission.
         var publicNamePermission;
         if ('_personalInfo' in playerAccount && 'scopePermissions' in playerAccount._personalInfo) {
           publicNamePermission = playerAccount._personalInfo.scopePermissions.public_name;
