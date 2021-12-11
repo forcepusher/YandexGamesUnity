@@ -62,6 +62,9 @@ namespace YandexGames
         #endregion
 
         #region HasProfileDataPermission
+        /// <summary>
+        /// Permission to use name and profile picture from the Yandex account.
+        /// </summary>
         /// <remarks>
         /// Requires authorization. Use <see cref="Authorized"/> and <see cref="Authorize"/>.
         /// </remarks>

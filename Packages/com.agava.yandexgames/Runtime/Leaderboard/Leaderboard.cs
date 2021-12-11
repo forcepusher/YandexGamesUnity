@@ -58,7 +58,7 @@ namespace YandexGames
 
         #region GetEntries
         /// <summary>
-        /// Returns result in onSuccessCallback.
+        /// Returns a fully parsed result object in onSuccessCallback.
         /// </summary>
         /// <remarks>
         /// Requires authorization. Use <see cref="PlayerAccount.Authorized"/> and <see cref="PlayerAccount.Authorize"/>.
