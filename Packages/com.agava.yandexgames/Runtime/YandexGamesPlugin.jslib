@@ -295,7 +295,7 @@ const library = {
     yandexGames.throwIfSdkNotInitialized();
 
     const leaderboardName = UTF8ToString(leaderboardNamePtr);
-    yandexGames.getLeaderboardEntries(leaderboardName, successCallbackPtr, errorCallbackPtr);
+    yandexGames.getLeaderboardPlayerEntry(leaderboardName, successCallbackPtr, errorCallbackPtr);
   },
 }
 
