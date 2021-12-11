@@ -49,17 +49,34 @@ const library = {
       }
     },
 
-    verifyLeaderboardInitialization: function () {
-      return yandexGames.leaderboard !== undefined;
+    throwIfSdkNotInitialized: function () {
+      if (!yandexGames.initialized) {
+        throw new Error('SDK was not fast enough to initialize. Use YandexGamesSdk.IsInitialized or WaitForInitialization.');
+      }
     },
 
-    verifyPlayerAccountAuthorization: function () {
-      return yandexGames.playerAccount !== undefined;
+    invokeErrorCallback: function (error, errorCallbackPtr) {
+      const errorMessage = error.message;
+      const errorMessageBufferSize = lengthBytesUTF8(errorMessage) + 1;
+      const errorMessageBufferPtr = _malloc(errorMessageBufferSize);
+      stringToUTF8(errorMessage, errorMessageBufferPtr, errorMessageBufferSize);
+      dynCall('vii', errorCallbackPtr, [errorMessageBufferPtr, errorMessageBufferSize]);
+      _free(errorMessageBufferPtr);
+    },
+
+    invokeErrorCallbackIfNotAuthorized: function (errorCallbackPtr) {
+      if (!yandexGames.authorized) {
+        yandexGames.invokeErrorCallback(new Error('Needs authorization.'), errorCallbackPtr);
+        return true;
+      }
+      return false;
     },
 
     checkProfileDataPermission: function () {
-      if (!yandexGames.verifyPlayerAccountAuthorization()) {
-        console.error('HasProfileDataPermission requires authorization. Assuming profile data permissions were not granted.');
+      yandexGames.throwIfSdkNotInitialized();
+
+      if (!yandexGames.authorized) {
+        console.error('checkProfileDataPermission requires authorization. Assuming profile data permissions were not granted.');
         return false;
       }
 
@@ -76,73 +93,27 @@ const library = {
         case 'allow':
           return true;
         default:
-          console.warn('Unexpected response from Yandex. Assuming profile data permissions were not granted. playerAccount = ' + JSON.stringify(playerAccount));
+          console.error('Unexpected response from Yandex. Assuming profile data permissions were not granted. playerAccount = ' + JSON.stringify(playerAccount));
           return false;
       }
-    },
-
-    throwIfSdkNotInitialized: function () {
-      if (!yandexGames.initialized) {
-        throw new Error('SDK was not fast enough to initialize. Use YandexGamesSdk.IsInitialized or WaitForInitialization.');
-      }
-    },
-
-    throwIfLeaderboardNotInitialized: function () {
-      if (!yandexGames.verifyLeaderboardInitialization()) {
-        throw new Error('Leaderboard was not fast enough to initialize. Use Leaderboard.IsInitialized or WaitForInitialization.');
-      }
-    },
-
-    // TODO: This has to be deleted
-    authorizePlayerAccountIfNotAuthorized: function () {
-      return new Promise(function (resolve, reject) {
-        if (yandexGames.verifyPlayerAccountAuthorization()) {
-          resolve(yandexGames.playerAccount);
-        } else {
-          yandexGames.sdk.auth.openAuthDialog().then(function () {
-            yandexGames.sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
-              yandexGames.playerAccount = playerAccount;
-              resolve(playerAccount);
-            }).catch(function (error) {
-              reject(error);
-            });
-          }).catch(function (error) {
-            reject(error);
-          });
-        }
-      });
     },
 
     requestProfileDataPermission: function (onAuthenticatedCallbackPtr, errorCallbackPtr) {
       yandexGames.throwIfSdkNotInitialized();
 
-      if (!yandexGames.ensureAuthorization(errorCallbackPtr)) { return; }
+      if (yandexGames.invokeErrorCallbackIfNotAuthorized(errorCallbackPtr)) {
+        console.error('requestProfileDataPermission requires authorization. Assuming profile data permissions were not granted.');
+        return;
+      }
 
       yandexGames.sdk.getPlayer({ scopes: true }).then(function (playerAccount) {
-
-        // TODO: Remove this because it duplicates checkProfileDataPermission.
-        var publicNamePermission;
-        if ('_personalInfo' in playerAccount && 'scopePermissions' in playerAccount._personalInfo) {
-          publicNamePermission = playerAccount._personalInfo.scopePermissions.public_name;
-        }
-
-        switch (publicNamePermission) {
-          case 'forbid':
-            yandexGames.invokeErrorCallback(new Error('User has refused the permission request.'), errorCallbackPtr);
-            return;
-          case 'not_set':
-            yandexGames.invokeErrorCallback(new Error('User has closed the permission request.'), errorCallbackPtr);
-            return;
-          case 'allow':
-            break;
-          default:
-            console.warn('Unexpected response from Yandex. Assuming profile data permissions were not granted. playerAccount = ' + JSON.stringify(playerAccount));
-            yandexGames.invokeErrorCallback(new Error('Unexpected response from Yandex.'), errorCallbackPtr);
-            return;
-        }
-
         yandexGames.playerAccount = playerAccount;
-        dynCall('v', onAuthenticatedCallbackPtr, []);
+
+        if (yandexGames.checkProfileDataPermission()) {
+          dynCall('v', onAuthenticatedCallbackPtr, []);
+        } else {
+          yandexGames.invokeErrorCallback(new Error('User has refused the permission request.'), errorCallbackPtr);
+        }
       }).catch(function (error) {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
       });
@@ -224,23 +195,6 @@ const library = {
       }).catch(function (error) {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
       });
-    },
-
-    ensureAuthorization: function (errorCallbackPtr) {
-      if (!yandexGames.verifyPlayerAccountAuthorization()) {
-        yandexGames.invokeErrorCallback(new Error('Needs authorization.'), errorCallbackPtr);
-        return false;
-      }
-      return true;
-    },
-
-    invokeErrorCallback: function (error, errorCallbackPtr) {
-      const errorMessage = error.message;
-      const errorMessageBufferSize = lengthBytesUTF8(errorMessage) + 1;
-      const errorMessageBufferPtr = _malloc(errorMessageBufferSize);
-      stringToUTF8(errorMessage, errorMessageBufferPtr, errorMessageBufferSize);
-      dynCall('vii', errorCallbackPtr, [errorMessageBufferPtr, errorMessageBufferSize]);
-      _free(errorMessageBufferPtr);
     },
   },
 
