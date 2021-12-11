@@ -29,13 +29,6 @@ namespace YandexGames.Samples
             // Always wait for it if invoking something immediately in the first scene.
             yield return YandexGamesSdk.WaitForInitialization();
 
-            //// Avoid unexpected authorization window popup that will freak out the user.
-            //if (PlayerAccount.IsAuthorized)
-            //{
-            //    // Authenticate silently without requesting photo and real name permissions.
-            //    PlayerAccount.Authenticate(false);
-            //}
-
             while (true)
             {
                 _authorizationStatusText.color = PlayerAccount.Authorized ? Color.green : Color.red;
@@ -71,7 +64,6 @@ namespace YandexGames.Samples
         {
             Leaderboard.GetEntries("PlaytestBoard", (result) =>
             {
-                // Use it
                 Debug.Log($"My rank = {result.userRank}");
                 foreach (var entry in result.entries)
                 {
