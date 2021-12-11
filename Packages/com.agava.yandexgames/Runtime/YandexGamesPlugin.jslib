@@ -55,12 +55,9 @@ const library = {
     },
 
     invokeErrorCallback: function (error, errorCallbackPtr) {
-      const errorMessage = error.message;
-      const errorMessageBufferSize = lengthBytesUTF8(errorMessage) + 1;
-      const errorMessageBufferPtr = _malloc(errorMessageBufferSize);
-      stringToUTF8(errorMessage, errorMessageBufferPtr, errorMessageBufferSize);
-      dynCall('vii', errorCallbackPtr, [errorMessageBufferPtr, errorMessageBufferSize]);
-      _free(errorMessageBufferPtr);
+      const errorUnmanagedString = yandexGames.allocateUnmanagedString(error.message);
+      dynCall('vii', errorCallbackPtr, [errorUnmanagedString.bufferPtr, errorUnmanagedString.bufferSize]);
+      _free(errorUnmanagedString.bufferPtr);
     },
 
     invokeErrorCallbackIfNotAuthorized: function (errorCallbackPtr) {
@@ -190,17 +187,20 @@ const library = {
       yandexGames.leaderboard.getLeaderboardEntries(leaderboardName, {
         includeUser: includeSelf, quantityAround: competingPlayersCount, quantityTop: topPlayersCount
       }).then(function (response) {
-        const entriesMessage = JSON.stringify(response);
-
-        // TODO: This string stuff is repetitive code. Make a class.
-        const entriesMessageBufferSize = lengthBytesUTF8(entriesMessage) + 1;
-        const entriesMessageBufferPtr = _malloc(entriesMessageBufferSize);
-        stringToUTF8(entriesMessage, entriesMessageBufferPtr, entriesMessageBufferSize);
-        dynCall('vii', successCallbackPtr, [entriesMessageBufferPtr, entriesMessageBufferSize]);
-        _free(entriesMessageBufferPtr);
+        const entriesJson = JSON.stringify(response);
+        const entriesUnmanagedString = yandexGames.allocateUnmanagedString(entriesJson);
+        dynCall('vii', successCallbackPtr, [entriesUnmanagedString.bufferPtr, entriesUnmanagedString.bufferSize]);
+        _free(entriesUnmanagedString.bufferPtr);
       }).catch(function (error) {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
       });
+    },
+
+    allocateUnmanagedString: function(string) {
+      const stringBufferSize = lengthBytesUTF8(string) + 1;
+      const stringBufferPtr = _malloc(stringBufferSize);
+      stringToUTF8(entriesMessage, entriesMessageBufferPtr, entriesMessageBufferSize);
+      return { bufferSize: stringBufferSize, bufferPtr: stringBufferPtr }
     },
   },
 
