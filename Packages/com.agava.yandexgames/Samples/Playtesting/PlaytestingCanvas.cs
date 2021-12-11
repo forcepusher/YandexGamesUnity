@@ -67,6 +67,9 @@ namespace YandexGames.Samples
                 Debug.Log($"My rank = {result.userRank}");
                 foreach (var entry in result.entries)
                 {
+                    string name = entry.player.publicName;
+                    if (string.IsNullOrEmpty(name))
+                        name = "Anonymous";
                     Debug.Log(entry.player.publicName + " " + entry.score);
                 }
             });
