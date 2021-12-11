@@ -46,7 +46,7 @@ const library = {
 
     checkProfileDataPermission: function () {
       if (!yandexGames.verifyPlayerAccountAuthorization()) {
-        console.error('HasProfileDataPermission requires authorization.');
+        console.error('HasProfileDataPermission requires authorization. Assuming profile data permissions were not granted.');
         return false;
       }
 
