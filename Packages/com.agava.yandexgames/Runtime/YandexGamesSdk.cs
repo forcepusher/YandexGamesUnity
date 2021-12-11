@@ -28,17 +28,17 @@ namespace YandexGames
         /// Leaderboard is initialized automatically on load.
         /// If either something fails or called way too early, this will return false.
         /// </summary>
-        public static bool IsInitialized => VerifySdkInitialization();
+        public static bool Initialized => CheckSdkInitialization();
 
         [DllImport("__Internal")]
-        private static extern bool VerifySdkInitialization();
+        private static extern bool CheckSdkInitialization();
 
         /// <summary>
-        /// Coroutine waiting for <see cref="IsInitialized"/> to return true.
+        /// Coroutine waiting for <see cref="Initialized"/> to return true.
         /// </summary>
         public static IEnumerator WaitForInitialization()
         {
-            while (!IsInitialized)
+            while (!Initialized)
                 yield return null;
         }
     }

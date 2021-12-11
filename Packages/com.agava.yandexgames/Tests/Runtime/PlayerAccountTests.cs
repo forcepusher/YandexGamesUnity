@@ -16,7 +16,13 @@ namespace YandexGames.Tests
         [Test]
         public void ShouldNotBeAuthorizedOnStart()
         {
-            Assert.IsFalse(PlayerAccount.IsAuthorized);
+            Assert.IsFalse(PlayerAccount.Authorized);
+        }
+
+        [Test]
+        public void ShouldNotHaveProfileDataPermission()
+        {
+            Assert.IsFalse(PlayerAccount.HasProfileDataPermission);
         }
 
         [UnityTest]

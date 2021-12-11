@@ -18,10 +18,10 @@ namespace YandexGames
         /// Use this before calling SDK methods that require authorization,
         /// so you can avoid unexpected authorization window popups.
         /// </summary>
-        public static bool IsAuthorized => VerifyPlayerAccountAuthorization();
+        public static bool Authorized => CheckAuthorization();
 
         [DllImport("__Internal")]
-        private static extern bool VerifyPlayerAccountAuthorization();
+        private static extern bool CheckAuthorization();
 
         public static void Authorize()
         {
@@ -29,12 +29,18 @@ namespace YandexGames
         }
 
         #region HasProfileDataPermission
+        /// <remarks>
+        /// Requires authorization. Use <see cref="Authorized"/> and <see cref="Authorize"/>.
+        /// </remarks>
+        public static bool HasProfileDataPermission => CheckProfileDataPermission();
 
+        [DllImport("__Internal")]
+        private static extern bool CheckProfileDataPermission();
         #endregion
 
         #region RequestProfileDataPermission
         /// <remarks>
-        /// Requires authorization. Use <see cref="IsAuthorized"/> and <see cref="Authorize"/>.
+        /// Requires authorization. Use <see cref="Authorized"/> and <see cref="Authorize"/>.
         /// </remarks>
         public static void RequestProfileDataPermission(Action onSuccessCallback = null, Action<string> onErrorCallback = null)
         {

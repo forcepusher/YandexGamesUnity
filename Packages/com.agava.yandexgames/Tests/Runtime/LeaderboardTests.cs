@@ -10,7 +10,7 @@ namespace YandexGames.Tests
         [UnitySetUp]
         public IEnumerator WaitForInitialization()
         {
-            yield return Leaderboard.WaitForInitialization();
+            yield return YandexGamesSdk.WaitForInitialization();
         }
 
         [Test]
