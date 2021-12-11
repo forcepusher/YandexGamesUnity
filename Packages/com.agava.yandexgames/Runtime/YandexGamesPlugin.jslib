@@ -75,8 +75,8 @@ const library = {
       yandexGames.sdk.auth.openAuthDialog().then(function () {
         yandexGames.sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
           yandexGames.playerAccount = playerAccount;
-        }).catch(function () {
-          console.error('authorize failed to update playerAccount. Possible problems ahead.');
+        }).catch(function (error) {
+          console.error('authorize failed to update playerAccount. Possible problems ahead. Error was: ' + error.message);
         }).finally(function () {
           yandexGames.authorized = true;
           dynCall('v', successCallbackPtr, []);
