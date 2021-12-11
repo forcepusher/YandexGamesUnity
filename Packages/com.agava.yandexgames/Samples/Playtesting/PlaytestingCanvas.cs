@@ -40,6 +40,11 @@ namespace YandexGames.Samples
             }
         }
 
+        public void OnAuthorizeButtonClick()
+        {
+            PlayerAccount.Authorize();
+        }
+
         public void OnShowInterestialButtonClick()
         {
             InterestialAd.Show();
