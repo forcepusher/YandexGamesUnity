@@ -73,7 +73,7 @@ namespace YandexGames
 
         #region RequestProfileDataPermission
         /// <summary>
-        /// Be aware, if user rejects the request - there's no way to get the window back.
+        /// Be aware, if user rejects the request - you're not getting another chance.
         /// </summary>
         /// <remarks>
         /// Requires authorization. Use <see cref="Authorized"/> and <see cref="Authorize"/>.
