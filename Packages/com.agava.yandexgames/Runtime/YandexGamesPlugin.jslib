@@ -25,7 +25,6 @@ const library = {
           // The { scopes: false } ensures personal data permission request window won't pop up,
           const playerAccountInitializationPromise = sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
             yandexGames.authorized = true;
-
             // Always contains permission info. Contains personal data as well if permissions were granted before.
             yandexGames.playerAccount = playerAccount;
 
@@ -70,6 +69,21 @@ const library = {
         return true;
       }
       return false;
+    },
+
+    authorize: function (successCallbackPtr, errorCallbackPtr) {
+      yandexGames.sdk.auth.openAuthDialog().then(function () {
+        yandexGames.sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
+          yandexGames.playerAccount = playerAccount;
+        }).catch(function () {
+          console.error('authorize failed to update playerAccount. Possible problems ahead.');
+        }).finally(function () {
+          yandexGames.authorized = true;
+          dynCall('v', successCallbackPtr, []);
+        });
+      }).catch(function (error) {
+        yandexGames.invokeErrorCallback(error, errorCallbackPtr);
+      });
     },
 
     checkProfileDataPermission: function () {
@@ -201,6 +215,12 @@ const library = {
     return yandexGames.initialized;
   },
 
+  Authorize: function (successCallbackPtr, errorCallbackPtr) {
+    yandexGames.throwIfSdkNotInitialized();
+
+    yandexGames.authorize(successCallbackPtr, errorCallbackPtr);
+  },
+
   CheckAuthorization: function () {
     yandexGames.throwIfSdkNotInitialized();
 
@@ -213,10 +233,10 @@ const library = {
     return yandexGames.checkProfileDataPermission();
   },
 
-  RequestProfileDataPermission: function (onSuccessCallbackPtr, errorCallbackPtr) {
+  RequestProfileDataPermission: function (successCallbackPtr, errorCallbackPtr) {
     yandexGames.throwIfSdkNotInitialized();
 
-    yandexGames.requestProfileDataPermission(onSuccessCallbackPtr, errorCallbackPtr);
+    yandexGames.requestProfileDataPermission(successCallbackPtr, errorCallbackPtr);
   },
 
   ShowInterestialAd: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {

@@ -11,6 +11,8 @@ namespace YandexGames
     /// </summary>
     public static class PlayerAccount
     {
+        private static Action s_onAuthorizeSuccessCallback;
+        private static Action<string> s_onAuthorizeErrorCallback;
         private static Action s_onRequestProfileDataPermissionSuccessCallback;
         private static Action<string> s_onRequestProfileDataPermissionErrorCallback;
 
@@ -23,10 +25,39 @@ namespace YandexGames
         [DllImport("__Internal")]
         private static extern bool CheckAuthorization();
 
-        public static void Authorize()
-        {
 
+        #region RequestProfileDataPermission
+        public static void Authorize(Action onSuccessCallback = null, Action<string> onErrorCallback = null)
+        {
+            s_onAuthorizeSuccessCallback = onSuccessCallback;
+            s_onAuthorizeErrorCallback = onErrorCallback;
+
+            Authorize(OnAuthorizeSuccessCallback, OnAuthorizeErrorCallback);
         }
+
+        [DllImport("__Internal")]
+        private static extern void Authorize(Action successCallback, Action<IntPtr, int> errorCallback);
+
+        [MonoPInvokeCallback(typeof(Action))]
+        private static void OnAuthorizeSuccessCallback()
+        {
+            if (YandexGamesSdk.CallbackLogging)
+                Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnAuthorizeSuccessCallback)} invoked");
+
+            s_onAuthorizeSuccessCallback?.Invoke();
+        }
+
+        [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
+        private static void OnAuthorizeErrorCallback(IntPtr errorMessageBufferPtr, int errorMessageBufferLength)
+        {
+            string errorMessage = new UnmanagedString(errorMessageBufferPtr, errorMessageBufferLength).ToString();
+
+            if (YandexGamesSdk.CallbackLogging)
+                Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnAuthorizeErrorCallback)} invoked, {nameof(errorMessage)} = {errorMessage}");
+
+            s_onAuthorizeErrorCallback?.Invoke(errorMessage);
+        }
+        #endregion
 
         #region HasProfileDataPermission
         /// <remarks>
