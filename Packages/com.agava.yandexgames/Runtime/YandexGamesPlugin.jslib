@@ -73,8 +73,6 @@ const library = {
     },
 
     checkProfileDataPermission: function () {
-      yandexGames.throwIfSdkNotInitialized();
-
       if (!yandexGames.authorized) {
         console.error('checkProfileDataPermission requires authorization. Assuming profile data permissions were not granted.');
         return false;
@@ -100,8 +98,6 @@ const library = {
     },
 
     requestProfileDataPermission: function (onAuthenticatedCallbackPtr, errorCallbackPtr) {
-      yandexGames.throwIfSdkNotInitialized();
-
       if (yandexGames.invokeErrorCallbackIfNotAuthorized(errorCallbackPtr)) {
         console.error('requestProfileDataPermission requires authorization. Assuming profile data permissions were not granted.');
         return;
@@ -121,8 +117,6 @@ const library = {
     },
 
     showInterestialAd: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
-      yandexGames.throwIfSdkNotInitialized();
-
       yandexGames.sdk.adv.showFullscreenAdv({
         callbacks: {
           onOpen: function () {
@@ -142,8 +136,6 @@ const library = {
     },
 
     showVideoAd: function (openCallbackPtr, rewardedCallbackPtr, closeCallbackPtr, errorCallbackPtr) {
-      yandexGames.throwIfSdkNotInitialized();
-
       yandexGames.sdk.adv.showRewardedVideo({
         callbacks: {
           onOpen: function () {
@@ -163,8 +155,6 @@ const library = {
     },
 
     setLeaderboardScore: function (leaderboardName, score, successCallbackPtr, errorCallbackPtr, extraData) {
-      yandexGames.throwIfSdkNotInitialized();
-
       if (yandexGames.invokeErrorCallbackIfNotAuthorized(errorCallbackPtr)) {
         console.error('setLeaderboardScore requires authorization.');
         return;
@@ -178,8 +168,6 @@ const library = {
     },
 
     getLeaderboardEntries: function (leaderboardName, successCallbackPtr, errorCallbackPtr, topPlayersCount, competingPlayersCount, includeSelf) {
-      yandexGames.throwIfSdkNotInitialized();
-
       if (yandexGames.invokeErrorCallbackIfNotAuthorized(errorCallbackPtr)) {
         console.error('getLeaderboardEntries requires authorization.');
         return;
@@ -220,22 +208,32 @@ const library = {
   },
 
   CheckProfileDataPermission: function () {
+    yandexGames.throwIfSdkNotInitialized();
+
     return yandexGames.checkProfileDataPermission();
   },
 
   RequestProfileDataPermission: function (onSuccessCallbackPtr, errorCallbackPtr) {
+    yandexGames.throwIfSdkNotInitialized();
+
     yandexGames.requestProfileDataPermission(onSuccessCallbackPtr, errorCallbackPtr);
   },
 
   ShowInterestialAd: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
+    yandexGames.throwIfSdkNotInitialized();
+
     yandexGames.showInterestialAd(openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr);
   },
 
   ShowVideoAd: function (openCallbackPtr, rewardedCallbackPtr, closeCallbackPtr, errorCallbackPtr) {
+    yandexGames.throwIfSdkNotInitialized();
+
     yandexGames.showVideoAd(openCallbackPtr, rewardedCallbackPtr, closeCallbackPtr, errorCallbackPtr);
   },
 
   SetLeaderboardScore: function (leaderboardNamePtr, score, successCallbackPtr, errorCallbackPtr, extraDataPtr) {
+    yandexGames.throwIfSdkNotInitialized();
+
     const leaderboardName = UTF8ToString(leaderboardNamePtr);
     var extraData = UTF8ToString(extraDataPtr);
     if (extraData.length === 0) { extraData = undefined; }
@@ -243,6 +241,8 @@ const library = {
   },
 
   GetLeaderboardEntries: function (leaderboardNamePtr, successCallbackPtr, errorCallbackPtr, topPlayersCount, competingPlayersCount, includeSelf) {
+    yandexGames.throwIfSdkNotInitialized();
+
     const leaderboardName = UTF8ToString(leaderboardNamePtr);
     // Booleans are transferred as either 1 or 0, so using !! to convert them to true or false.
     includeSelf = !!includeSelf;
