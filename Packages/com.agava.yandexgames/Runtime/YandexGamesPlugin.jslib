@@ -25,7 +25,6 @@ const library = {
           // The { scopes: false } ensures personal data permission request window won't pop up,
           const playerAccountInitializationPromise = sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
             yandexGames.authorized = true;
-
             // Always contains permission info. Contains personal data as well if permissions were granted before.
             yandexGames.playerAccount = playerAccount;
 
@@ -51,17 +50,14 @@ const library = {
 
     throwIfSdkNotInitialized: function () {
       if (!yandexGames.initialized) {
-        throw new Error('SDK was not fast enough to initialize. Use YandexGamesSdk.IsInitialized or WaitForInitialization.');
+        throw new Error('SDK was not fast enough to initialize. Use YandexGamesSdk.Initialized or WaitForInitialization.');
       }
     },
 
     invokeErrorCallback: function (error, errorCallbackPtr) {
-      const errorMessage = error.message;
-      const errorMessageBufferSize = lengthBytesUTF8(errorMessage) + 1;
-      const errorMessageBufferPtr = _malloc(errorMessageBufferSize);
-      stringToUTF8(errorMessage, errorMessageBufferPtr, errorMessageBufferSize);
-      dynCall('vii', errorCallbackPtr, [errorMessageBufferPtr, errorMessageBufferSize]);
-      _free(errorMessageBufferPtr);
+      const errorUnmanagedString = yandexGames.allocateUnmanagedString(error.message);
+      dynCall('vii', errorCallbackPtr, [errorUnmanagedString.bufferPtr, errorUnmanagedString.bufferSize]);
+      _free(errorUnmanagedString.bufferPtr);
     },
 
     invokeErrorCallbackIfNotAuthorized: function (errorCallbackPtr) {
@@ -70,6 +66,27 @@ const library = {
         return true;
       }
       return false;
+    },
+
+    authorize: function (successCallbackPtr, errorCallbackPtr) {
+      if (yandexGames.authorized) {
+        console.error('Already authorized.');
+        dynCall('v', successCallbackPtr, []);
+        return;
+      }
+
+      yandexGames.sdk.auth.openAuthDialog().then(function () {
+        yandexGames.sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
+          yandexGames.authorized = true;
+          yandexGames.playerAccount = playerAccount;
+          dynCall('v', successCallbackPtr, []);
+        }).catch(function (error) {
+          console.error('authorize failed to update playerAccount. Assuming authorization failed. Error was: ' + error.message);
+          yandexGames.invokeErrorCallback(error, errorCallbackPtr);
+        });
+      }).catch(function (error) {
+        yandexGames.invokeErrorCallback(error, errorCallbackPtr);
+      });
     },
 
     checkProfileDataPermission: function () {
@@ -176,17 +193,20 @@ const library = {
       yandexGames.leaderboard.getLeaderboardEntries(leaderboardName, {
         includeUser: includeSelf, quantityAround: competingPlayersCount, quantityTop: topPlayersCount
       }).then(function (response) {
-        const entriesMessage = JSON.stringify(response);
-
-        // TODO: This string stuff is repetitive code. Make a class.
-        const entriesMessageBufferSize = lengthBytesUTF8(entriesMessage) + 1;
-        const entriesMessageBufferPtr = _malloc(entriesMessageBufferSize);
-        stringToUTF8(entriesMessage, entriesMessageBufferPtr, entriesMessageBufferSize);
-        dynCall('vii', successCallbackPtr, [entriesMessageBufferPtr, entriesMessageBufferSize]);
-        _free(entriesMessageBufferPtr);
+        const entriesJson = JSON.stringify(response);
+        const entriesUnmanagedString = yandexGames.allocateUnmanagedString(entriesJson);
+        dynCall('vii', successCallbackPtr, [entriesUnmanagedString.bufferPtr, entriesUnmanagedString.bufferSize]);
+        _free(entriesUnmanagedString.bufferPtr);
       }).catch(function (error) {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
       });
+    },
+
+    allocateUnmanagedString: function(string) {
+      const stringBufferSize = lengthBytesUTF8(string) + 1;
+      const stringBufferPtr = _malloc(stringBufferSize);
+      stringToUTF8(string, stringBufferPtr, stringBufferSize);
+      return { bufferSize: stringBufferSize, bufferPtr: stringBufferPtr }
     },
   },
 
@@ -201,6 +221,12 @@ const library = {
     return yandexGames.initialized;
   },
 
+  Authorize: function (successCallbackPtr, errorCallbackPtr) {
+    yandexGames.throwIfSdkNotInitialized();
+
+    yandexGames.authorize(successCallbackPtr, errorCallbackPtr);
+  },
+
   CheckAuthorization: function () {
     yandexGames.throwIfSdkNotInitialized();
 
@@ -213,10 +239,10 @@ const library = {
     return yandexGames.checkProfileDataPermission();
   },
 
-  RequestProfileDataPermission: function (onSuccessCallbackPtr, errorCallbackPtr) {
+  RequestProfileDataPermission: function (successCallbackPtr, errorCallbackPtr) {
     yandexGames.throwIfSdkNotInitialized();
 
-    yandexGames.requestProfileDataPermission(onSuccessCallbackPtr, errorCallbackPtr);
+    yandexGames.requestProfileDataPermission(successCallbackPtr, errorCallbackPtr);
   },
 
   ShowInterestialAd: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {

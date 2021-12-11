@@ -18,7 +18,7 @@ namespace YandexGames
 
         #region SetScore
         /// <remarks>
-        /// Requires authorization. Use <see cref="Authorized"/> and <see cref="Authorize"/>.
+        /// Requires authorization. Use <see cref="PlayerAccount.Authorized"/> and <see cref="PlayerAccount.Authorize"/>.
         /// </remarks>
         public static void SetScore(string leaderboardName, int score, Action onSuccessCallback = null, Action<string> onErrorCallback = null, string extraData = "")
         {
@@ -54,10 +54,10 @@ namespace YandexGames
 
         #region GetEntries
         /// <summary>
-        /// Returns result JSON as a string in onSuccessCallback - for now.
+        /// Returns result in onSuccessCallback.
         /// </summary>
         /// <remarks>
-        /// Requires authorization. Use <see cref="Authorized"/> and <see cref="Authorize"/>.
+        /// Requires authorization. Use <see cref="PlayerAccount.Authorized"/> and <see cref="PlayerAccount.Authorize"/>.
         /// </remarks>
         public static void GetEntries(string leaderboardName, Action<LeaderboardGetEntriesResponse> onSuccessCallback, Action<string> onErrorCallback = null, int topPlayersCount = 5, int competingPlayersCount = 5, bool includeSelf = true)
         {
