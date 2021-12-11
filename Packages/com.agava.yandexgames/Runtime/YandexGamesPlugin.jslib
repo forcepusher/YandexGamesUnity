@@ -24,7 +24,7 @@ const library = {
 
           // The { scopes: false } ensures personal data permission request window won't pop up,
           const playerAccountInitializationPromise = sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
-            authorized = true;
+            yandexGames.authorized = true;
 
             // Always contains permission info. Contains personal data as well if permissions were granted before.
             yandexGames.playerAccount = playerAccount;
@@ -80,9 +80,9 @@ const library = {
         return false;
       }
 
-      var publicNamePermission;
-      if ('_personalInfo' in playerAccount && 'scopePermissions' in playerAccount._personalInfo) {
-        publicNamePermission = playerAccount._personalInfo.scopePermissions.public_name;
+      var publicNamePermission = undefined;
+      if ('_personalInfo' in yandexGames.playerAccount && 'scopePermissions' in yandexGames.playerAccount._personalInfo) {
+        publicNamePermission = yandexGames.playerAccount._personalInfo.scopePermissions.public_name;
       }
 
       switch (publicNamePermission) {
@@ -93,7 +93,8 @@ const library = {
         case 'allow':
           return true;
         default:
-          console.error('Unexpected response from Yandex. Assuming profile data permissions were not granted. playerAccount = ' + JSON.stringify(playerAccount));
+          console.error('Unexpected response from Yandex. Assuming profile data permissions were not granted. playerAccount = '
+            + JSON.stringify(yandexGames.playerAccount));
           return false;
       }
     },
@@ -162,36 +163,39 @@ const library = {
     },
 
     setLeaderboardScore: function (leaderboardName, score, successCallbackPtr, errorCallbackPtr, extraData) {
-      yandexGames.throwIfLeaderboardNotInitialized();
+      yandexGames.throwIfSdkNotInitialized();
 
-      yandexGames.authorizePlayerAccountIfNotAuthorized().then(function () {
-        yandexGames.leaderboard.setLeaderboardScore(leaderboardName, score, extraData).then(function () {
-          dynCall('v', successCallbackPtr, []);
-        }).catch(function (error) {
-          yandexGames.invokeErrorCallback(error, errorCallbackPtr);
-        });
+      if (yandexGames.invokeErrorCallbackIfNotAuthorized(errorCallbackPtr)) {
+        console.error('setLeaderboardScore requires authorization.');
+        return;
+      }
+
+      yandexGames.leaderboard.setLeaderboardScore(leaderboardName, score, extraData).then(function () {
+        dynCall('v', successCallbackPtr, []);
       }).catch(function (error) {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
       });
     },
 
     getLeaderboardEntries: function (leaderboardName, successCallbackPtr, errorCallbackPtr, topPlayersCount, competingPlayersCount, includeSelf) {
-      yandexGames.throwIfLeaderboardNotInitialized();
+      yandexGames.throwIfSdkNotInitialized();
 
-      yandexGames.authorizePlayerAccountIfNotAuthorized().then(function () {
-        yandexGames.leaderboard.getLeaderboardEntries(leaderboardName, {
-          includeUser: includeSelf, quantityAround: competingPlayersCount, quantityTop: topPlayersCount
-        }).then(function (response) {
-          // TODO: This is repetitive code. Make a class.
-          const entriesMessage = JSON.stringify(response);
-          const entriesMessageBufferSize = lengthBytesUTF8(entriesMessage) + 1;
-          const entriesMessageBufferPtr = _malloc(entriesMessageBufferSize);
-          stringToUTF8(entriesMessage, entriesMessageBufferPtr, entriesMessageBufferSize);
-          dynCall('vii', successCallbackPtr, [entriesMessageBufferPtr, entriesMessageBufferSize]);
-          _free(entriesMessageBufferPtr);
-        }).catch(function (error) {
-          yandexGames.invokeErrorCallback(error, errorCallbackPtr);
-        });
+      if (yandexGames.invokeErrorCallbackIfNotAuthorized(errorCallbackPtr)) {
+        console.error('getLeaderboardEntries requires authorization.');
+        return;
+      }
+
+      yandexGames.leaderboard.getLeaderboardEntries(leaderboardName, {
+        includeUser: includeSelf, quantityAround: competingPlayersCount, quantityTop: topPlayersCount
+      }).then(function (response) {
+        const entriesMessage = JSON.stringify(response);
+
+        // TODO: This string stuff is repetitive code. Make a class.
+        const entriesMessageBufferSize = lengthBytesUTF8(entriesMessage) + 1;
+        const entriesMessageBufferPtr = _malloc(entriesMessageBufferSize);
+        stringToUTF8(entriesMessage, entriesMessageBufferPtr, entriesMessageBufferSize);
+        dynCall('vii', successCallbackPtr, [entriesMessageBufferPtr, entriesMessageBufferSize]);
+        _free(entriesMessageBufferPtr);
       }).catch(function (error) {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
       });
