@@ -75,7 +75,7 @@ namespace YandexGames.Samples
                     string name = entry.player.publicName;
                     if (string.IsNullOrEmpty(name))
                         name = "Anonymous";
-                    Debug.Log(entry.player.publicName + " " + entry.score);
+                    Debug.Log(name + " " + entry.score);
                 }
             });
         }

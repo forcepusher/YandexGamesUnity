@@ -17,8 +17,7 @@ namespace YandexGames
         private static Action<string> s_onRequestProfileDataPermissionErrorCallback;
 
         /// <summary>
-        /// Use this before calling SDK methods that require authorization,
-        /// so you can avoid unexpected authorization window popups.
+        /// Use this before calling SDK methods that require authorization.
         /// </summary>
         public static bool Authorized => CheckAuthorization();
 
@@ -27,6 +26,9 @@ namespace YandexGames
 
 
         #region RequestProfileDataPermission
+        /// <summary>
+        /// Calls a scary authorization window upon the user. Be very afraid.
+        /// </summary>
         public static void Authorize(Action onSuccessCallback = null, Action<string> onErrorCallback = null)
         {
             s_onAuthorizeSuccessCallback = onSuccessCallback;
@@ -70,6 +72,9 @@ namespace YandexGames
         #endregion
 
         #region RequestProfileDataPermission
+        /// <summary>
+        /// Be aware, if user rejects the request - there's no way to get the window back.
+        /// </summary>
         /// <remarks>
         /// Requires authorization. Use <see cref="Authorized"/> and <see cref="Authorize"/>.
         /// </remarks>
