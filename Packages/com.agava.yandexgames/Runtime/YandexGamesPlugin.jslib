@@ -46,7 +46,8 @@ const library = {
 
     checkProfileDataPermission: function () {
       if (!yandexGames.verifyPlayerAccountAuthorization()) {
-        throw new Error('HasProfileDataPermission requires authorization.');
+        console.error('HasProfileDataPermission requires authorization.');
+        return false;
       }
 
       var publicNamePermission;
