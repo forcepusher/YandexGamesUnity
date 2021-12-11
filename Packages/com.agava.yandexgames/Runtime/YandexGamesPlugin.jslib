@@ -22,21 +22,23 @@ const library = {
         window['YaGames'].init().then(function (sdk) {
           yandexGames.sdk = sdk;
 
-          var leaderboardInitializationPromise = sdk.getLeaderboards().then(function (leaderboard) {
+          // The { scopes: false } ensures personal data permission request window won't pop up,
+          const playerAccountInitializationPromise = sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
+            authorized = true;
+
+            // Always contains permission info. Contains personal data as well if permissions were granted before.
+            yandexGames.playerAccount = playerAccount;
+
+            // Catch the error that happens when user is not authorized.
+            // This IS the intended way to check for player authorization, not even kidding:
+            // https://yandex.ru/dev/games/doc/dg/sdk/sdk-player.html#sdk-player__auth
+          }).catch(function () { });
+
+          const leaderboardInitializationPromise = sdk.getLeaderboards().then(function (leaderboard) {
             yandexGames.leaderboard = leaderboard;
           }).catch(function () { });
 
-          // Cache the playerAccount immediately so it's ready for verifyPlayerAccountAuthorization call.
-          // This IS the intended way to check for player authorization, not even kidding:
-          // https://yandex.ru/dev/games/doc/dg/sdk/sdk-player.html#sdk-player__auth
-          // The { scopes: false } ensures personal data permission won't pop up,
-          // but if permissions were granted before, playerAccount will contain personal data.
-          var playerAccountinitializationPromise = sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
-            authorized = true;
-            yandexGames.playerAccount = playerAccount;
-          }).catch(function () { });
-
-          Promise.allSettled([leaderboardInitializationPromise, playerAccountinitializationPromise]).then(function () {
+          Promise.allSettled([leaderboardInitializationPromise, playerAccountInitializationPromise]).then(function () {
             if (yandexGames.leaderboard === undefined) {
               throw new Error('Leaderboard caused Yandex Games SDK to fail initialization.');
             }
