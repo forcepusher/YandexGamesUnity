@@ -52,7 +52,7 @@ namespace YandexGames.Samples
 
         public void OnGetProfileDataPermissionButtonClick()
         {
-            PlayerAccount.GetProfileDataPermission();
+            PlayerAccount.RequestProfileDataPermission();
         }
 
         public void OnSetLeaderboardScoreButtonClick()

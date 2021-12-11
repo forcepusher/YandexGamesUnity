@@ -74,7 +74,7 @@ const library = {
       });
     },
 
-    getProfileDataPermission: function (onAuthenticatedCallbackPtr, errorCallbackPtr) {
+    requestProfileDataPermission: function (onAuthenticatedCallbackPtr, errorCallbackPtr) {
       yandexGames.throwIfSdkNotInitialized();
 
       if (!yandexGames.ensureAuthorization(errorCallbackPtr)) { return; }
@@ -95,7 +95,7 @@ const library = {
           case 'allow':
             break;
           default:
-            console.warn('Unexpected response from Yandex. Assuming personal data permissions were granted. playerAccount = ' + JSON.stringify(playerAccount));
+            console.warn('Unexpected response from Yandex. Assuming profile data permissions were granted. playerAccount = ' + JSON.stringify(playerAccount));
         }
 
         yandexGames.playerAccount = playerAccount;
@@ -220,8 +220,8 @@ const library = {
     return yandexGames.verifyPlayerAccountAuthorization();
   },
 
-  GetProfileDataPermission: function (onSuccessCallbackPtr, errorCallbackPtr) {
-    yandexGames.getProfileDataPermission(onSuccessCallbackPtr, errorCallbackPtr);
+  RequestProfileDataPermission: function (onSuccessCallbackPtr, errorCallbackPtr) {
+    yandexGames.requestProfileDataPermission(onSuccessCallbackPtr, errorCallbackPtr);
   },
 
   ShowInterestialAd: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
