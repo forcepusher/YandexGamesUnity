@@ -12,6 +12,9 @@ namespace YandexGames.Samples
         [SerializeField]
         private Text _isAuthorizedText;
 
+        [SerializeField]
+        private Text _hasProfileDataPermissionText;
+
         private void Awake()
         {
             YandexGamesSdk.CallbackLogging = true;
@@ -36,6 +39,10 @@ namespace YandexGames.Samples
             while (true)
             {
                 _isAuthorizedText.color = PlayerAccount.IsAuthorized ? Color.green : Color.red;
+
+                if (PlayerAccount.IsAuthorized)
+                    _hasProfileDataPermissionText.color = PlayerAccount.HasProfileDataPermission ? Color.green : Color.red;
+
                 yield return new WaitForSecondsRealtime(0.25f);
             }
         }
