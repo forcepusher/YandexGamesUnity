@@ -205,7 +205,7 @@ const library = {
     allocateUnmanagedString: function(string) {
       const stringBufferSize = lengthBytesUTF8(string) + 1;
       const stringBufferPtr = _malloc(stringBufferSize);
-      stringToUTF8(entriesMessage, entriesMessageBufferPtr, entriesMessageBufferSize);
+      stringToUTF8(string, stringBufferPtr, stringBufferSize);
       return { bufferSize: stringBufferSize, bufferPtr: stringBufferPtr }
     },
   },
