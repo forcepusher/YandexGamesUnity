@@ -50,7 +50,7 @@ namespace YandexGames.Samples
             VideoAd.Show();
         }
 
-        public void OnGetProfileDataPermissionButtonClick()
+        public void OnRequestProfileDataPermissionButtonClick()
         {
             PlayerAccount.RequestProfileDataPermission();
         }
