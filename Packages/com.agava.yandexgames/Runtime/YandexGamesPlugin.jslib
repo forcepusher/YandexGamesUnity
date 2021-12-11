@@ -49,10 +49,6 @@ const library = {
       }
     },
 
-    verifySdkInitialization: function () {
-      return yandexGames.initialized === true;
-    },
-
     verifyLeaderboardInitialization: function () {
       return yandexGames.leaderboard !== undefined;
     },
@@ -86,7 +82,7 @@ const library = {
     },
 
     throwIfSdkNotInitialized: function () {
-      if (!yandexGames.verifySdkInitialization()) {
+      if (!yandexGames.initialized) {
         throw new Error('SDK was not fast enough to initialize. Use YandexGamesSdk.IsInitialized or WaitForInitialization.');
       }
     },
@@ -255,8 +251,8 @@ const library = {
     yandexGames.initialize();
   },
 
-  VerifySdkInitialization: function () {
-    return yandexGames.verifySdkInitialization();
+  CheckSdkInitialization: function () {
+    return yandexGames.initialized;
   },
 
   VerifyLeaderboardInitialization: function () {
