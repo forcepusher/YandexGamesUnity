@@ -69,6 +69,12 @@ const library = {
     },
 
     authorize: function (successCallbackPtr, errorCallbackPtr) {
+      if (yandexGames.authorized) {
+        console.error('Already authorized.');
+        dynCall('v', successCallbackPtr, []);
+        return;
+      }
+
       yandexGames.sdk.auth.openAuthDialog().then(function () {
         yandexGames.sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
           yandexGames.playerAccount = playerAccount;
