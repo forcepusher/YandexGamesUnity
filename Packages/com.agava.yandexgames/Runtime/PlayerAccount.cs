@@ -11,8 +11,8 @@ namespace YandexGames
     /// </summary>
     public static class PlayerAccount
     {
-        private static Action s_onAuthenticatedCallback;
-        private static Action<string> s_onErrorCallback;
+        private static Action s_onGetProfileDataPermissionSuccessCallback;
+        private static Action<string> s_onGetProfileDataPermissionErrorCallback;
 
         /// <summary>
         /// Use this before calling SDK methods that require authorization,
@@ -23,39 +23,43 @@ namespace YandexGames
         [DllImport("__Internal")]
         private static extern bool VerifyPlayerAccountAuthorization();
 
-        /// <remarks>
-        /// Use <see cref="IsAuthorized"/> to avoid automatic authorization window popup.
-        /// </remarks>
-        public static void Authenticate(bool requestPermissions, Action onAuthenticatedCallback = null,
-            Action<string> onErrorCallback = null)
+        public static void Authorize()
         {
-            s_onAuthenticatedCallback = onAuthenticatedCallback;
-            s_onErrorCallback = onErrorCallback;
 
-            AuthenticatePlayerAccount(requestPermissions, OnAuthenticatedCallback, OnAuthenticationErrorCallback);
+        }
+
+        /// <remarks>
+        /// Requires authorization. Use <see cref="IsAuthorized"/> and <see cref="Authorize"/>.
+        /// </remarks>
+        public static void GetProfileDataPermission(Action onSuccessCallback = null, Action<string> onErrorCallback = null)
+        {
+            s_onGetProfileDataPermissionSuccessCallback = onSuccessCallback;
+            s_onGetProfileDataPermissionErrorCallback = onErrorCallback;
+
+            GetProfileDataPermission(OnGetProfileDataPermissionSuccessCallback, OnGetProfileDataPermissionErrorCallback);
         }
 
         [DllImport("__Internal")]
-        private static extern void AuthenticatePlayerAccount(bool requestPermissions, Action onAuthenticatedCallback, Action<IntPtr, int> errorCallback);
+        private static extern void GetProfileDataPermission(Action successCallback, Action<IntPtr, int> errorCallback);
 
         [MonoPInvokeCallback(typeof(Action))]
-        private static void OnAuthenticatedCallback()
+        private static void OnGetProfileDataPermissionSuccessCallback()
         {
             if (YandexGamesSdk.CallbackLogging)
-                Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnAuthenticatedCallback)} invoked");
+                Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnGetProfileDataPermissionSuccessCallback)} invoked");
 
-            s_onAuthenticatedCallback?.Invoke();
+            s_onGetProfileDataPermissionSuccessCallback?.Invoke();
         }
 
         [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
-        private static void OnAuthenticationErrorCallback(IntPtr errorMessageBufferPtr, int errorMessageBufferLength)
+        private static void OnGetProfileDataPermissionErrorCallback(IntPtr errorMessageBufferPtr, int errorMessageBufferLength)
         {
             string errorMessage = new UnmanagedString(errorMessageBufferPtr, errorMessageBufferLength).ToString();
 
             if (YandexGamesSdk.CallbackLogging)
-                Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnAuthenticationErrorCallback)} invoked, {nameof(errorMessage)} = {errorMessage}");
+                Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnGetProfileDataPermissionErrorCallback)} invoked, {nameof(errorMessage)} = {errorMessage}");
 
-            s_onErrorCallback?.Invoke(errorMessage);
+            s_onGetProfileDataPermissionErrorCallback?.Invoke(errorMessage);
         }
     }
 }
