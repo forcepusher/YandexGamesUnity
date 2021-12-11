@@ -50,7 +50,7 @@ const library = {
 
     throwIfSdkNotInitialized: function () {
       if (!yandexGames.initialized) {
-        throw new Error('SDK was not fast enough to initialize. Use YandexGamesSdk.IsInitialized or WaitForInitialization.');
+        throw new Error('SDK was not fast enough to initialize. Use YandexGamesSdk.Initialized or WaitForInitialization.');
       }
     },
 
