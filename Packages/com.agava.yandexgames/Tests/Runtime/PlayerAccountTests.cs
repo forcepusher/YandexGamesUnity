@@ -19,6 +19,12 @@ namespace YandexGames.Tests
             Assert.IsFalse(PlayerAccount.Authorized);
         }
 
+        [Test]
+        public void ShouldNotHaveProfileDataPermission()
+        {
+            Assert.IsFalse(PlayerAccount.HasProfileDataPermission);
+        }
+
         [UnityTest]
         public IEnumerator RequestProfileDataPermissionShouldInvokeErrorCallback()
         {

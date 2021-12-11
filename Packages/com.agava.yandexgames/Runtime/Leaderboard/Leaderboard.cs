@@ -18,7 +18,7 @@ namespace YandexGames
 
         #region SetScore
         /// <remarks>
-        /// Use <see cref="PlayerAccount.Authorized"/> to avoid automatic authorization window popup.
+        /// Requires authorization. Use <see cref="Authorized"/> and <see cref="Authorize"/>.
         /// </remarks>
         public static void SetScore(string leaderboardName, int score, Action onSuccessCallback = null, Action<string> onErrorCallback = null, string extraData = "")
         {
@@ -57,7 +57,7 @@ namespace YandexGames
         /// Returns result JSON as a string in onSuccessCallback - for now.
         /// </summary>
         /// <remarks>
-        /// Use <see cref="PlayerAccount.Authorized"/> to avoid automatic authorization window popup.
+        /// Requires authorization. Use <see cref="Authorized"/> and <see cref="Authorize"/>.
         /// </remarks>
         public static void GetEntries(string leaderboardName, Action<LeaderboardGetEntriesResponse> onSuccessCallback, Action<string> onErrorCallback = null, int topPlayersCount = 5, int competingPlayersCount = 5, bool includeSelf = true)
         {
