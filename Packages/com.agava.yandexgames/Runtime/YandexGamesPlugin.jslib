@@ -29,7 +29,7 @@ const library = {
             // Always contains permission info. Contains personal data as well if permissions were granted before.
             yandexGames.playerAccount = playerAccount;
 
-            // Catch the error that happens when user is not authorized.
+            // Catch the error that gets thrown when user is not authorized.
             // This IS the intended way to check for player authorization, not even kidding:
             // https://yandex.ru/dev/games/doc/dg/sdk/sdk-player.html#sdk-player__auth
           }).catch(function () { });
