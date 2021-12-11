@@ -213,12 +213,10 @@ const library = {
     return yandexGames.initialized;
   },
 
-  VerifyLeaderboardInitialization: function () {
-    return yandexGames.verifyLeaderboardInitialization();
-  },
+  CheckAuthorization: function () {
+    yandexGames.throwIfSdkNotInitialized();
 
-  VerifyPlayerAccountAuthorization: function () {
-    return yandexGames.verifyPlayerAccountAuthorization();
+    return yandexGames.authorized;
   },
 
   CheckProfileDataPermission: function () {

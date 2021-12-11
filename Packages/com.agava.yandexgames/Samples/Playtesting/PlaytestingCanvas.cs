@@ -10,10 +10,10 @@ namespace YandexGames.Samples
     public class PlaytestingCanvas : MonoBehaviour
     {
         [SerializeField]
-        private Text _isAuthorizedText;
+        private Text _authorizationStatusText;
 
         [SerializeField]
-        private Text _hasProfileDataPermissionText;
+        private Text _profileDataPermissionStatusText;
 
         private void Awake()
         {
@@ -38,10 +38,10 @@ namespace YandexGames.Samples
 
             while (true)
             {
-                _isAuthorizedText.color = PlayerAccount.IsAuthorized ? Color.green : Color.red;
+                _authorizationStatusText.color = PlayerAccount.Authorized ? Color.green : Color.red;
 
-                if (PlayerAccount.IsAuthorized)
-                    _hasProfileDataPermissionText.color = PlayerAccount.HasProfileDataPermission ? Color.green : Color.red;
+                if (PlayerAccount.Authorized)
+                    _profileDataPermissionStatusText.color = PlayerAccount.HasProfileDataPermission ? Color.green : Color.red;
 
                 yield return new WaitForSecondsRealtime(0.25f);
             }

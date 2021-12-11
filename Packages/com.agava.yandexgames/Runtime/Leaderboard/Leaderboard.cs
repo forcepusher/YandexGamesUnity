@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Runtime.InteropServices;
 using AOT;
 using UnityEngine;
@@ -15,29 +14,11 @@ namespace YandexGames
         private static Action<LeaderboardGetEntriesResponse> s_onGetEntriesSuccessCallback;
         private static Action<string> s_onGetEntriesErrorCallback;
 
-        /// <summary>
-        /// LeaderboardService is initialized automatically on load.
-        /// If either something fails or called way too early, this will return false.
-        /// </summary>
-        public static bool IsInitialized => VerifyLeaderboardInitialization();
-        
-        [DllImport("__Internal")]
-        private static extern bool VerifyLeaderboardInitialization();
-
-        /// <summary>
-        /// Coroutine waiting for <see cref="IsInitialized"/> to return true.
-        /// </summary>
-        public static IEnumerator WaitForInitialization()
-        {
-            while (!IsInitialized)
-                yield return null;
-        }
-
         // We shouldn't normally use regions, but my eyes hurt from statics.
 
         #region SetScore
         /// <remarks>
-        /// Use <see cref="PlayerAccount.IsAuthorized"/> to avoid automatic authorization window popup.
+        /// Use <see cref="PlayerAccount.Authorized"/> to avoid automatic authorization window popup.
         /// </remarks>
         public static void SetScore(string leaderboardName, int score, Action onSuccessCallback = null, Action<string> onErrorCallback = null, string extraData = "")
         {
@@ -76,7 +57,7 @@ namespace YandexGames
         /// Returns result JSON as a string in onSuccessCallback - for now.
         /// </summary>
         /// <remarks>
-        /// Use <see cref="PlayerAccount.IsAuthorized"/> to avoid automatic authorization window popup.
+        /// Use <see cref="PlayerAccount.Authorized"/> to avoid automatic authorization window popup.
         /// </remarks>
         public static void GetEntries(string leaderboardName, Action<LeaderboardGetEntriesResponse> onSuccessCallback, Action<string> onErrorCallback = null, int topPlayersCount = 5, int competingPlayersCount = 5, bool includeSelf = true)
         {
