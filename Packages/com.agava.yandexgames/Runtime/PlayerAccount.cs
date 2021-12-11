@@ -29,7 +29,13 @@ namespace YandexGames
         }
 
         #region HasProfileDataPermission
+        /// <remarks>
+        /// Requires authorization. Use <see cref="IsAuthorized"/> and <see cref="Authorize"/>.
+        /// </remarks>
+        public static bool HasProfileDataPermission => CheckProfileDataPermission();
 
+        [DllImport("__Internal")]
+        private static extern bool CheckProfileDataPermission();
         #endregion
 
         #region RequestProfileDataPermission

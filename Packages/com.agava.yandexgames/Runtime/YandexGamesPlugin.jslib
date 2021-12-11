@@ -23,6 +23,8 @@ const library = {
           // Cache the playerAccount immediately so it's ready for verifyPlayerAccountAuthorization call.
           // This IS the intended way to check for player authorization, not even kidding:
           // https://yandex.ru/dev/games/doc/dg/sdk/sdk-player.html#sdk-player__auth
+          // The { scopes: false } ensures personal data permission won't pop up,
+          // but if permissions were granted before, playerAccount will contain personal data.
           sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
             yandexGames.playerAccount = playerAccount;
           }).catch(function () { });
@@ -40,6 +42,29 @@ const library = {
 
     verifyPlayerAccountAuthorization: function () {
       return yandexGames.playerAccount !== undefined;
+    },
+
+    checkProfileDataPermission: function () {
+      if (!yandexGames.verifyPlayerAccountAuthorization()) {
+        throw new Error('HasProfileDataPermission requires authorization.');
+      }
+
+      var publicNamePermission;
+      if ('_personalInfo' in playerAccount && 'scopePermissions' in playerAccount._personalInfo) {
+        publicNamePermission = playerAccount._personalInfo.scopePermissions.public_name;
+      }
+
+      switch (publicNamePermission) {
+        case 'forbid':
+          return false;
+        case 'not_set':
+          return false;
+        case 'allow':
+          return true;
+        default:
+          console.warn('Unexpected response from Yandex. Assuming profile data permissions were not granted. playerAccount = ' + JSON.stringify(playerAccount));
+          return false;
+      }
     },
 
     throwIfSdkNotInitialized: function () {
@@ -95,7 +120,9 @@ const library = {
           case 'allow':
             break;
           default:
-            console.warn('Unexpected response from Yandex. Assuming profile data permissions were granted. playerAccount = ' + JSON.stringify(playerAccount));
+            console.warn('Unexpected response from Yandex. Assuming profile data permissions were not granted. playerAccount = ' + JSON.stringify(playerAccount));
+            yandexGames.invokeErrorCallback(new Error('Unexpected response from Yandex.'), errorCallbackPtr);
+            return;
         }
 
         yandexGames.playerAccount = playerAccount;
@@ -218,6 +245,10 @@ const library = {
 
   VerifyPlayerAccountAuthorization: function () {
     return yandexGames.verifyPlayerAccountAuthorization();
+  },
+
+  CheckProfileDataPermission: function () {
+    return yandexGames.checkProfileDataPermission();
   },
 
   RequestProfileDataPermission: function (onSuccessCallbackPtr, errorCallbackPtr) {
