@@ -79,5 +79,13 @@ namespace YandexGames.Samples
                 }
             });
         }
+
+        public void OnGetLeaderboardPlayerEntryButtonClick()
+        {
+            Leaderboard.GetPlayerEntry("PlaytestBoard", (result) =>
+            {
+                Debug.Log($"My rank = {result.rank}, score = {result.score}");
+            });
+        }
     }
 }
