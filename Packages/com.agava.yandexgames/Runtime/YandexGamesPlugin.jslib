@@ -77,12 +77,12 @@ const library = {
 
       yandexGames.sdk.auth.openAuthDialog().then(function () {
         yandexGames.sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
-          yandexGames.playerAccount = playerAccount;
-        }).catch(function (error) {
-          console.error('authorize failed to update playerAccount. Possible problems ahead. Error was: ' + error.message);
-        }).finally(function () {
           yandexGames.authorized = true;
+          yandexGames.playerAccount = playerAccount;
           dynCall('v', successCallbackPtr, []);
+        }).catch(function (error) {
+          console.error('authorize failed to update playerAccount. Assuming authorization failed. Error was: ' + error.message);
+          yandexGames.invokeErrorCallback(error, errorCallbackPtr);
         });
       }).catch(function (error) {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
