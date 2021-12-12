@@ -22,7 +22,7 @@ namespace YandexGames.Tests
         [Test]
         public void ShouldNotHaveProfileDataPermission()
         {
-            Assert.IsFalse(PlayerAccount.HasProfileDataPermission);
+            Assert.IsFalse(PlayerAccount.HasPersonalProfileDataPermission);
         }
 
         [UnityTest]

@@ -32,10 +32,10 @@ namespace YandexGames
         /// <remarks>
         /// Requires authorization. Use <see cref="Authorized"/> and <see cref="Authorize"/>.
         /// </remarks>
-        public static bool HasProfileDataPermission => CheckProfileDataPermission();
+        public static bool HasPersonalProfileDataPermission => CheckPersonalProfileDataPermission();
 
         [DllImport("__Internal")]
-        private static extern bool CheckProfileDataPermission();
+        private static extern bool CheckPersonalProfileDataPermission();
 
         #region Authorize
         /// <summary>
@@ -75,10 +75,10 @@ namespace YandexGames
 
         #region RequestPersonalProfileDataPermission
         /// <summary>
-        /// Be aware, if user rejects the request - you're not getting another chance.
-        /// The window will never show up again unless user clicks the "X" button.
+        /// Request the permission to get Yandex account name and profile picture when calling <see cref="GetProfileData"/>.
         /// </summary>
         /// <remarks>
+        /// Be aware, if user rejects the request - it's permanent. The request window will never open again.<br/>
         /// Requires authorization. Use <see cref="Authorized"/> and <see cref="Authorize"/>.
         /// </remarks>
         public static void RequestPersonalProfileDataPermission(Action onSuccessCallback = null, Action<string> onErrorCallback = null)
@@ -115,7 +115,7 @@ namespace YandexGames
 
         #region GetProfileData
         /// <summary>
-        /// Will only return <see cref="PlayerAccountProfileDataResponse.uniqueID"/> unless <see cref="HasProfileDataPermission"/>.
+        /// Will only return <see cref="PlayerAccountProfileDataResponse.uniqueID"/> unless <see cref="HasPersonalProfileDataPermission"/>.
         /// </summary>
         /// <remarks>
         /// Requires authorization. Use <see cref="Authorized"/> and <see cref="Authorize"/>.

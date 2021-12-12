@@ -13,7 +13,7 @@ namespace YandexGames.Samples
         private Text _authorizationStatusText;
 
         [SerializeField]
-        private Text _profileDataPermissionStatusText;
+        private Text _personalProfileDataPermissionStatusText;
 
         private void Awake()
         {
@@ -34,7 +34,7 @@ namespace YandexGames.Samples
                 _authorizationStatusText.color = PlayerAccount.Authorized ? Color.green : Color.red;
 
                 if (PlayerAccount.Authorized)
-                    _profileDataPermissionStatusText.color = PlayerAccount.HasProfileDataPermission ? Color.green : Color.red;
+                    _personalProfileDataPermissionStatusText.color = PlayerAccount.HasPersonalProfileDataPermission ? Color.green : Color.red;
 
                 yield return new WaitForSecondsRealtime(0.25f);
             }
@@ -55,7 +55,7 @@ namespace YandexGames.Samples
             PlayerAccount.Authorize();
         }
 
-        public void OnRequestProfileDataPermissionButtonClick()
+        public void OnRequestPersonalProfileDataPermissionButtonClick()
         {
             PlayerAccount.RequestPersonalProfileDataPermission();
         }

@@ -20,7 +20,7 @@ namespace YandexGames
 
         #region SetScore
         /// <summary>
-        /// If user did not give <see cref="PlayerAccount.HasProfileDataPermission"/> or rejected it,
+        /// If user did not give <see cref="PlayerAccount.HasPersonalProfileDataPermission"/> or rejected it,
         /// the result will be posted anonymously. You can prevent that.
         /// </summary>
         /// <remarks>
