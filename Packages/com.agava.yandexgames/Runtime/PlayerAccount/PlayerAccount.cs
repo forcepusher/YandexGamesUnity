@@ -15,7 +15,7 @@ namespace YandexGames
         private static Action<string> s_onAuthorizeErrorCallback;
         private static Action s_onRequestProfileDataPermissionSuccessCallback;
         private static Action<string> s_onRequestProfileDataPermissionErrorCallback;
-        private static Action s_onGetProfileDataSuccessCallback;
+        private static Action<PlayerAccountProfileDataResponse> s_onGetProfileDataSuccessCallback;
         private static Action<string> s_onGetProfileDataErrorCallback;
 
         /// <summary>
@@ -117,41 +117,41 @@ namespace YandexGames
         /// Will only return identity unless <see cref="HasProfileDataPermission"/>.
         /// </summary>
         /// <remarks>
-        /// Requires authorization. Use <see cref="PlayerAccount.Authorized"/> and <see cref="PlayerAccount.Authorize"/>.
+        /// Requires authorization. Use <see cref="Authorized"/> and <see cref="Authorize"/>.
         /// </remarks>
-        public static void GetProfileData(Action<LeaderboardEntryResponse> onSuccessCallback, Action<string> onErrorCallback = null)
+        public static void GetProfileData(Action<PlayerAccountProfileDataResponse> onSuccessCallback, Action<string> onErrorCallback = null)
         {
             s_onGetProfileDataSuccessCallback = onSuccessCallback;
             s_onGetProfileDataErrorCallback = onErrorCallback;
 
-            GetLeaderboardPlayerEntry(OnGetLeaderboardPlayerEntrySuccessCallback, OnGetLeaderboardPlayerEntryErrorCallback);
+            GetProfileData(OnGetProfileDataSuccessCallback, OnGetProfileDataErrorCallback);
         }
 
         [DllImport("__Internal")]
-        private static extern void GetLeaderboardPlayerEntry(string leaderboardName, Action<IntPtr, int> successCallback, Action<IntPtr, int> errorCallback);
+        private static extern void GetProfileData(Action<IntPtr, int> successCallback, Action<IntPtr, int> errorCallback);
 
         [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
-        private static void OnGetLeaderboardPlayerEntrySuccessCallback(IntPtr entryMessageBufferPtr, int entryMessageBufferLength)
+        private static void OnGetProfileDataSuccessCallback(IntPtr entryMessageBufferPtr, int entryMessageBufferLength)
         {
-            string entryResponseJson = new UnmanagedString(entryMessageBufferPtr, entryMessageBufferLength).ToString();
+            string profileDataResponseJson = new UnmanagedString(entryMessageBufferPtr, entryMessageBufferLength).ToString();
 
             if (YandexGamesSdk.CallbackLogging)
-                Debug.Log($"{nameof(Leaderboard)}.{nameof(OnGetLeaderboardPlayerEntrySuccessCallback)} invoked, {nameof(entryResponseJson)} = {entryResponseJson}");
+                Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnGetProfileDataSuccessCallback)} invoked, {nameof(profileDataResponseJson)} = {profileDataResponseJson}");
 
-            LeaderboardEntryResponse entryResponse = JsonUtility.FromJson<LeaderboardEntryResponse>(entryResponseJson);
+            PlayerAccountProfileDataResponse profileDataResponse = JsonUtility.FromJson<PlayerAccountProfileDataResponse>(profileDataResponseJson);
 
-            s_onGetPlayerEntrySuccessCallback?.Invoke(entryResponse);
+            s_onGetProfileDataSuccessCallback?.Invoke(profileDataResponse);
         }
 
         [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
-        private static void OnGetLeaderboardPlayerEntryErrorCallback(IntPtr errorMessageBufferPtr, int errorMessageBufferLength)
+        private static void OnGetProfileDataErrorCallback(IntPtr errorMessageBufferPtr, int errorMessageBufferLength)
         {
             string errorMessage = new UnmanagedString(errorMessageBufferPtr, errorMessageBufferLength).ToString();
 
             if (YandexGamesSdk.CallbackLogging)
-                Debug.Log($"{nameof(Leaderboard)}.{nameof(OnGetLeaderboardPlayerEntryErrorCallback)} invoked, {nameof(errorMessage)} = {errorMessage}");
+                Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnGetProfileDataErrorCallback)} invoked, {nameof(errorMessage)} = {errorMessage}");
 
-            s_onGetPlayerEntryErrorCallback?.Invoke(errorMessage);
+            s_onGetProfileDataErrorCallback?.Invoke(errorMessage);
         }
         #endregion
     }
