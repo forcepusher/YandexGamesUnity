@@ -26,8 +26,18 @@ namespace YandexGames
         [DllImport("__Internal")]
         private static extern bool CheckAuthorization();
 
+        /// <summary>
+        /// Permission to use name and profile picture from the Yandex account.
+        /// </summary>
+        /// <remarks>
+        /// Requires authorization. Use <see cref="Authorized"/> and <see cref="Authorize"/>.
+        /// </remarks>
+        public static bool HasProfileDataPermission => CheckProfileDataPermission();
 
-        #region RequestProfileDataPermission
+        [DllImport("__Internal")]
+        private static extern bool CheckProfileDataPermission();
+
+        #region Authorize
         /// <summary>
         /// Calls a scary authorization window upon the user. Be very afraid.
         /// </summary>
@@ -61,19 +71,6 @@ namespace YandexGames
 
             s_onAuthorizeErrorCallback?.Invoke(errorMessage);
         }
-        #endregion
-
-        #region HasProfileDataPermission
-        /// <summary>
-        /// Permission to use name and profile picture from the Yandex account.
-        /// </summary>
-        /// <remarks>
-        /// Requires authorization. Use <see cref="Authorized"/> and <see cref="Authorize"/>.
-        /// </remarks>
-        public static bool HasProfileDataPermission => CheckProfileDataPermission();
-
-        [DllImport("__Internal")]
-        private static extern bool CheckProfileDataPermission();
         #endregion
 
         #region RequestProfileDataPermission
