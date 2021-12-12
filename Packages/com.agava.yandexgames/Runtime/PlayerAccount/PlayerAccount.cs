@@ -114,7 +114,7 @@ namespace YandexGames
 
         #region GetProfileData
         /// <summary>
-        /// Will only return identity unless <see cref="HasProfileDataPermission"/>.
+        /// Will only return <see cref="PlayerAccountProfileDataResponse.uniqueID"/> unless <see cref="HasProfileDataPermission"/>.
         /// </summary>
         /// <remarks>
         /// Requires authorization. Use <see cref="Authorized"/> and <see cref="Authorize"/>.

@@ -50,5 +50,18 @@ namespace YandexGames.Tests
 
             Assert.IsTrue(callbackInvoked);
         }
+
+        [UnityTest]
+        public IEnumerator GetProfileDataShouldInvokeErrorCallback()
+        {
+            bool callbackInvoked = false;
+            PlayerAccount.GetProfileData(null, onErrorCallback: (message) => {
+                callbackInvoked = true;
+            });
+
+            yield return new WaitForSecondsRealtime(1);
+
+            Assert.IsTrue(callbackInvoked);
+        }
     }
 }

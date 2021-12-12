@@ -40,11 +40,6 @@ namespace YandexGames.Samples
             }
         }
 
-        public void OnAuthorizeButtonClick()
-        {
-            PlayerAccount.Authorize();
-        }
-
         public void OnShowInterestialButtonClick()
         {
             InterestialAd.Show();
@@ -55,9 +50,25 @@ namespace YandexGames.Samples
             VideoAd.Show();
         }
 
+        public void OnAuthorizeButtonClick()
+        {
+            PlayerAccount.Authorize();
+        }
+
         public void OnRequestProfileDataPermissionButtonClick()
         {
             PlayerAccount.RequestProfileDataPermission();
+        }
+
+        public void OnGetProfileDataButtonClick()
+        {
+            PlayerAccount.GetProfileData((result) =>
+            {
+                string name = result.publicName;
+                if (string.IsNullOrEmpty(name))
+                    name = "Anonymous";
+                Debug.Log($"My id = {result.uniqueID}, name = {name}");
+            });
         }
 
         public void OnSetLeaderboardScoreButtonClick()
