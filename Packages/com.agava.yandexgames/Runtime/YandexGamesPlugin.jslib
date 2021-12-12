@@ -193,7 +193,7 @@ const library = {
       yandexGames.leaderboard.getLeaderboardEntries(leaderboardName, {
         includeUser: includeSelf, quantityAround: competingPlayersCount, quantityTop: topPlayersCount
       }).then(function (response) {
-        const entriesJson = JSON.stringify(response);
+        const entriesJson = JSON.stringify(response, yandexGames.replaceIncompatibleJsonElements);
         const entriesUnmanagedString = yandexGames.allocateUnmanagedString(entriesJson);
         dynCall('vii', successCallbackPtr, [entriesUnmanagedString.bufferPtr, entriesUnmanagedString.bufferSize]);
         _free(entriesUnmanagedString.bufferPtr);
@@ -209,7 +209,7 @@ const library = {
       }
 
       yandexGames.leaderboard.getLeaderboardPlayerEntry(leaderboardName).then(function (response) {
-        const entryJson = JSON.stringify(response);
+        const entryJson = JSON.stringify(response, yandexGames.replaceIncompatibleJsonElements);
         const entryUnmanagedString = yandexGames.allocateUnmanagedString(entryJson);
         dynCall('vii', successCallbackPtr, [entryUnmanagedString.bufferPtr, entryUnmanagedString.bufferSize]);
         _free(entryUnmanagedString.bufferPtr);
@@ -223,6 +223,16 @@ const library = {
       const stringBufferPtr = _malloc(stringBufferSize);
       stringToUTF8(string, stringBufferPtr, stringBufferSize);
       return { bufferSize: stringBufferSize, bufferPtr: stringBufferPtr }
+    },
+
+    replaceIncompatibleJsonElements: function(jsonKey, jsonValue) {
+      if (jsonValue && typeof jsonValue === 'object') {
+        if (jsonValue.hasOwnProperty('default')) {
+          Object.defineProperty(jsonValue, 'isDefault', Object.getOwnPropertyDescriptor(jsonValue, 'default'));
+          delete jsonValue['default'];
+        }
+      }
+      return jsonValue;
     },
   },
 
