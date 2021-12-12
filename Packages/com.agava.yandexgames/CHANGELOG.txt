@@ -1,0 +1,2 @@
+v4.0.0 Breaking changes:
+- Renamed RequestProfileDataPermission to RequestPersonalProfileDataPermission.

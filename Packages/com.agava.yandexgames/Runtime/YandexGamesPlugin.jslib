@@ -114,9 +114,9 @@ const library = {
       }
     },
 
-    requestProfileDataPermission: function (successCallbackPtr, errorCallbackPtr) {
+    requestPersonalProfileDataPermission: function (successCallbackPtr, errorCallbackPtr) {
       if (yandexGames.invokeErrorCallbackIfNotAuthorized(errorCallbackPtr)) {
-        console.error('requestProfileDataPermission requires authorization. Assuming profile data permissions were not granted.');
+        console.error('requestPersonalProfileDataPermission requires authorization. Assuming profile data permissions were not granted.');
         return;
       }
 
@@ -282,10 +282,10 @@ const library = {
     return yandexGames.checkProfileDataPermission();
   },
 
-  RequestProfileDataPermission: function (successCallbackPtr, errorCallbackPtr) {
+  RequestPersonalProfileDataPermission: function (successCallbackPtr, errorCallbackPtr) {
     yandexGames.throwIfSdkNotInitialized();
 
-    yandexGames.requestProfileDataPermission(successCallbackPtr, errorCallbackPtr);
+    yandexGames.requestPersonalProfileDataPermission(successCallbackPtr, errorCallbackPtr);
   },
 
   GetProfileData: function (successCallbackPtr, errorCallbackPtr) {

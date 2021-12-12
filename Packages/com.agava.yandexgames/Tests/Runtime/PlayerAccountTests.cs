@@ -42,7 +42,7 @@ namespace YandexGames.Tests
         public IEnumerator RequestProfileDataPermissionShouldInvokeErrorCallback()
         {
             bool callbackInvoked = false;
-            PlayerAccount.RequestProfileDataPermission(onErrorCallback: (message) => {
+            PlayerAccount.RequestPersonalProfileDataPermission(onErrorCallback: (message) => {
                 callbackInvoked = true;
             });
 

@@ -13,8 +13,8 @@ namespace YandexGames
     {
         private static Action s_onAuthorizeSuccessCallback;
         private static Action<string> s_onAuthorizeErrorCallback;
-        private static Action s_onRequestProfileDataPermissionSuccessCallback;
-        private static Action<string> s_onRequestProfileDataPermissionErrorCallback;
+        private static Action s_onRequestPersonalProfileDataPermissionSuccessCallback;
+        private static Action<string> s_onRequestPersonalProfileDataPermissionErrorCallback;
         private static Action<PlayerAccountProfileDataResponse> s_onGetProfileDataSuccessCallback;
         private static Action<string> s_onGetProfileDataErrorCallback;
 
@@ -76,39 +76,40 @@ namespace YandexGames
         #region RequestProfileDataPermission
         /// <summary>
         /// Be aware, if user rejects the request - you're not getting another chance.
+        /// The window will never show up again unless user clicks the "X" button.
         /// </summary>
         /// <remarks>
         /// Requires authorization. Use <see cref="Authorized"/> and <see cref="Authorize"/>.
         /// </remarks>
-        public static void RequestProfileDataPermission(Action onSuccessCallback = null, Action<string> onErrorCallback = null)
+        public static void RequestPersonalProfileDataPermission(Action onSuccessCallback = null, Action<string> onErrorCallback = null)
         {
-            s_onRequestProfileDataPermissionSuccessCallback = onSuccessCallback;
-            s_onRequestProfileDataPermissionErrorCallback = onErrorCallback;
+            s_onRequestPersonalProfileDataPermissionSuccessCallback = onSuccessCallback;
+            s_onRequestPersonalProfileDataPermissionErrorCallback = onErrorCallback;
 
-            RequestProfileDataPermission(OnRequestProfileDataPermissionSuccessCallback, OnRequestProfileDataPermissionErrorCallback);
+            RequestPersonalProfileDataPermission(OnRequestPersonalProfileDataPermissionSuccessCallback, OnRequestPersonalProfileDataPermissionErrorCallback);
         }
 
         [DllImport("__Internal")]
-        private static extern void RequestProfileDataPermission(Action successCallback, Action<IntPtr, int> errorCallback);
+        private static extern void RequestPersonalProfileDataPermission(Action successCallback, Action<IntPtr, int> errorCallback);
 
         [MonoPInvokeCallback(typeof(Action))]
-        private static void OnRequestProfileDataPermissionSuccessCallback()
+        private static void OnRequestPersonalProfileDataPermissionSuccessCallback()
         {
             if (YandexGamesSdk.CallbackLogging)
-                Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnRequestProfileDataPermissionSuccessCallback)} invoked");
+                Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnRequestPersonalProfileDataPermissionSuccessCallback)} invoked");
 
-            s_onRequestProfileDataPermissionSuccessCallback?.Invoke();
+            s_onRequestPersonalProfileDataPermissionSuccessCallback?.Invoke();
         }
 
         [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
-        private static void OnRequestProfileDataPermissionErrorCallback(IntPtr errorMessageBufferPtr, int errorMessageBufferLength)
+        private static void OnRequestPersonalProfileDataPermissionErrorCallback(IntPtr errorMessageBufferPtr, int errorMessageBufferLength)
         {
             string errorMessage = new UnmanagedString(errorMessageBufferPtr, errorMessageBufferLength).ToString();
 
             if (YandexGamesSdk.CallbackLogging)
-                Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnRequestProfileDataPermissionErrorCallback)} invoked, {nameof(errorMessage)} = {errorMessage}");
+                Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnRequestPersonalProfileDataPermissionErrorCallback)} invoked, {nameof(errorMessage)} = {errorMessage}");
 
-            s_onRequestProfileDataPermissionErrorCallback?.Invoke(errorMessage);
+            s_onRequestPersonalProfileDataPermissionErrorCallback?.Invoke(errorMessage);
         }
         #endregion
 

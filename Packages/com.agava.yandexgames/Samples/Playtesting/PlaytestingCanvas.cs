@@ -57,7 +57,7 @@ namespace YandexGames.Samples
 
         public void OnRequestProfileDataPermissionButtonClick()
         {
-            PlayerAccount.RequestProfileDataPermission();
+            PlayerAccount.RequestPersonalProfileDataPermission();
         }
 
         public void OnGetProfileDataButtonClick()
