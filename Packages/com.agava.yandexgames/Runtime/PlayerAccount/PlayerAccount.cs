@@ -73,7 +73,7 @@ namespace YandexGames
         }
         #endregion
 
-        #region RequestProfileDataPermission
+        #region RequestPersonalProfileDataPermission
         /// <summary>
         /// Be aware, if user rejects the request - you're not getting another chance.
         /// The window will never show up again unless user clicks the "X" button.
