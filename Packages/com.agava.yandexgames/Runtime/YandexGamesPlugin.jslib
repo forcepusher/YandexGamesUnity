@@ -141,7 +141,7 @@ const library = {
 
       yandexGames.sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
         yandexGames.playerAccount = playerAccount;
-        const profileDataJson = JSON.stringify(playerAccount, yandexGames.replaceIncompatibleJsonElements);
+        const profileDataJson = JSON.stringify(playerAccount._personalInfo, yandexGames.replaceIncompatibleJsonElements);
         const profileDataUnmanagedString = yandexGames.allocateUnmanagedString(profileDataJson);
         dynCall('vii', successCallbackPtr, [profileDataUnmanagedString.bufferPtr, profileDataUnmanagedString.bufferSize]);
         _free(profileDataUnmanagedString.bufferPtr);
