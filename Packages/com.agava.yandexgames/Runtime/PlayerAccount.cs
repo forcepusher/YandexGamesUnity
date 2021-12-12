@@ -15,6 +15,8 @@ namespace YandexGames
         private static Action<string> s_onAuthorizeErrorCallback;
         private static Action s_onRequestProfileDataPermissionSuccessCallback;
         private static Action<string> s_onRequestProfileDataPermissionErrorCallback;
+        private static Action s_onGetProfileDataSuccessCallback;
+        private static Action<string> s_onGetProfileDataErrorCallback;
 
         /// <summary>
         /// Use this before calling SDK methods that require authorization.
@@ -110,6 +112,49 @@ namespace YandexGames
                 Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnRequestProfileDataPermissionErrorCallback)} invoked, {nameof(errorMessage)} = {errorMessage}");
 
             s_onRequestProfileDataPermissionErrorCallback?.Invoke(errorMessage);
+        }
+        #endregion
+
+        #region GetProfileData
+        /// <summary>
+        /// Will only return identity unless <see cref="HasProfileDataPermission"/>.
+        /// </summary>
+        /// <remarks>
+        /// Requires authorization. Use <see cref="PlayerAccount.Authorized"/> and <see cref="PlayerAccount.Authorize"/>.
+        /// </remarks>
+        public static void GetProfileData(Action<LeaderboardEntryResponse> onSuccessCallback, Action<string> onErrorCallback = null)
+        {
+            s_onGetProfileDataSuccessCallback = onSuccessCallback;
+            s_onGetProfileDataErrorCallback = onErrorCallback;
+
+            GetLeaderboardPlayerEntry(OnGetLeaderboardPlayerEntrySuccessCallback, OnGetLeaderboardPlayerEntryErrorCallback);
+        }
+
+        [DllImport("__Internal")]
+        private static extern void GetLeaderboardPlayerEntry(string leaderboardName, Action<IntPtr, int> successCallback, Action<IntPtr, int> errorCallback);
+
+        [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
+        private static void OnGetLeaderboardPlayerEntrySuccessCallback(IntPtr entryMessageBufferPtr, int entryMessageBufferLength)
+        {
+            string entryResponseJson = new UnmanagedString(entryMessageBufferPtr, entryMessageBufferLength).ToString();
+
+            if (YandexGamesSdk.CallbackLogging)
+                Debug.Log($"{nameof(Leaderboard)}.{nameof(OnGetLeaderboardPlayerEntrySuccessCallback)} invoked, {nameof(entryResponseJson)} = {entryResponseJson}");
+
+            LeaderboardEntryResponse entryResponse = JsonUtility.FromJson<LeaderboardEntryResponse>(entryResponseJson);
+
+            s_onGetPlayerEntrySuccessCallback?.Invoke(entryResponse);
+        }
+
+        [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
+        private static void OnGetLeaderboardPlayerEntryErrorCallback(IntPtr errorMessageBufferPtr, int errorMessageBufferLength)
+        {
+            string errorMessage = new UnmanagedString(errorMessageBufferPtr, errorMessageBufferLength).ToString();
+
+            if (YandexGamesSdk.CallbackLogging)
+                Debug.Log($"{nameof(Leaderboard)}.{nameof(OnGetLeaderboardPlayerEntryErrorCallback)} invoked, {nameof(errorMessage)} = {errorMessage}");
+
+            s_onGetPlayerEntryErrorCallback?.Invoke(errorMessage);
         }
         #endregion
     }
