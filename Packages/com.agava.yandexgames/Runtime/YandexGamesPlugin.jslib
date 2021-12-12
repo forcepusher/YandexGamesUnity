@@ -114,7 +114,7 @@ const library = {
       }
     },
 
-    requestProfileDataPermission: function (onAuthenticatedCallbackPtr, errorCallbackPtr) {
+    requestProfileDataPermission: function (successCallbackPtr, errorCallbackPtr) {
       if (yandexGames.invokeErrorCallbackIfNotAuthorized(errorCallbackPtr)) {
         console.error('requestProfileDataPermission requires authorization. Assuming profile data permissions were not granted.');
         return;
@@ -124,10 +124,27 @@ const library = {
         yandexGames.playerAccount = playerAccount;
 
         if (yandexGames.checkProfileDataPermission()) {
-          dynCall('v', onAuthenticatedCallbackPtr, []);
+          dynCall('v', successCallbackPtr, []);
         } else {
           yandexGames.invokeErrorCallback(new Error('User has refused the permission request.'), errorCallbackPtr);
         }
+      }).catch(function (error) {
+        yandexGames.invokeErrorCallback(error, errorCallbackPtr);
+      });
+    },
+
+    getProfileData: function (successCallbackPtr, errorCallbackPtr) {
+      if (yandexGames.invokeErrorCallbackIfNotAuthorized(errorCallbackPtr)) {
+        console.error('requestProfileDataPermission requires authorization. Assuming profile data permissions were not granted.');
+        return;
+      }
+
+      yandexGames.sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
+        yandexGames.playerAccount = playerAccount;
+        const profileDataJson = JSON.stringify(playerAccount, yandexGames.replaceIncompatibleJsonElements);
+        const profileDataUnmanagedString = yandexGames.allocateUnmanagedString(profileDataJson);
+        dynCall('vii', successCallbackPtr, [profileDataUnmanagedString.bufferPtr, profileDataUnmanagedString.bufferSize]);
+        _free(profileDataUnmanagedString.bufferPtr);
       }).catch(function (error) {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
       });
@@ -269,6 +286,12 @@ const library = {
     yandexGames.throwIfSdkNotInitialized();
 
     yandexGames.requestProfileDataPermission(successCallbackPtr, errorCallbackPtr);
+  },
+
+  GetProfileData: function (successCallbackPtr, errorCallbackPtr) {
+    yandexGames.throwIfSdkNotInitialized();
+
+    yandexGames.getProfileData(successCallbackPtr, errorCallbackPtr);
   },
 
   ShowInterestialAd: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
