@@ -19,9 +19,7 @@ namespace YandexGames
         {
             while (true)
             {
-                bool mute = Enabled && Time.deltaTime == Time.maximumDeltaTime && Time.unscaledDeltaTime > Time.maximumDeltaTime;
-                Object.FindObjectOfType<AudioListener>().enabled = !mute;
-                Debug.Log(Time.deltaTime + " " + Time.unscaledDeltaTime);
+                AudioListener.pause = Enabled && Time.unscaledDeltaTime > Time.maximumDeltaTime;
                 await Task.Yield();
             }
         }
