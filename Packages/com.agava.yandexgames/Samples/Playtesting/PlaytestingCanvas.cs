@@ -18,6 +18,7 @@ namespace YandexGames.Samples
         private void Awake()
         {
             YandexGamesSdk.CallbackLogging = true;
+            WebBackgroundMute.Enabled = true;
         }
 
         private IEnumerator Start()
