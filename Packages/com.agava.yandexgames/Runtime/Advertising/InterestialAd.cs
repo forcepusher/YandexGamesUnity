@@ -2,7 +2,6 @@ using System;
 using System.Runtime.InteropServices;
 using AOT;
 using UnityEngine;
-using YandexGames.Utility;
 
 namespace YandexGames
 {
@@ -37,7 +36,7 @@ namespace YandexGames
         }
 
         [DllImport("__Internal")]
-        private static extern bool ShowInterestialAd(Action openCallback, Action<bool> closeCallback, Action<IntPtr, int> errorCallback, Action offlineCallback);
+        private static extern bool ShowInterestialAd(Action openCallback, Action<bool> closeCallback, Action<string> errorCallback, Action offlineCallback);
 
         [MonoPInvokeCallback(typeof(Action))]
         private static void OnOpenCallback()
@@ -57,11 +56,9 @@ namespace YandexGames
             s_onCloseCallback?.Invoke(wasShown);
         }
 
-        [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
-        private static void OnErrorCallback(IntPtr errorMessageBufferPtr, int errorMessageBufferLength)
+        [MonoPInvokeCallback(typeof(Action<string>))]
+        private static void OnErrorCallback(string errorMessage)
         {
-            string errorMessage = new UnmanagedString(errorMessageBufferPtr, errorMessageBufferLength).ToString();
-
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(InterestialAd)}.{nameof(OnErrorCallback)} invoked, {nameof(errorMessage)} = {errorMessage}");
 

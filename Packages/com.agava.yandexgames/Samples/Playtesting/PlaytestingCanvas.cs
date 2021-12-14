@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using YandexGames.Utility;
 
 namespace YandexGames.Samples
 {

@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace YandexGames
+namespace YandexGames.Utility
 {
     /// <summary>
     /// Mutes audio in background while "Run In Background" option is set to true.

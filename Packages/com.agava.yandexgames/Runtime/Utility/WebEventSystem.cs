@@ -1,6 +1,6 @@
 using UnityEngine.EventSystems;
 
-namespace YandexGames
+namespace YandexGames.Utility
 {
     /// <summary>
     /// Workaround for EventSystem bug https://trello.com/c/PjW4j3st

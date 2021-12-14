@@ -2,7 +2,6 @@ using System;
 using System.Runtime.InteropServices;
 using AOT;
 using UnityEngine;
-using YandexGames.Utility;
 
 namespace YandexGames
 {
