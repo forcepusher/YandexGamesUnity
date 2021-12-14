@@ -215,13 +215,7 @@ const library = {
         dynCall('vii', successCallbackPtr, [entriesUnmanagedString.bufferPtr, entriesUnmanagedString.bufferSize]);
         _free(entriesUnmanagedString.bufferPtr);
       }).catch(function (error) {
-        if (error.code === 'LEADERBOARD_PLAYER_NOT_PRESENT') {
-          const entriesUnmanagedString = yandexGames.allocateUnmanagedString('');
-          dynCall('vii', successCallbackPtr, [entriesUnmanagedString.bufferPtr, entriesUnmanagedString.bufferSize]);
-          _free(entriesUnmanagedString.bufferPtr);
-        } else {
-          yandexGames.invokeErrorCallback(error, errorCallbackPtr);
-        }
+        yandexGames.invokeErrorCallback(error, errorCallbackPtr);
       });
     },
 
@@ -237,7 +231,13 @@ const library = {
         dynCall('vii', successCallbackPtr, [entryUnmanagedString.bufferPtr, entryUnmanagedString.bufferSize]);
         _free(entryUnmanagedString.bufferPtr);
       }).catch(function (error) {
-        yandexGames.invokeErrorCallback(error, errorCallbackPtr);
+        if (error.code === 'LEADERBOARD_PLAYER_NOT_PRESENT') {
+          const entryUnmanagedString = yandexGames.allocateUnmanagedString('');
+          dynCall('vii', successCallbackPtr, [entryUnmanagedString.bufferPtr, entryUnmanagedString.bufferSize]);
+          _free(entryUnmanagedString.bufferPtr);
+        } else {
+          yandexGames.invokeErrorCallback(error, errorCallbackPtr);
+        }
       });
     },
 
