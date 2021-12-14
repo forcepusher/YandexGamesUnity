@@ -235,7 +235,7 @@ const library = {
           console.log('1');
           const nullUnmanagedString = yandexGames.allocateUnmanagedString('null');
           console.log('2');
-          dynCall('vii', successCallbackPtr, [nullUnmanagedString.bufferPtr, nullUnmanagedString.bufferSize]);
+          dynCall('vi', successCallbackPtr, [nullUnmanagedString.bufferPtr]);
           console.log('3');
           _free(nullUnmanagedString.bufferPtr);
           console.log('4');

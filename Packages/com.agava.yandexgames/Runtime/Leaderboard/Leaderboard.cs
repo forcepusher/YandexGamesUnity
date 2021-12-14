@@ -115,14 +115,14 @@ namespace YandexGames
         }
 
         [DllImport("__Internal")]
-        private static extern void GetLeaderboardPlayerEntry(string leaderboardName, Action<IntPtr, int> successCallback, Action<IntPtr, int> errorCallback);
+        private static extern void GetLeaderboardPlayerEntry(string leaderboardName, Action<string> successCallback, Action<IntPtr, int> errorCallback);
 
-        [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
-        private static void OnGetLeaderboardPlayerEntrySuccessCallback(IntPtr entryMessageBufferPtr, int entryMessageBufferLength)
+        [MonoPInvokeCallback(typeof(Action<string>))]
+        private static void OnGetLeaderboardPlayerEntrySuccessCallback(string entryResponseJson)
         {
             Debug.Log("C# 1");
 
-            string entryResponseJson = new UnmanagedString(entryMessageBufferPtr, entryMessageBufferLength).ToString();
+            //string entryResponseJson = new UnmanagedString(entryMessageBufferPtr, entryMessageBufferLength).ToString();
 
             Debug.Log("C# 2");
 
