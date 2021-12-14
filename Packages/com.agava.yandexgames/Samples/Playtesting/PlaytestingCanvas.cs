@@ -96,7 +96,10 @@ namespace YandexGames.Samples
         {
             Leaderboard.GetPlayerEntry("PlaytestBoard", (result) =>
             {
-                Debug.Log($"My rank = {result.rank}, score = {result.score}");
+                if (result == null)
+                    Debug.Log("Player is not present in the leaderboard.");
+                else
+                    Debug.Log($"My rank = {result.rank}, score = {result.score}");
             });
         }
     }

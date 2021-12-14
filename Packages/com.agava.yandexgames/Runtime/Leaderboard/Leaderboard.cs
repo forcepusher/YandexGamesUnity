@@ -19,12 +19,10 @@ namespace YandexGames
         // We shouldn't normally use regions, but my eyes hurt from statics.
 
         #region SetScore
-        /// <summary>
-        /// If user did not give <see cref="PlayerAccount.HasPersonalProfileDataPermission"/> or rejected it,
-        /// the result will be posted anonymously. You can prevent that.
-        /// </summary>
         /// <remarks>
-        /// Requires authorization. Use <see cref="PlayerAccount.Authorized"/> and <see cref="PlayerAccount.Authorize"/>.
+        /// <para />To prevent overwriting a better result, use <see cref="GetPlayerEntry"/>.
+        /// <para />If user did not give <see cref="PlayerAccount.HasPersonalProfileDataPermission"/> or rejected it, the result will be posted anonymously.
+        /// <para />Requires authorization. Use <see cref="PlayerAccount.Authorized"/> and <see cref="PlayerAccount.Authorize"/>.
         /// </remarks>
         public static void SetScore(string leaderboardName, int score, Action onSuccessCallback = null, Action<string> onErrorCallback = null, string extraData = "")
         {
@@ -103,7 +101,7 @@ namespace YandexGames
 
         #region GetPlayerEntry
         /// <summary>
-        /// Returns a fully parsed result object in onSuccessCallback.
+        /// Returns a fully parsed result object in onSuccessCallback, or returns null if player is not present.
         /// </summary>
         /// <remarks>
         /// Requires authorization. Use <see cref="PlayerAccount.Authorized"/> and <see cref="PlayerAccount.Authorize"/>.
@@ -127,7 +125,7 @@ namespace YandexGames
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(Leaderboard)}.{nameof(OnGetLeaderboardPlayerEntrySuccessCallback)} invoked, {nameof(entryResponseJson)} = {entryResponseJson}");
 
-            LeaderboardEntryResponse entryResponse = JsonUtility.FromJson<LeaderboardEntryResponse>(entryResponseJson);
+            LeaderboardEntryResponse entryResponse = string.IsNullOrEmpty(entryResponseJson) ? null : JsonUtility.FromJson<LeaderboardEntryResponse>(entryResponseJson);
 
             s_onGetPlayerEntrySuccessCallback?.Invoke(entryResponse);
         }
