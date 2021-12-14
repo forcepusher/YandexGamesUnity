@@ -288,7 +288,7 @@ const library = {
     return yandexGames.checkPersonalProfileDataPermission();
   },
 
-  RequestPersonalProfileDataPermission: function (successCallbackPtr, errorCallbackPtr) {
+  RequestPlayerAccountPersonalProfileDataPermission: function (successCallbackPtr, errorCallbackPtr) {
     yandexGames.throwIfSdkNotInitialized();
 
     yandexGames.requestPersonalProfileDataPermission(successCallbackPtr, errorCallbackPtr);

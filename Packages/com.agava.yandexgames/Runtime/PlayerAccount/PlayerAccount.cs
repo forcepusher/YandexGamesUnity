@@ -45,7 +45,7 @@ namespace YandexGames
             s_onAuthorizeSuccessCallback = onSuccessCallback;
             s_onAuthorizeErrorCallback = onErrorCallback;
 
-            Authorize(OnAuthorizeSuccessCallback, OnAuthorizeErrorCallback);
+            AuthorizePlayerAccount(OnAuthorizeSuccessCallback, OnAuthorizeErrorCallback);
         }
 
         [DllImport("__Internal")]
@@ -83,11 +83,11 @@ namespace YandexGames
             s_onRequestPersonalProfileDataPermissionSuccessCallback = onSuccessCallback;
             s_onRequestPersonalProfileDataPermissionErrorCallback = onErrorCallback;
 
-            RequestPersonalProfileDataPermission(OnRequestPersonalProfileDataPermissionSuccessCallback, OnRequestPersonalProfileDataPermissionErrorCallback);
+            RequestPlayerAccountPersonalProfileDataPermission(OnRequestPersonalProfileDataPermissionSuccessCallback, OnRequestPersonalProfileDataPermissionErrorCallback);
         }
 
         [DllImport("__Internal")]
-        private static extern void RequestPersonalProfileDataPermission(Action successCallback, Action<IntPtr, int> errorCallback);
+        private static extern void RequestPlayerAccountPersonalProfileDataPermission(Action successCallback, Action<string> errorCallback);
 
         [MonoPInvokeCallback(typeof(Action))]
         private static void OnRequestPersonalProfileDataPermissionSuccessCallback()
