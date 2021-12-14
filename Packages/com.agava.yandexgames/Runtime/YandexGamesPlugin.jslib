@@ -232,9 +232,13 @@ const library = {
         _free(entryUnmanagedString.bufferPtr);
       }).catch(function (error) {
         if (error.code === 'LEADERBOARD_PLAYER_NOT_PRESENT') {
-          const entryUnmanagedString = yandexGames.allocateUnmanagedString('');
-          dynCall('vii', successCallbackPtr, [entryUnmanagedString.bufferPtr, entryUnmanagedString.bufferSize]);
-          _free(entryUnmanagedString.bufferPtr);
+          console.log('1');
+          const nullUnmanagedString = yandexGames.allocateUnmanagedString('null');
+          console.log('2');
+          dynCall('vii', successCallbackPtr, [nullUnmanagedString.bufferPtr, nullUnmanagedString.bufferSize]);
+          console.log('3');
+          _free(nullUnmanagedString.bufferPtr);
+          console.log('4');
         } else {
           yandexGames.invokeErrorCallback(error, errorCallbackPtr);
         }
