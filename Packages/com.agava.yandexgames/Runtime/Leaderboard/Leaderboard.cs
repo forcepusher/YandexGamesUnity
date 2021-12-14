@@ -120,58 +120,12 @@ namespace YandexGames
         [MonoPInvokeCallback(typeof(Action<string>))]
         private static void OnGetLeaderboardPlayerEntrySuccessCallback(string entryResponseJson)
         {
-            Debug.Log("C# 1");
-
-            //string entryResponseJson = new UnmanagedString(entryMessageBufferPtr, entryMessageBufferLength).ToString();
-
-            Debug.Log("C# 2");
-
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(Leaderboard)}.{nameof(OnGetLeaderboardPlayerEntrySuccessCallback)} invoked, {nameof(entryResponseJson)} = {entryResponseJson}");
 
-            Debug.Log("C# 3");
-             
-            LeaderboardEntryResponse entryResponse;
-
-            Debug.Log("C# 4.0");
-
-            Debug.Log(entryResponseJson.Length);
-
-            Debug.Log("C# 4.1");
-
-            Debug.Log(entryResponseJson);
-
-            Debug.Log("C# 4.2");
-
-            Debug.Log(string.Equals(entryResponseJson, "null"));
-
-            Debug.Log("C# 4.3");
-
-            Debug.Log((entryResponseJson == "null").ToString());
-
-            Debug.Log("C# 4.4");
-
-            //if (entryResponseJson == "null")
-            if (string.Equals(entryResponseJson, "null"))
-            {
-                Debug.Log("C# 5");
-                entryResponse = null;
-                Debug.Log("C# 6");
-            }
-            else
-            {
-                Debug.Log("C# 7");
-                entryResponse = JsonUtility.FromJson<LeaderboardEntryResponse>(entryResponseJson);
-                Debug.Log("C# 8");
-            }
-
-            //LeaderboardEntryResponse entryResponse = entryResponseJson == "null" ? null : JsonUtility.FromJson<LeaderboardEntryResponse>(entryResponseJson);
-
-            Debug.Log("C# 9");
+            LeaderboardEntryResponse entryResponse = entryResponseJson == "null" ? null : JsonUtility.FromJson<LeaderboardEntryResponse>(entryResponseJson);
 
             s_onGetPlayerEntrySuccessCallback?.Invoke(entryResponse);
-
-            Debug.Log("C# 10");
         }
 
         [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
