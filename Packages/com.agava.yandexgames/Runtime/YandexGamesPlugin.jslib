@@ -55,9 +55,9 @@ const library = {
     },
 
     invokeErrorCallback: function (error, errorCallbackPtr) {
-      const errorUnmanagedString = yandexGames.allocateUnmanagedString(error.message);
-      dynCall('vii', errorCallbackPtr, [errorUnmanagedString.bufferPtr, errorUnmanagedString.bufferSize]);
-      _free(errorUnmanagedString.bufferPtr);
+      const errorUnmanagedStringPtr = yandexGames.allocateUnmanagedString(error.message);
+      dynCall('vi', errorCallbackPtr, [errorUnmanagedStringPtr]);
+      _free(errorUnmanagedStringPtr);
     },
 
     invokeErrorCallbackIfNotAuthorized: function (errorCallbackPtr) {
@@ -142,9 +142,9 @@ const library = {
       yandexGames.sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
         yandexGames.playerAccount = playerAccount;
         const profileDataJson = JSON.stringify(playerAccount._personalInfo, yandexGames.replaceIncompatibleJsonElements);
-        const profileDataUnmanagedString = yandexGames.allocateUnmanagedString(profileDataJson);
-        dynCall('vii', successCallbackPtr, [profileDataUnmanagedString.bufferPtr, profileDataUnmanagedString.bufferSize]);
-        _free(profileDataUnmanagedString.bufferPtr);
+        const profileDataUnmanagedStringPtr = yandexGames.allocateUnmanagedString(profileDataJson);
+        dynCall('vi', successCallbackPtr, [profileDataUnmanagedStringPtr]);
+        _free(profileDataUnmanagedStringPtr);
       }).catch(function (error) {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
       });
@@ -211,9 +211,9 @@ const library = {
         includeUser: includeSelf, quantityAround: competingPlayersCount, quantityTop: topPlayersCount
       }).then(function (response) {
         const entriesJson = JSON.stringify(response, yandexGames.replaceIncompatibleJsonElements);
-        const entriesUnmanagedString = yandexGames.allocateUnmanagedString(entriesJson);
-        dynCall('vii', successCallbackPtr, [entriesUnmanagedString.bufferPtr, entriesUnmanagedString.bufferSize]);
-        _free(entriesUnmanagedString.bufferPtr);
+        const entriesUnmanagedStringPtr = yandexGames.allocateUnmanagedString(entriesJson);
+        dynCall('vi', successCallbackPtr, [entriesUnmanagedStringPtr]);
+        _free(entriesUnmanagedStringPtr);
       }).catch(function (error) {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
       });
@@ -227,14 +227,14 @@ const library = {
 
       yandexGames.leaderboard.getLeaderboardPlayerEntry(leaderboardName).then(function (response) {
         const entryJson = JSON.stringify(response, yandexGames.replaceIncompatibleJsonElements);
-        const entryUnmanagedString = yandexGames.allocateUnmanagedString(entryJson);
-        dynCall('vii', successCallbackPtr, [entryUnmanagedString.bufferPtr, entryUnmanagedString.bufferSize]);
-        _free(entryUnmanagedString.bufferPtr);
+        const entryUnmanagedStringPtr = yandexGames.allocateUnmanagedString(entryJson);
+        dynCall('vi', successCallbackPtr, [entryUnmanagedStringPtr]);
+        _free(entryUnmanagedStringPtr);
       }).catch(function (error) {
         if (error.code === 'LEADERBOARD_PLAYER_NOT_PRESENT') {
-          const nullUnmanagedString = yandexGames.allocateUnmanagedString('null');
-          dynCall('vi', successCallbackPtr, [nullUnmanagedString.bufferPtr]);
-          _free(nullUnmanagedString.bufferPtr);
+          const nullUnmanagedStringPtr = yandexGames.allocateUnmanagedString('null');
+          dynCall('vi', successCallbackPtr, [nullUnmanagedStringPtr]);
+          _free(nullUnmanagedStringPtr);
         } else {
           yandexGames.invokeErrorCallback(error, errorCallbackPtr);
         }
@@ -245,7 +245,7 @@ const library = {
       const stringBufferSize = lengthBytesUTF8(string) + 1;
       const stringBufferPtr = _malloc(stringBufferSize);
       stringToUTF8(string, stringBufferPtr, stringBufferSize);
-      return { bufferSize: stringBufferSize, bufferPtr: stringBufferPtr }
+      return stringBufferPtr;
     },
 
     replaceIncompatibleJsonElements: function(jsonKey, jsonValue) {
