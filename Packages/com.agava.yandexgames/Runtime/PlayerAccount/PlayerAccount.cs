@@ -50,7 +50,7 @@ namespace YandexGames
         }
 
         [DllImport("__Internal")]
-        private static extern void Authorize(Action successCallback, Action<IntPtr, int> errorCallback);
+        private static extern void AuthorizePlayerAccount(Action successCallback, Action<string> errorCallback);
 
         [MonoPInvokeCallback(typeof(Action))]
         private static void OnAuthorizeSuccessCallback()
@@ -61,11 +61,9 @@ namespace YandexGames
             s_onAuthorizeSuccessCallback?.Invoke();
         }
 
-        [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
-        private static void OnAuthorizeErrorCallback(IntPtr errorMessageBufferPtr, int errorMessageBufferLength)
+        [MonoPInvokeCallback(typeof(Action<string>))]
+        private static void OnAuthorizeErrorCallback(string errorMessage)
         {
-            string errorMessage = new UnmanagedString(errorMessageBufferPtr, errorMessageBufferLength).ToString();
-
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnAuthorizeErrorCallback)} invoked, {nameof(errorMessage)} = {errorMessage}");
 
@@ -101,11 +99,9 @@ namespace YandexGames
             s_onRequestPersonalProfileDataPermissionSuccessCallback?.Invoke();
         }
 
-        [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
-        private static void OnRequestPersonalProfileDataPermissionErrorCallback(IntPtr errorMessageBufferPtr, int errorMessageBufferLength)
+        [MonoPInvokeCallback(typeof(Action<string>))]
+        private static void OnRequestPersonalProfileDataPermissionErrorCallback(string errorMessage)
         {
-            string errorMessage = new UnmanagedString(errorMessageBufferPtr, errorMessageBufferLength).ToString();
-
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnRequestPersonalProfileDataPermissionErrorCallback)} invoked, {nameof(errorMessage)} = {errorMessage}");
 
@@ -129,13 +125,11 @@ namespace YandexGames
         }
 
         [DllImport("__Internal")]
-        private static extern void GetProfileData(Action<IntPtr, int> successCallback, Action<IntPtr, int> errorCallback);
+        private static extern void GetProfileData(Action<string> successCallback, Action<string> errorCallback);
 
-        [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
-        private static void OnGetProfileDataSuccessCallback(IntPtr entryMessageBufferPtr, int entryMessageBufferLength)
+        [MonoPInvokeCallback(typeof(Action<string>))]
+        private static void OnGetProfileDataSuccessCallback(string profileDataResponseJson)
         {
-            string profileDataResponseJson = new UnmanagedString(entryMessageBufferPtr, entryMessageBufferLength).ToString();
-
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnGetProfileDataSuccessCallback)} invoked, {nameof(profileDataResponseJson)} = {profileDataResponseJson}");
 
@@ -144,11 +138,9 @@ namespace YandexGames
             s_onGetProfileDataSuccessCallback?.Invoke(profileDataResponse);
         }
 
-        [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
-        private static void OnGetProfileDataErrorCallback(IntPtr errorMessageBufferPtr, int errorMessageBufferLength)
+        [MonoPInvokeCallback(typeof(Action<string>))]
+        private static void OnGetProfileDataErrorCallback(string errorMessage)
         {
-            string errorMessage = new UnmanagedString(errorMessageBufferPtr, errorMessageBufferLength).ToString();
-
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnGetProfileDataErrorCallback)} invoked, {nameof(errorMessage)} = {errorMessage}");
 

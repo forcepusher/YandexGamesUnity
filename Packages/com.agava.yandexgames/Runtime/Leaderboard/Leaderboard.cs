@@ -33,7 +33,7 @@ namespace YandexGames
         }
 
         [DllImport("__Internal")]
-        private static extern void SetLeaderboardScore(string leaderboardName, int score, Action successCallback, Action<IntPtr, int> errorCallback, string extraData);
+        private static extern void SetLeaderboardScore(string leaderboardName, int score, Action successCallback, Action<string> errorCallback, string extraData);
 
         [MonoPInvokeCallback(typeof(Action))]
         private static void OnSetLeaderboardScoreSuccessCallback()
@@ -44,11 +44,9 @@ namespace YandexGames
             s_onSetScoreSuccessCallback?.Invoke();
         }
 
-        [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
-        private static void OnSetLeaderboardScoreErrorCallback(IntPtr errorMessageBufferPtr, int errorMessageBufferLength)
+        [MonoPInvokeCallback(typeof(Action<string>))]
+        private static void OnSetLeaderboardScoreErrorCallback(string errorMessage)
         {
-            string errorMessage = new UnmanagedString(errorMessageBufferPtr, errorMessageBufferLength).ToString();
-
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(Leaderboard)}.{nameof(OnSetLeaderboardScoreErrorCallback)} invoked, {nameof(errorMessage)} = {errorMessage}");
 
@@ -72,13 +70,11 @@ namespace YandexGames
         }
 
         [DllImport("__Internal")]
-        private static extern void GetLeaderboardEntries(string leaderboardName, Action<IntPtr, int> successCallback, Action<IntPtr, int> errorCallback, int topPlayersCount, int competingPlayersCount, bool includeSelf);
+        private static extern void GetLeaderboardEntries(string leaderboardName, Action<string> successCallback, Action<string> errorCallback, int topPlayersCount, int competingPlayersCount, bool includeSelf);
 
-        [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
-        private static void OnGetLeaderboardEntriesSuccessCallback(IntPtr entriesMessageBufferPtr, int entriesMessageBufferLength)
+        [MonoPInvokeCallback(typeof(Action<string>))]
+        private static void OnGetLeaderboardEntriesSuccessCallback(string entriesResponseJson)
         {
-            string entriesResponseJson = new UnmanagedString(entriesMessageBufferPtr, entriesMessageBufferLength).ToString();
-
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(Leaderboard)}.{nameof(OnGetLeaderboardEntriesSuccessCallback)} invoked, {nameof(entriesResponseJson)} = {entriesResponseJson}");
 
@@ -87,11 +83,9 @@ namespace YandexGames
             s_onGetEntriesSuccessCallback?.Invoke(entriesResponse);
         }
 
-        [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
-        private static void OnGetLeaderboardEntriesErrorCallback(IntPtr errorMessageBufferPtr, int errorMessageBufferLength)
+        [MonoPInvokeCallback(typeof(Action<string>))]
+        private static void OnGetLeaderboardEntriesErrorCallback(string errorMessage)
         {
-            string errorMessage = new UnmanagedString(errorMessageBufferPtr, errorMessageBufferLength).ToString();
-
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(Leaderboard)}.{nameof(OnGetLeaderboardEntriesErrorCallback)} invoked, {nameof(errorMessage)} = {errorMessage}");
 
@@ -115,7 +109,7 @@ namespace YandexGames
         }
 
         [DllImport("__Internal")]
-        private static extern void GetLeaderboardPlayerEntry(string leaderboardName, Action<string> successCallback, Action<IntPtr, int> errorCallback);
+        private static extern void GetLeaderboardPlayerEntry(string leaderboardName, Action<string> successCallback, Action<string> errorCallback);
 
         [MonoPInvokeCallback(typeof(Action<string>))]
         private static void OnGetLeaderboardPlayerEntrySuccessCallback(string entryResponseJson)
@@ -128,11 +122,9 @@ namespace YandexGames
             s_onGetPlayerEntrySuccessCallback?.Invoke(entryResponse);
         }
 
-        [MonoPInvokeCallback(typeof(Action<IntPtr, int>))]
-        private static void OnGetLeaderboardPlayerEntryErrorCallback(IntPtr errorMessageBufferPtr, int errorMessageBufferLength)
+        [MonoPInvokeCallback(typeof(Action<string>))]
+        private static void OnGetLeaderboardPlayerEntryErrorCallback(string errorMessage)
         {
-            string errorMessage = new UnmanagedString(errorMessageBufferPtr, errorMessageBufferLength).ToString();
-
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(Leaderboard)}.{nameof(OnGetLeaderboardPlayerEntryErrorCallback)} invoked, {nameof(errorMessage)} = {errorMessage}");
 

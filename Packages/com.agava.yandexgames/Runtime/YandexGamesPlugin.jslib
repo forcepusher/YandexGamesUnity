@@ -68,7 +68,7 @@ const library = {
       return false;
     },
 
-    authorize: function (successCallbackPtr, errorCallbackPtr) {
+    authorizePlayerAccount: function (successCallbackPtr, errorCallbackPtr) {
       if (yandexGames.authorized) {
         console.error('Already authorized.');
         dynCall('v', successCallbackPtr, []);
@@ -270,10 +270,10 @@ const library = {
     return yandexGames.initialized;
   },
 
-  Authorize: function (successCallbackPtr, errorCallbackPtr) {
+  AuthorizePlayerAccount: function (successCallbackPtr, errorCallbackPtr) {
     yandexGames.throwIfSdkNotInitialized();
 
-    yandexGames.authorize(successCallbackPtr, errorCallbackPtr);
+    yandexGames.authorizePlayerAccount(successCallbackPtr, errorCallbackPtr);
   },
 
   CheckAuthorization: function () {
