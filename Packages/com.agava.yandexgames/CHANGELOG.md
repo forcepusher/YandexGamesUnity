@@ -1,3 +1,7 @@
+v5.0.1  
+Fixes:  
+- Fixed Leaderboard.GetPlayerEntry successCallback silently stopping execution when it's supposed to return null.  
+  
 v5.0.0  
 Breaking changes:  
 - Leaderboard.GetPlayerEntry now returns null in successCallback instead of invoking errorCallback.  
