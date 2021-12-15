@@ -5,8 +5,11 @@ namespace YandexGames.Utility
 {
     /// <summary>
     /// Mutes audio in background while "Run In Background" option is set to true.
-    /// Workaround for https://trello.com/c/PjW4j3st
     /// </summary>
+    /// <remarks>
+    /// Uses <see cref="AudioListener.pause"/> to achieve this effect.<br/>
+    /// Workaround for <see href="https://trello.com/c/PjW4j3st"/>
+    /// </remarks>
     public static class WebBackgroundMute
     {
         public static bool Enabled = false;
