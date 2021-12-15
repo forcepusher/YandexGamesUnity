@@ -21,7 +21,7 @@ namespace YandexGames
         /// <remarks>
         /// <para />To prevent overwriting a better result, use <see cref="GetPlayerEntry"/>.
         /// <para />If user did not give <see cref="PlayerAccount.HasPersonalProfileDataPermission"/> or rejected it, the result will be posted anonymously.
-        /// <para />Requires authorization. Use <see cref="PlayerAccount.Authorized"/> and <see cref="PlayerAccount.Authorize"/>.
+        /// <para />Requires authorization. Use <see cref="PlayerAccount.IsAuthorized"/> and <see cref="PlayerAccount.Authorize"/>.
         /// </remarks>
         public static void SetScore(string leaderboardName, int score, Action onSuccessCallback = null, Action<string> onErrorCallback = null, string extraData = "")
         {
@@ -58,7 +58,7 @@ namespace YandexGames
         /// Returns a fully parsed result object in onSuccessCallback.
         /// </summary>
         /// <remarks>
-        /// Requires authorization. Use <see cref="PlayerAccount.Authorized"/> and <see cref="PlayerAccount.Authorize"/>.
+        /// Requires authorization. Use <see cref="PlayerAccount.IsAuthorized"/> and <see cref="PlayerAccount.Authorize"/>.
         /// </remarks>
         public static void GetEntries(string leaderboardName, Action<LeaderboardGetEntriesResponse> onSuccessCallback, Action<string> onErrorCallback = null, int topPlayersCount = 5, int competingPlayersCount = 5, bool includeSelf = true)
         {
@@ -97,7 +97,7 @@ namespace YandexGames
         /// Returns a fully parsed result object in onSuccessCallback, or returns null if player is not present.
         /// </summary>
         /// <remarks>
-        /// Requires authorization. Use <see cref="PlayerAccount.Authorized"/> and <see cref="PlayerAccount.Authorize"/>.
+        /// Requires authorization. Use <see cref="PlayerAccount.IsAuthorized"/> and <see cref="PlayerAccount.Authorize"/>.
         /// </remarks>
         public static void GetPlayerEntry(string leaderboardName, Action<LeaderboardEntryResponse> onSuccessCallback, Action<string> onErrorCallback = null)
         {

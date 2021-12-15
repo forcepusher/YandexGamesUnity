@@ -33,9 +33,9 @@ namespace YandexGames.Samples
 
             while (true)
             {
-                _authorizationStatusText.color = PlayerAccount.Authorized ? Color.green : Color.red;
+                _authorizationStatusText.color = PlayerAccount.IsAuthorized ? Color.green : Color.red;
 
-                if (PlayerAccount.Authorized)
+                if (PlayerAccount.IsAuthorized)
                     _personalProfileDataPermissionStatusText.color = PlayerAccount.HasPersonalProfileDataPermission ? Color.green : Color.red;
 
                 yield return new WaitForSecondsRealtime(0.25f);

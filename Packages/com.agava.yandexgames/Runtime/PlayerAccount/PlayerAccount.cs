@@ -20,21 +20,21 @@ namespace YandexGames
         /// <summary>
         /// Use this before calling SDK methods that require authorization.
         /// </summary>
-        public static bool Authorized => CheckAuthorization();
+        public static bool IsAuthorized => GetPlayerAccountIsAuthorized();
 
         [DllImport("__Internal")]
-        private static extern bool CheckAuthorization();
+        private static extern bool GetPlayerAccountIsAuthorized();
 
         /// <summary>
         /// Permission to use name and profile picture from the Yandex account.
         /// </summary>
         /// <remarks>
-        /// Requires authorization. Use <see cref="Authorized"/> and <see cref="Authorize"/>.
+        /// Requires authorization. Use <see cref="IsAuthorized"/> and <see cref="Authorize"/>.
         /// </remarks>
-        public static bool HasPersonalProfileDataPermission => CheckPersonalProfileDataPermission();
+        public static bool HasPersonalProfileDataPermission => GetPlayerAccountHasPersonalProfileDataPermission();
 
         [DllImport("__Internal")]
-        private static extern bool CheckPersonalProfileDataPermission();
+        private static extern bool GetPlayerAccountHasPersonalProfileDataPermission();
 
         #region Authorize
         /// <summary>
@@ -45,11 +45,11 @@ namespace YandexGames
             s_onAuthorizeSuccessCallback = onSuccessCallback;
             s_onAuthorizeErrorCallback = onErrorCallback;
 
-            AuthorizePlayerAccount(OnAuthorizeSuccessCallback, OnAuthorizeErrorCallback);
+            PlayerAccountAuthorize(OnAuthorizeSuccessCallback, OnAuthorizeErrorCallback);
         }
 
         [DllImport("__Internal")]
-        private static extern void AuthorizePlayerAccount(Action successCallback, Action<string> errorCallback);
+        private static extern void PlayerAccountAuthorize(Action successCallback, Action<string> errorCallback);
 
         [MonoPInvokeCallback(typeof(Action))]
         private static void OnAuthorizeSuccessCallback()
@@ -76,18 +76,18 @@ namespace YandexGames
         /// </summary>
         /// <remarks>
         /// Be aware, if user rejects the request - it's permanent. The request window will never open again.<br/>
-        /// Requires authorization. Use <see cref="Authorized"/> and <see cref="Authorize"/>.
+        /// Requires authorization. Use <see cref="IsAuthorized"/> and <see cref="Authorize"/>.
         /// </remarks>
         public static void RequestPersonalProfileDataPermission(Action onSuccessCallback = null, Action<string> onErrorCallback = null)
         {
             s_onRequestPersonalProfileDataPermissionSuccessCallback = onSuccessCallback;
             s_onRequestPersonalProfileDataPermissionErrorCallback = onErrorCallback;
 
-            RequestPlayerAccountPersonalProfileDataPermission(OnRequestPersonalProfileDataPermissionSuccessCallback, OnRequestPersonalProfileDataPermissionErrorCallback);
+            PlayerAccountRequestPersonalProfileDataPermission(OnRequestPersonalProfileDataPermissionSuccessCallback, OnRequestPersonalProfileDataPermissionErrorCallback);
         }
 
         [DllImport("__Internal")]
-        private static extern void RequestPlayerAccountPersonalProfileDataPermission(Action successCallback, Action<string> errorCallback);
+        private static extern void PlayerAccountRequestPersonalProfileDataPermission(Action successCallback, Action<string> errorCallback);
 
         [MonoPInvokeCallback(typeof(Action))]
         private static void OnRequestPersonalProfileDataPermissionSuccessCallback()
@@ -113,7 +113,7 @@ namespace YandexGames
         /// Will only return <see cref="PlayerAccountProfileDataResponse.uniqueID"/> unless <see cref="HasPersonalProfileDataPermission"/>.
         /// </summary>
         /// <remarks>
-        /// Requires authorization. Use <see cref="Authorized"/> and <see cref="Authorize"/>.
+        /// Requires authorization. Use <see cref="IsAuthorized"/> and <see cref="Authorize"/>.
         /// </remarks>
         public static void GetProfileData(Action<PlayerAccountProfileDataResponse> onSuccessCallback, Action<string> onErrorCallback = null)
         {

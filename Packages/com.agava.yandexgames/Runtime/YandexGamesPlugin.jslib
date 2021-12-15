@@ -68,7 +68,7 @@ const library = {
       return false;
     },
 
-    authorizePlayerAccount: function (successCallbackPtr, errorCallbackPtr) {
+    playerAccountAuthorize: function (successCallbackPtr, errorCallbackPtr) {
       if (yandexGames.authorized) {
         console.error('Already authorized.');
         dynCall('v', successCallbackPtr, []);
@@ -89,9 +89,9 @@ const library = {
       });
     },
 
-    checkPersonalProfileDataPermission: function () {
+    getPlayerAccountHasPersonalProfileDataPermission: function () {
       if (!yandexGames.authorized) {
-        console.error('checkPersonalProfileDataPermission requires authorization. Assuming profile data permissions were not granted.');
+        console.error('getPlayerAccountHasPersonalProfileDataPermission requires authorization. Assuming profile data permissions were not granted.');
         return false;
       }
 
@@ -123,7 +123,7 @@ const library = {
       yandexGames.sdk.getPlayer({ scopes: true }).then(function (playerAccount) {
         yandexGames.playerAccount = playerAccount;
 
-        if (yandexGames.checkPersonalProfileDataPermission()) {
+        if (yandexGames.getPlayerAccountHasPersonalProfileDataPermission()) {
           dynCall('v', successCallbackPtr, []);
         } else {
           yandexGames.invokeErrorCallback(new Error('User has refused the permission request.'), errorCallbackPtr);
@@ -270,22 +270,22 @@ const library = {
     return yandexGames.initialized;
   },
 
-  AuthorizePlayerAccount: function (successCallbackPtr, errorCallbackPtr) {
+  PlayerAccountAuthorize: function (successCallbackPtr, errorCallbackPtr) {
     yandexGames.throwIfSdkNotInitialized();
 
-    yandexGames.authorizePlayerAccount(successCallbackPtr, errorCallbackPtr);
+    yandexGames.playerAccountAuthorize(successCallbackPtr, errorCallbackPtr);
   },
 
-  CheckAuthorization: function () {
+  GetPlayerAccountIsAuthorized: function () {
     yandexGames.throwIfSdkNotInitialized();
 
     return yandexGames.authorized;
   },
 
-  CheckPersonalProfileDataPermission: function () {
+  GetPlayerAccountHasPersonalProfileDataPermission: function () {
     yandexGames.throwIfSdkNotInitialized();
 
-    return yandexGames.checkPersonalProfileDataPermission();
+    return yandexGames.getPlayerAccountHasPersonalProfileDataPermission();
   },
 
   RequestPlayerAccountPersonalProfileDataPermission: function (successCallbackPtr, errorCallbackPtr) {
