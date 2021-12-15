@@ -1,6 +1,7 @@
 v6.0.0  
 Breaking changes:  
 - PlayerAccount.Authorized is now PlayerAccount.IsAuthorized. Needed that to achieve full naming consistency across internal and external API.  
+- Same goes for YandexGamesSdk.IsInitialized.  
   
 v5.0.1  
 Fixes:  

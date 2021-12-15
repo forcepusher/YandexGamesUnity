@@ -120,11 +120,11 @@ namespace YandexGames
             s_onGetProfileDataSuccessCallback = onSuccessCallback;
             s_onGetProfileDataErrorCallback = onErrorCallback;
 
-            GetProfileData(OnGetProfileDataSuccessCallback, OnGetProfileDataErrorCallback);
+            PlayerAccountGetProfileData(OnGetProfileDataSuccessCallback, OnGetProfileDataErrorCallback);
         }
 
         [DllImport("__Internal")]
-        private static extern void GetProfileData(Action<string> successCallback, Action<string> errorCallback);
+        private static extern void PlayerAccountGetProfileData(Action<string> successCallback, Action<string> errorCallback);
 
         [MonoPInvokeCallback(typeof(Action<string>))]
         private static void OnGetProfileDataSuccessCallback(string profileDataResponseJson)

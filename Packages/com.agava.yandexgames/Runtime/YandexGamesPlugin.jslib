@@ -3,9 +3,9 @@ const library = {
   // Class definition.
 
   $yandexGames: {
-    initialized: false,
+    isInitialized: false,
 
-    authorized: false,
+    isAuthorized: false,
 
     sdk: undefined,
 
@@ -13,7 +13,7 @@ const library = {
 
     playerAccount: undefined,
 
-    initialize: function () {
+    yandexGamesSdkInitialize: function () {
       const sdkScript = document.createElement('script');
       sdkScript.src = 'https://yandex.ru/games/sdk/v2';
       document.head.appendChild(sdkScript);
@@ -24,7 +24,7 @@ const library = {
 
           // The { scopes: false } ensures personal data permission request window won't pop up,
           const playerAccountInitializationPromise = sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
-            yandexGames.authorized = true;
+            yandexGames.isAuthorized = true;
             // Always contains permission info. Contains personal data as well if permissions were granted before.
             yandexGames.playerAccount = playerAccount;
 
@@ -42,14 +42,14 @@ const library = {
               throw new Error('Leaderboard caused Yandex Games SDK to fail initialization.');
             }
 
-            yandexGames.initialized = true;
+            yandexGames.isInitialized = true;
           });
         });
       }
     },
 
     throwIfSdkNotInitialized: function () {
-      if (!yandexGames.initialized) {
+      if (!yandexGames.isInitialized) {
         throw new Error('SDK was not fast enough to initialize. Use YandexGamesSdk.Initialized or WaitForInitialization.');
       }
     },
@@ -61,7 +61,7 @@ const library = {
     },
 
     invokeErrorCallbackIfNotAuthorized: function (errorCallbackPtr) {
-      if (!yandexGames.authorized) {
+      if (!yandexGames.isAuthorized) {
         yandexGames.invokeErrorCallback(new Error('Needs authorization.'), errorCallbackPtr);
         return true;
       }
@@ -69,7 +69,7 @@ const library = {
     },
 
     playerAccountAuthorize: function (successCallbackPtr, errorCallbackPtr) {
-      if (yandexGames.authorized) {
+      if (yandexGames.isAuthorized) {
         console.error('Already authorized.');
         dynCall('v', successCallbackPtr, []);
         return;
@@ -77,7 +77,7 @@ const library = {
 
       yandexGames.sdk.auth.openAuthDialog().then(function () {
         yandexGames.sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
-          yandexGames.authorized = true;
+          yandexGames.isAuthorized = true;
           yandexGames.playerAccount = playerAccount;
           dynCall('v', successCallbackPtr, []);
         }).catch(function (error) {
@@ -90,7 +90,7 @@ const library = {
     },
 
     getPlayerAccountHasPersonalProfileDataPermission: function () {
-      if (!yandexGames.authorized) {
+      if (!yandexGames.isAuthorized) {
         console.error('getPlayerAccountHasPersonalProfileDataPermission requires authorization. Assuming profile data permissions were not granted.');
         return false;
       }
@@ -114,9 +114,9 @@ const library = {
       }
     },
 
-    requestPersonalProfileDataPermission: function (successCallbackPtr, errorCallbackPtr) {
+    playerAccountRequestPersonalProfileDataPermission: function (successCallbackPtr, errorCallbackPtr) {
       if (yandexGames.invokeErrorCallbackIfNotAuthorized(errorCallbackPtr)) {
-        console.error('requestPersonalProfileDataPermission requires authorization. Assuming profile data permissions were not granted.');
+        console.error('playerAccountRequestPersonalProfileDataPermission requires authorization. Assuming profile data permissions were not granted.');
         return;
       }
 
@@ -133,7 +133,7 @@ const library = {
       });
     },
 
-    getProfileData: function (successCallbackPtr, errorCallbackPtr) {
+    playerAccountGetProfileData: function (successCallbackPtr, errorCallbackPtr) {
       if (yandexGames.invokeErrorCallbackIfNotAuthorized(errorCallbackPtr)) {
         console.error('requestProfileDataPermission requires authorization. Assuming profile data permissions were not granted.');
         return;
@@ -262,12 +262,12 @@ const library = {
 
   // External C# calls.
 
-  Initialize: function () {
-    yandexGames.initialize();
+  YandexGamesSdkInitialize: function () {
+    yandexGames.yandexGamesSdkInitialize();
   },
 
-  CheckSdkInitialization: function () {
-    return yandexGames.initialized;
+  GetYandexGamesSdkIsInitialized: function () {
+    return yandexGames.isInitialized;
   },
 
   PlayerAccountAuthorize: function (successCallbackPtr, errorCallbackPtr) {
@@ -279,7 +279,7 @@ const library = {
   GetPlayerAccountIsAuthorized: function () {
     yandexGames.throwIfSdkNotInitialized();
 
-    return yandexGames.authorized;
+    return yandexGames.isAuthorized;
   },
 
   GetPlayerAccountHasPersonalProfileDataPermission: function () {
@@ -288,16 +288,16 @@ const library = {
     return yandexGames.getPlayerAccountHasPersonalProfileDataPermission();
   },
 
-  RequestPlayerAccountPersonalProfileDataPermission: function (successCallbackPtr, errorCallbackPtr) {
+  PlayerAccountRequestPersonalProfileDataPermission: function (successCallbackPtr, errorCallbackPtr) {
     yandexGames.throwIfSdkNotInitialized();
 
-    yandexGames.requestPersonalProfileDataPermission(successCallbackPtr, errorCallbackPtr);
+    yandexGames.playerAccountRequestPersonalProfileDataPermission(successCallbackPtr, errorCallbackPtr);
   },
 
-  GetProfileData: function (successCallbackPtr, errorCallbackPtr) {
+  PlayerAccountGetProfileData: function (successCallbackPtr, errorCallbackPtr) {
     yandexGames.throwIfSdkNotInitialized();
 
-    yandexGames.getProfileData(successCallbackPtr, errorCallbackPtr);
+    yandexGames.playerAccountGetProfileData(successCallbackPtr, errorCallbackPtr);
   },
 
   InterestialAdShow: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
