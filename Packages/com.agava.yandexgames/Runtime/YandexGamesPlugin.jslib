@@ -188,9 +188,9 @@ const library = {
       });
     },
 
-    setLeaderboardScore: function (leaderboardName, score, successCallbackPtr, errorCallbackPtr, extraData) {
+    leaderboardSetScore: function (leaderboardName, score, successCallbackPtr, errorCallbackPtr, extraData) {
       if (yandexGames.invokeErrorCallbackIfNotAuthorized(errorCallbackPtr)) {
-        console.error('setLeaderboardScore requires authorization.');
+        console.error('leaderboardSetScore requires authorization.');
         return;
       }
 
@@ -201,9 +201,9 @@ const library = {
       });
     },
 
-    getLeaderboardEntries: function (leaderboardName, successCallbackPtr, errorCallbackPtr, topPlayersCount, competingPlayersCount, includeSelf) {
+    leaderboardGetEntries: function (leaderboardName, successCallbackPtr, errorCallbackPtr, topPlayersCount, competingPlayersCount, includeSelf) {
       if (yandexGames.invokeErrorCallbackIfNotAuthorized(errorCallbackPtr)) {
-        console.error('getLeaderboardEntries requires authorization.');
+        console.error('leaderboardGetEntries requires authorization.');
         return;
       }
 
@@ -219,9 +219,9 @@ const library = {
       });
     },
 
-    getLeaderboardPlayerEntry: function (leaderboardName, successCallbackPtr, errorCallbackPtr) {
+    leaderboardGetPlayerEntry: function (leaderboardName, successCallbackPtr, errorCallbackPtr) {
       if (yandexGames.invokeErrorCallbackIfNotAuthorized(errorCallbackPtr)) {
-        console.error('getLeaderboardPlayerEntry requires authorization.');
+        console.error('leaderboardGetPlayerEntry requires authorization.');
         return;
       }
 
@@ -312,29 +312,29 @@ const library = {
     yandexGames.videoAdShow(openCallbackPtr, rewardedCallbackPtr, closeCallbackPtr, errorCallbackPtr);
   },
 
-  SetLeaderboardScore: function (leaderboardNamePtr, score, successCallbackPtr, errorCallbackPtr, extraDataPtr) {
+  LeaderboardSetScore: function (leaderboardNamePtr, score, successCallbackPtr, errorCallbackPtr, extraDataPtr) {
     yandexGames.throwIfSdkNotInitialized();
 
     const leaderboardName = UTF8ToString(leaderboardNamePtr);
     var extraData = UTF8ToString(extraDataPtr);
     if (extraData.length === 0) { extraData = undefined; }
-    yandexGames.setLeaderboardScore(leaderboardName, score, successCallbackPtr, errorCallbackPtr, extraData);
+    yandexGames.leaderboardSetScore(leaderboardName, score, successCallbackPtr, errorCallbackPtr, extraData);
   },
 
-  GetLeaderboardEntries: function (leaderboardNamePtr, successCallbackPtr, errorCallbackPtr, topPlayersCount, competingPlayersCount, includeSelf) {
+  LeaderboardGetEntries: function (leaderboardNamePtr, successCallbackPtr, errorCallbackPtr, topPlayersCount, competingPlayersCount, includeSelf) {
     yandexGames.throwIfSdkNotInitialized();
 
     const leaderboardName = UTF8ToString(leaderboardNamePtr);
     // Booleans are transferred as either 1 or 0, so using !! to convert them to true or false.
     includeSelf = !!includeSelf;
-    yandexGames.getLeaderboardEntries(leaderboardName, successCallbackPtr, errorCallbackPtr, topPlayersCount, competingPlayersCount, includeSelf);
+    yandexGames.leaderboardGetEntries(leaderboardName, successCallbackPtr, errorCallbackPtr, topPlayersCount, competingPlayersCount, includeSelf);
   },
 
-  GetLeaderboardPlayerEntry: function (leaderboardNamePtr, successCallbackPtr, errorCallbackPtr) {
+  LeaderboardGetPlayerEntry: function (leaderboardNamePtr, successCallbackPtr, errorCallbackPtr) {
     yandexGames.throwIfSdkNotInitialized();
 
     const leaderboardName = UTF8ToString(leaderboardNamePtr);
-    yandexGames.getLeaderboardPlayerEntry(leaderboardName, successCallbackPtr, errorCallbackPtr);
+    yandexGames.leaderboardGetPlayerEntry(leaderboardName, successCallbackPtr, errorCallbackPtr);
   },
 }
 
