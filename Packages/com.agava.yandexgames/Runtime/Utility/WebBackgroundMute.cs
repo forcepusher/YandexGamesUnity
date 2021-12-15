@@ -19,7 +19,9 @@ namespace YandexGames.Utility
         {
             while (true)
             {
-                AudioListener.pause = Enabled && Time.unscaledDeltaTime > Time.maximumDeltaTime;
+                if (Enabled)
+                    AudioListener.pause = Time.unscaledDeltaTime > Time.maximumDeltaTime;
+
                 await Task.Yield();
             }
         }
