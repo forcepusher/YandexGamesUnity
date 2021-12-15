@@ -31,11 +31,11 @@ namespace YandexGames
             s_onCloseCallback = onCloseCallback;
             s_onErrorCallback = onErrorCallback;
 
-            ShowVideoAd(OnOpenCallback, OnRewardedCallback, OnCloseCallback, OnErrorCallback);
+            VideoAdShow(OnOpenCallback, OnRewardedCallback, OnCloseCallback, OnErrorCallback);
         }
 
         [DllImport("__Internal")]
-        private static extern bool ShowVideoAd(Action openCallback, Action rewardedCallback, Action closeCallback, Action<string> errorCallback);
+        private static extern bool VideoAdShow(Action openCallback, Action rewardedCallback, Action closeCallback, Action<string> errorCallback);
 
         [MonoPInvokeCallback(typeof(Action))]
         private static void OnOpenCallback()

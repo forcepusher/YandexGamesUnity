@@ -32,11 +32,11 @@ namespace YandexGames
             s_onErrorCallback = onErrorCallback;
             s_onOfflineCallback = onOfflineCallback;
 
-            ShowInterestialAd(OnOpenCallback, OnCloseCallback, OnErrorCallback, OnOfflineCallback);
+            InterestialAdShow(OnOpenCallback, OnCloseCallback, OnErrorCallback, OnOfflineCallback);
         }
 
         [DllImport("__Internal")]
-        private static extern bool ShowInterestialAd(Action openCallback, Action<bool> closeCallback, Action<string> errorCallback, Action offlineCallback);
+        private static extern bool InterestialAdShow(Action openCallback, Action<bool> closeCallback, Action<string> errorCallback, Action offlineCallback);
 
         [MonoPInvokeCallback(typeof(Action))]
         private static void OnOpenCallback()
