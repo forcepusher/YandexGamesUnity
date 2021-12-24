@@ -8,14 +8,27 @@ namespace YandexGames.Utility
     /// </summary>
     public static class WebApplication
     {
-        public static float BackgroundDetectionDeltaTimeThreshold = 0.5f;
-        public static int TicksAboveThresholdToTriggerBackground = 2;
-
         /// <summary>
-        /// Detects when app is background while "Run In Background" option is set to true.
+        /// Threshold for <see cref="Time.unscaledDeltaTime"/> to assume that app is running in the background.
         /// </summary>
         /// <remarks>
-        /// This isn't a static event because we can't trust developers to reliably unsubscribe from it.
+        /// This works because most browsers throttle background page update frequency to 1 per second.
+        /// </remarks>
+        public static float BackgroundDetectionDeltaTimeThreshold = 0.5f;
+        /// <summary>
+        /// Number of subsequent updates with <see cref="Time.unscaledDeltaTime"/> above <see cref="BackgroundDetectionDeltaTimeThreshold"/>
+        /// will switch <see cref="InBackground"/> to true.<br/>
+        /// </summary>
+        /// <remarks>
+        /// Increase this value for laggy apps that are getting false-positives.
+        /// </remarks>
+        public static int BackgroundDetectionTicksThreshold = 1;
+
+        /// <summary>
+        /// Detects when app is in the background while <see cref="Application.runInBackground"/> is set to true.
+        /// </summary>
+        /// <remarks>
+        /// This can't be a static event because we can't trust developers to reliably unsubscribe from it.
         /// </remarks>
         public static bool InBackground { get; private set; }
 
@@ -34,7 +47,7 @@ namespace YandexGames.Utility
                 else
                     s_ticksAboveThreshold = 0;
 
-                InBackground = s_ticksAboveThreshold >= TicksAboveThresholdToTriggerBackground;
+                InBackground = s_ticksAboveThreshold >= BackgroundDetectionTicksThreshold;
 
                 await Task.Yield();
             }
