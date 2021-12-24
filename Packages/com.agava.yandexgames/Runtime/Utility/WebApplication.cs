@@ -14,7 +14,7 @@ namespace YandexGames.Utility
         /// <remarks>
         /// This works because most browsers throttle background page update frequency to 1 per second.
         /// </remarks>
-        public static float BackgroundDetectionDeltaTimeThreshold = 0.5f;
+        public static float BackgroundDetectionDeltaTimeThreshold = 0.75f;
         /// <summary>
         /// Number of subsequent updates with <see cref="Time.unscaledDeltaTime"/> above <see cref="BackgroundDetectionDeltaTimeThreshold"/>
         /// will switch <see cref="InBackground"/> to true.<br/>
@@ -22,7 +22,7 @@ namespace YandexGames.Utility
         /// <remarks>
         /// Increase this value for laggy apps that are getting false-positives.
         /// </remarks>
-        public static int BackgroundDetectionTicksThreshold = 1;
+        public static int BackgroundDetectionTicksThreshold = 2;
 
         /// <summary>
         /// Detects when app is in the background while <see cref="Application.runInBackground"/> is set to true.
