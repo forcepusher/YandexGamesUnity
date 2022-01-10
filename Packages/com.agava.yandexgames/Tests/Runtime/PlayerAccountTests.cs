@@ -30,7 +30,8 @@ namespace YandexGames.Tests
         public IEnumerator AuthorizeShouldInvokeErrorCallback()
         {
             bool callbackInvoked = false;
-            PlayerAccount.Authorize(onErrorCallback: (message) => {
+            PlayerAccount.Authorize(onErrorCallback: (message) =>
+            {
                 callbackInvoked = true;
             });
 
@@ -43,7 +44,8 @@ namespace YandexGames.Tests
         public IEnumerator RequestProfileDataPermissionShouldInvokeErrorCallback()
         {
             bool callbackInvoked = false;
-            PlayerAccount.RequestPersonalProfileDataPermission(onErrorCallback: (message) => {
+            PlayerAccount.RequestPersonalProfileDataPermission(onErrorCallback: (message) =>
+            {
                 callbackInvoked = true;
             });
 
@@ -56,7 +58,8 @@ namespace YandexGames.Tests
         public IEnumerator GetProfileDataShouldInvokeErrorCallback()
         {
             bool callbackInvoked = false;
-            PlayerAccount.GetProfileData(null, onErrorCallback: (message) => {
+            PlayerAccount.GetProfileData(null, onErrorCallback: (message) =>
+            {
                 callbackInvoked = true;
             });
 

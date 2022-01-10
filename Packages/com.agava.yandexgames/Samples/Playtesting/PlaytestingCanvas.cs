@@ -2,14 +2,14 @@
 
 using System.Collections;
 using Agava.YandexGames;
+using Agava.YandexGames;
 using Agava.YandexGames.Samples;
+using Agava.YandexGames.Samples;
+using Agava.YandexGames.Utility;
 using Agava.YandexGames.Utility;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Agava.YandexGames;
-using Agava.YandexGames.Samples;
-using Agava.YandexGames.Utility;
 
 namespace Agava.YandexGames.Samples
 {

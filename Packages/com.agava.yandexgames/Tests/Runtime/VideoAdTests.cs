@@ -18,7 +18,8 @@ namespace YandexGames.Tests
         public IEnumerator ShowShouldInvokeErrorCallback()
         {
             bool callbackInvoked = false;
-            VideoAd.Show(onErrorCallback: (message) => {
+            VideoAd.Show(onErrorCallback: (message) =>
+            {
                 callbackInvoked = true;
             });
 
