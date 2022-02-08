@@ -55,7 +55,7 @@ const library = {
     },
 
     invokeErrorCallback: function (error, errorCallbackPtr) {
-      let errorMessage;
+      var errorMessage;
       if (error instanceof Error) {
         errorMessage = error.message;
         if (errorMessage === null) { errorMessage = 'SDK API thrown an error with null message.' }
