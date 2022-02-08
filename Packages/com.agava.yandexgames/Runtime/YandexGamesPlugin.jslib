@@ -55,7 +55,22 @@ const library = {
     },
 
     invokeErrorCallback: function (error, errorCallbackPtr) {
-      const errorUnmanagedStringPtr = yandexGames.allocateUnmanagedString(error.message);
+      let errorMessage;
+      if (error instanceof Error) {
+        errorMessage = error.message;
+        if (errorMessage === null) { errorMessage = 'SDK API thrown an error with null message.' }
+        if (errorMessage === undefined) { errorMessage = 'SDK API thrown an error with undefined message.' }
+      } else if (typeof error === 'string') {
+        errorMessage = error;
+      } else if (error) {
+        errorMessage = 'SDK API thrown an unexpected type as error: ' + JSON.stringify(error);
+      } else if (error === null) {
+        errorMessage = 'SDK API thrown a null as error.';
+      } else {
+        errorMessage = 'SDK API thrown an undefined as error.';
+      }
+
+      const errorUnmanagedStringPtr = yandexGames.allocateUnmanagedString(errorMessage);
       dynCall('vi', errorCallbackPtr, [errorUnmanagedStringPtr]);
       _free(errorUnmanagedStringPtr);
     },
