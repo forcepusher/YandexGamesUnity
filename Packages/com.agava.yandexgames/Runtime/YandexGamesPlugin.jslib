@@ -156,7 +156,7 @@ const library = {
 
       yandexGames.sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
         yandexGames.playerAccount = playerAccount;
-        const profileDataJson = JSON.stringify(playerAccount._personalInfo, yandexGames.replaceIncompatibleJsonElements);
+        const profileDataJson = JSON.stringify(playerAccount._personalInfo);
         const profileDataUnmanagedStringPtr = yandexGames.allocateUnmanagedString(profileDataJson);
         dynCall('vi', successCallbackPtr, [profileDataUnmanagedStringPtr]);
         _free(profileDataUnmanagedStringPtr);
@@ -225,7 +225,7 @@ const library = {
       yandexGames.leaderboard.getLeaderboardEntries(leaderboardName, {
         includeUser: includeSelf, quantityAround: competingPlayersCount, quantityTop: topPlayersCount
       }).then(function (response) {
-        const entriesJson = JSON.stringify(response, yandexGames.replaceIncompatibleJsonElements);
+        const entriesJson = JSON.stringify(response);
         const entriesUnmanagedStringPtr = yandexGames.allocateUnmanagedString(entriesJson);
         dynCall('vi', successCallbackPtr, [entriesUnmanagedStringPtr]);
         _free(entriesUnmanagedStringPtr);
@@ -241,7 +241,7 @@ const library = {
       }
 
       yandexGames.leaderboard.getLeaderboardPlayerEntry(leaderboardName).then(function (response) {
-        const entryJson = JSON.stringify(response, yandexGames.replaceIncompatibleJsonElements);
+        const entryJson = JSON.stringify(response);
         const entryUnmanagedStringPtr = yandexGames.allocateUnmanagedString(entryJson);
         dynCall('vi', successCallbackPtr, [entryUnmanagedStringPtr]);
         _free(entryUnmanagedStringPtr);
@@ -261,16 +261,6 @@ const library = {
       const stringBufferPtr = _malloc(stringBufferSize);
       stringToUTF8(string, stringBufferPtr, stringBufferSize);
       return stringBufferPtr;
-    },
-
-    replaceIncompatibleJsonElements: function(jsonKey, jsonValue) {
-      if (jsonValue && typeof jsonValue === 'object') {
-        if (jsonValue.hasOwnProperty('default')) {
-          Object.defineProperty(jsonValue, 'isDefault', Object.getOwnPropertyDescriptor(jsonValue, 'default'));
-          delete jsonValue['default'];
-        }
-      }
-      return jsonValue;
     },
   },
 
