@@ -28,6 +28,9 @@ namespace Agava.YandexGames
             if (leaderboardName == null)
                 throw new ArgumentNullException(nameof(leaderboardName));
 
+            if (extraData == null)
+                extraData = string.Empty;
+
             s_onSetScoreSuccessCallback = onSuccessCallback;
             s_onSetScoreErrorCallback = onErrorCallback;
 
