@@ -164,7 +164,36 @@ const library = {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
       });
     },
-
+	
+	playerAccountGetData: function (successCallbackPtr, errorCallbackPtr){
+	  if (yandexGames.invokeErrorCallbackIfNotAuthorized(errorCallbackPtr)) {
+        console.error('request player data requires authorization');
+        return;
+      }
+	  yandexGames.playerAccount.getData().then(function (_data) {
+		  const resultObjectUnmanagedStringPtr = yandexGames.allocateUnmanagedString(JSON.stringify(_data));
+		  dynCall('vi', successCallbackPtr, [resultObjectUnmanagedStringPtr]);
+		  _free(resultObjectUnmanagedStringPtr);
+	  }).catch(function (error) {
+        yandexGames.invokeErrorCallback(error, errorCallbackPtr);
+      });
+	},
+	
+	playerAccountSetData: function (dataAsString, flush, successCallbackPtr, errorCallbackPtr)
+	{
+	  if (yandexGames.invokeErrorCallbackIfNotAuthorized(errorCallbackPtr)) {
+        console.error('set player data requires authorization');
+        return;
+      }
+	  
+	  var data  = JSON.parse(dataAsString);
+	  yandexGames.playerAccount.setData(data, !!flush).
+	  then( function() { dynCall('v', successCallbackPtr, []);})
+	  .catch(function (error) {
+        yandexGames.invokeErrorCallback(error, errorCallbackPtr);
+      });
+	},
+	
     interestialAdShow: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
       yandexGames.sdk.adv.showFullscreenAdv({
         callbacks: {
@@ -303,6 +332,20 @@ const library = {
     yandexGames.throwIfSdkNotInitialized();
 
     yandexGames.playerAccountGetProfileData(successCallbackPtr, errorCallbackPtr);
+  },
+ 
+  PlayerAccountGetPlayerData : function(successCallbackPtr, errorCallbackPtr)
+  {
+	yandexGames.throwIfSdkNotInitialized();
+    	
+	yandexGames.playerAccountGetData(successCallbackPtr, errorCallbackPtr);
+  },
+
+  PlayerAccountSetPlayerData : function(data, flush, successCallbackPtr, errorCallbackPtr)
+  {
+	yandexGames.throwIfSdkNotInitialized();
+	  
+	yandexGames.playerAccountSetData(Pointer_stringify(data), flush, successCallbackPtr, errorCallbackPtr);
   },
 
   InterestialAdShow: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
