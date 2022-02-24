@@ -16,6 +16,10 @@ namespace Agava.YandexGames
         private static Action<string> s_onRequestPersonalProfileDataPermissionErrorCallback;
         private static Action<PlayerAccountProfileDataResponse> s_onGetProfileDataSuccessCallback;
         private static Action<string> s_onGetProfileDataErrorCallback;
+        private static Action s_onSetPlayerDataSuccessCallback;
+        private static Action<string> s_onSetPlayerDataErrorCallback;
+        private static Action<string> s_onGetPlayerDataSuccessCallback;
+        private static Action<string> s_onGetPlayerDataErrorCallback;
 
         /// <summary>
         /// Use this before calling SDK methods that require authorization.
@@ -145,6 +149,66 @@ namespace Agava.YandexGames
 
             s_onGetProfileDataErrorCallback?.Invoke(errorMessage);
         }
+        #endregion
+
+
+        #region PlayerData
+        public static void SetPlayerData(string jsonString, bool flush ,Action onSuccessCallback = null, Action<string> onErrorCallback = null)
+        {
+            s_onSetPlayerDataSuccessCallback = onSuccessCallback;
+            s_onSetPlayerDataErrorCallback = onErrorCallback;
+            PlayerAccountSetPlayerData(jsonString, flush, OnSetPlayerDataSuccessCallback, OnSetPlayerDataErrorCallback);
+        }
+
+        [DllImport("__Internal")]
+        private static extern void PlayerAccountSetPlayerData(string jsonString, bool flush, Action successCallback, Action<string> errorCallback);
+
+        [MonoPInvokeCallback(typeof(Action))]
+        private static void OnSetPlayerDataSuccessCallback()
+        {
+            if (YandexGamesSdk.CallbackLogging)
+                Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnSetPlayerDataSuccessCallback)} invoked");
+
+            s_onSetPlayerDataSuccessCallback?.Invoke();
+        }
+
+        [MonoPInvokeCallback(typeof(Action<string>))]
+        private static void OnSetPlayerDataErrorCallback(string errorMessage)
+        {
+            if (YandexGamesSdk.CallbackLogging)
+                Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnSetPlayerDataErrorCallback)} invoked, {nameof(errorMessage)} = {errorMessage}");
+
+            s_onSetPlayerDataErrorCallback?.Invoke(errorMessage);
+        }
+
+        public static void GetPlayerData(Action<string> onSuccessCallback = null, Action<string> onErrorCallback = null)
+        {
+            s_onGetPlayerDataSuccessCallback = onSuccessCallback;
+            s_onGetPlayerDataErrorCallback = onErrorCallback;
+            PlayerAccountGetPlayerData(OnGetPlayerDataSuccessCallback, OnGetPlayerDataErrorCallback);
+        }
+
+        [DllImport("__Internal")]
+        private static extern void PlayerAccountGetPlayerData(Action<string> successCallback, Action<string> errorCallback);
+
+        [MonoPInvokeCallback(typeof(Action<string>))]
+        private static void OnGetPlayerDataSuccessCallback(string jsonString)
+        {
+            if (YandexGamesSdk.CallbackLogging)
+                Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnGetPlayerDataSuccessCallback)} invoked, {nameof(jsonString)} = {jsonString}");
+
+            s_onGetPlayerDataSuccessCallback?.Invoke(jsonString);
+        }
+
+        [MonoPInvokeCallback(typeof(Action<string>))]
+        private static void OnGetPlayerDataErrorCallback(string errorMessage)
+        {
+            if (YandexGamesSdk.CallbackLogging)
+                Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnGetPlayerDataErrorCallback)} invoked, {nameof(errorMessage)} = {errorMessage}");
+
+            s_onGetPlayerDataErrorCallback?.Invoke(errorMessage);
+        }
+
         #endregion
     }
 }
