@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   
 ## [8.1.0] - 2022-02-25  
 ### Added  
-- PlayerAccount.GetPlayerData and SetPlayerData that implements Cloud Save functionality.
+- PlayerAccount.GetPlayerData and SetPlayerData that implements Cloud Save functionality.  
   
 ## [8.0.1] - 2022-02-08  
 ### Fixed  
