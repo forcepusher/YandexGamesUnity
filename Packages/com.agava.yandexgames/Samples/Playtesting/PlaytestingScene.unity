@@ -3520,7 +3520,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Set data
+  m_Text: Set player data
 --- !u!222 &1644675228
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3795,7 +3795,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Get data
+  m_Text: Get player data
 --- !u!222 &1853559957
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -153,10 +153,11 @@ namespace Agava.YandexGames
 
 
         #region PlayerData
-        public static void SetPlayerData(string jsonString, bool flush ,Action onSuccessCallback = null, Action<string> onErrorCallback = null)
+        public static void SetPlayerData(string jsonString, bool flush, Action onSuccessCallback = null, Action<string> onErrorCallback = null)
         {
             s_onSetPlayerDataSuccessCallback = onSuccessCallback;
             s_onSetPlayerDataErrorCallback = onErrorCallback;
+
             PlayerAccountSetPlayerData(jsonString, flush, OnSetPlayerDataSuccessCallback, OnSetPlayerDataErrorCallback);
         }
 
@@ -185,6 +186,7 @@ namespace Agava.YandexGames
         {
             s_onGetPlayerDataSuccessCallback = onSuccessCallback;
             s_onGetPlayerDataErrorCallback = onErrorCallback;
+
             PlayerAccountGetPlayerData(OnGetPlayerDataSuccessCallback, OnGetPlayerDataErrorCallback);
         }
 

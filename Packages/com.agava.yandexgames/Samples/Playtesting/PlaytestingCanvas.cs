@@ -125,7 +125,6 @@ namespace Agava.YandexGames.Samples
         public void OnGetPlayerDataButtonClick()
         {
             PlayerAccount.GetPlayerData((data) => _playerDataTextField.text = data);
-
         }
     }
 }
