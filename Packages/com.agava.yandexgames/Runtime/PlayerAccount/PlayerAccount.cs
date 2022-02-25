@@ -153,10 +153,9 @@ namespace Agava.YandexGames
 
         #region PlayerData
         /// <summary>
-        /// Cloud save method, proxy for player.setData.
+        /// Cloud save method, proxy for player.setData(), where "flush" setting is always true.
         /// </summary>
-        /// <param name="flush">Whether new data should be immediately pushed to server or put in a queue.</param>
-        public static void SetPlayerData(string playerDataJson, bool flush, Action onSuccessCallback = null, Action<string> onErrorCallback = null)
+        public static void SetPlayerData(string playerDataJson, Action onSuccessCallback = null, Action<string> onErrorCallback = null)
         {
             if (playerDataJson == null)
                 throw new ArgumentNullException(nameof(playerDataJson));
@@ -167,11 +166,11 @@ namespace Agava.YandexGames
             s_onSetPlayerDataSuccessCallback = onSuccessCallback;
             s_onSetPlayerDataErrorCallback = onErrorCallback;
 
-            PlayerAccountSetPlayerData(playerDataJson, flush, OnSetPlayerDataSuccessCallback, OnSetPlayerDataErrorCallback);
+            PlayerAccountSetPlayerData(playerDataJson, OnSetPlayerDataSuccessCallback, OnSetPlayerDataErrorCallback);
         }
 
         [DllImport("__Internal")]
-        private static extern void PlayerAccountSetPlayerData(string playerDataJson, bool flush, Action successCallback, Action<string> errorCallback);
+        private static extern void PlayerAccountSetPlayerData(string playerDataJson, Action successCallback, Action<string> errorCallback);
 
         [MonoPInvokeCallback(typeof(Action))]
         private static void OnSetPlayerDataSuccessCallback()
@@ -191,6 +190,10 @@ namespace Agava.YandexGames
             s_onSetPlayerDataErrorCallback?.Invoke(errorMessage);
         }
 
+        /// <summary>
+        /// Loads cloud save data, proxy for player.getData().
+        /// </summary>
+        /// <param name="onSuccessCallback">Callback that returns unparsed JSON string.</param>
         public static void GetPlayerData(Action<string> onSuccessCallback = null, Action<string> onErrorCallback = null)
         {
             s_onGetPlayerDataSuccessCallback = onSuccessCallback;

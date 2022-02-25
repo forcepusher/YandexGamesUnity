@@ -180,14 +180,14 @@ const library = {
       });
     },
 
-    playerAccountSetPlayerData: function (playerDataJson, flush, successCallbackPtr, errorCallbackPtr) {
+    playerAccountSetPlayerData: function (playerDataJson, successCallbackPtr, errorCallbackPtr) {
       if (yandexGames.invokeErrorCallbackIfNotAuthorized(errorCallbackPtr)) {
         console.error('playerAccountSetPlayerData requires authorization.');
         return;
       }
 
       var playerData = JSON.parse(playerDataJson);
-      yandexGames.playerAccount.setData(playerData, flush).then(function () {
+      yandexGames.playerAccount.setData(playerData, true).then(function () {
         dynCall('v', successCallbackPtr, []);
       }).catch(function (error) {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
@@ -340,13 +340,11 @@ const library = {
     yandexGames.playerAccountGetPlayerData(successCallbackPtr, errorCallbackPtr);
   },
 
-  PlayerAccountSetPlayerData: function (playerDataJsonPtr, flush, successCallbackPtr, errorCallbackPtr) {
+  PlayerAccountSetPlayerData: function (playerDataJsonPtr, successCallbackPtr, errorCallbackPtr) {
     yandexGames.throwIfSdkNotInitialized();
 
     const playerDataJson = UTF8ToString(playerDataJsonPtr);
-    // Booleans are transferred as either 1 or 0, so using !! to convert them to true or false.
-    flush = !!flush;
-    yandexGames.playerAccountSetPlayerData(playerDataJson, flush, successCallbackPtr, errorCallbackPtr);
+    yandexGames.playerAccountSetPlayerData(playerDataJson, successCallbackPtr, errorCallbackPtr);
   },
 
   InterestialAdShow: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {

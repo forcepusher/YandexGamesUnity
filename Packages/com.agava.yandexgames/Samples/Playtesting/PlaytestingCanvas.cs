@@ -119,7 +119,7 @@ namespace Agava.YandexGames.Samples
 
         public void OnSetPlayerDataButtonClick()
         {
-            PlayerAccount.SetPlayerData(_playerDataTextField.text, true);
+            PlayerAccount.SetPlayerData(_playerDataTextField.text);
         }
 
         public void OnGetPlayerDataButtonClick()

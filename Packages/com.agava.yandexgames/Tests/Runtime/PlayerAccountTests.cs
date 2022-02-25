@@ -72,7 +72,7 @@ namespace YandexGames.Tests
         public IEnumerator SetPlayerDataShouldInvokeErrorCallback()
         {
             bool callbackInvoked = false;
-            PlayerAccount.SetPlayerData(string.Empty, true, onErrorCallback: (message) =>
+            PlayerAccount.SetPlayerData(string.Empty, onErrorCallback: (message) =>
             {
                 callbackInvoked = true;
             });
