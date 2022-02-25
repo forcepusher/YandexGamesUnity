@@ -150,7 +150,7 @@ const library = {
 
     playerAccountGetProfileData: function (successCallbackPtr, errorCallbackPtr) {
       if (yandexGames.invokeErrorCallbackIfNotAuthorized(errorCallbackPtr)) {
-        console.error('requestProfileDataPermission requires authorization. Assuming profile data permissions were not granted.');
+        console.error('playerAccountGetProfileData requires authorization. Assuming profile data permissions were not granted.');
         return;
       }
 
@@ -165,32 +165,33 @@ const library = {
       });
     },
 
-    playerAccountGetData: function (successCallbackPtr, errorCallbackPtr) {
+    playerAccountGetPlayerData: function (successCallbackPtr, errorCallbackPtr) {
       if (yandexGames.invokeErrorCallbackIfNotAuthorized(errorCallbackPtr)) {
-        console.error('request player data requires authorization');
+        console.error('playerAccountGetPlayerData requires authorization.');
         return;
       }
-      yandexGames.playerAccount.getData().then(function (_data) {
-        const resultObjectUnmanagedStringPtr = yandexGames.allocateUnmanagedString(JSON.stringify(_data));
-        dynCall('vi', successCallbackPtr, [resultObjectUnmanagedStringPtr]);
-        _free(resultObjectUnmanagedStringPtr);
+
+      yandexGames.playerAccount.getData().then(function (playerData) {
+        const playerDataUnmanagedStringPtr = yandexGames.allocateUnmanagedString(JSON.stringify(playerData));
+        dynCall('vi', successCallbackPtr, [playerDataUnmanagedStringPtr]);
+        _free(playerDataUnmanagedStringPtr);
       }).catch(function (error) {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
       });
     },
 
-    playerAccountSetData: function (dataAsString, flush, successCallbackPtr, errorCallbackPtr) {
+    playerAccountSetPlayerData: function (playerDataJson, flush, successCallbackPtr, errorCallbackPtr) {
       if (yandexGames.invokeErrorCallbackIfNotAuthorized(errorCallbackPtr)) {
-        console.error('set player data requires authorization');
+        console.error('playerAccountSetPlayerData requires authorization.');
         return;
       }
 
-      var data = JSON.parse(dataAsString);
-      yandexGames.playerAccount.setData(data, !!flush).
-        then(function () { dynCall('v', successCallbackPtr, []); })
-        .catch(function (error) {
-          yandexGames.invokeErrorCallback(error, errorCallbackPtr);
-        });
+      var playerData = JSON.parse(playerDataJson);
+      yandexGames.playerAccount.setData(playerData, flush).then(function () {
+        dynCall('v', successCallbackPtr, []);
+      }).catch(function (error) {
+        yandexGames.invokeErrorCallback(error, errorCallbackPtr);
+      });
     },
 
     interestialAdShow: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
@@ -336,14 +337,16 @@ const library = {
   PlayerAccountGetPlayerData: function (successCallbackPtr, errorCallbackPtr) {
     yandexGames.throwIfSdkNotInitialized();
 
-    yandexGames.playerAccountGetData(successCallbackPtr, errorCallbackPtr);
+    yandexGames.playerAccountGetPlayerData(successCallbackPtr, errorCallbackPtr);
   },
 
   PlayerAccountSetPlayerData: function (playerDataJsonPtr, flush, successCallbackPtr, errorCallbackPtr) {
     yandexGames.throwIfSdkNotInitialized();
 
     const playerDataJson = UTF8ToString(playerDataJsonPtr);
-    yandexGames.playerAccountSetData(playerDataJson, flush, successCallbackPtr, errorCallbackPtr);
+    // Booleans are transferred as either 1 or 0, so using !! to convert them to true or false.
+    flush = !!flush;
+    yandexGames.playerAccountSetPlayerData(playerDataJson, flush, successCallbackPtr, errorCallbackPtr);
   },
 
   InterestialAdShow: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
