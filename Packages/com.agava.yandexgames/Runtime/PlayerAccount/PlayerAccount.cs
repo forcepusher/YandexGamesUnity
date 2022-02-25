@@ -152,6 +152,10 @@ namespace Agava.YandexGames
         #endregion
 
         #region PlayerData
+        /// <summary>
+        /// Cloud save method, proxy for player.setData.
+        /// </summary>
+        /// <param name="flush">Whether new data should be immediately pushed to server or put in a queue.</param>
         public static void SetPlayerData(string playerDataJson, bool flush, Action onSuccessCallback = null, Action<string> onErrorCallback = null)
         {
             s_onSetPlayerDataSuccessCallback = onSuccessCallback;
