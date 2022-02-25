@@ -151,18 +151,17 @@ namespace Agava.YandexGames
         }
         #endregion
 
-
         #region PlayerData
-        public static void SetPlayerData(string jsonString, bool flush, Action onSuccessCallback = null, Action<string> onErrorCallback = null)
+        public static void SetPlayerData(string playerDataJson, bool flush, Action onSuccessCallback = null, Action<string> onErrorCallback = null)
         {
             s_onSetPlayerDataSuccessCallback = onSuccessCallback;
             s_onSetPlayerDataErrorCallback = onErrorCallback;
 
-            PlayerAccountSetPlayerData(jsonString, flush, OnSetPlayerDataSuccessCallback, OnSetPlayerDataErrorCallback);
+            PlayerAccountSetPlayerData(playerDataJson, flush, OnSetPlayerDataSuccessCallback, OnSetPlayerDataErrorCallback);
         }
 
         [DllImport("__Internal")]
-        private static extern void PlayerAccountSetPlayerData(string jsonString, bool flush, Action successCallback, Action<string> errorCallback);
+        private static extern void PlayerAccountSetPlayerData(string playerDataJson, bool flush, Action successCallback, Action<string> errorCallback);
 
         [MonoPInvokeCallback(typeof(Action))]
         private static void OnSetPlayerDataSuccessCallback()
@@ -194,12 +193,12 @@ namespace Agava.YandexGames
         private static extern void PlayerAccountGetPlayerData(Action<string> successCallback, Action<string> errorCallback);
 
         [MonoPInvokeCallback(typeof(Action<string>))]
-        private static void OnGetPlayerDataSuccessCallback(string jsonString)
+        private static void OnGetPlayerDataSuccessCallback(string playerDataJson)
         {
             if (YandexGamesSdk.CallbackLogging)
-                Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnGetPlayerDataSuccessCallback)} invoked, {nameof(jsonString)} = {jsonString}");
+                Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnGetPlayerDataSuccessCallback)} invoked, {nameof(playerDataJson)} = {playerDataJson}");
 
-            s_onGetPlayerDataSuccessCallback?.Invoke(jsonString);
+            s_onGetPlayerDataSuccessCallback?.Invoke(playerDataJson);
         }
 
         [MonoPInvokeCallback(typeof(Action<string>))]
@@ -210,7 +209,6 @@ namespace Agava.YandexGames
 
             s_onGetPlayerDataErrorCallback?.Invoke(errorMessage);
         }
-
         #endregion
     }
 }

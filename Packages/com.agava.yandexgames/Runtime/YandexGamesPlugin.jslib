@@ -339,10 +339,11 @@ const library = {
     yandexGames.playerAccountGetData(successCallbackPtr, errorCallbackPtr);
   },
 
-  PlayerAccountSetPlayerData: function (data, flush, successCallbackPtr, errorCallbackPtr) {
+  PlayerAccountSetPlayerData: function (playerDataJsonPtr, flush, successCallbackPtr, errorCallbackPtr) {
     yandexGames.throwIfSdkNotInitialized();
 
-    yandexGames.playerAccountSetData(Pointer_stringify(data), flush, successCallbackPtr, errorCallbackPtr);
+    const playerDataJson = UTF8ToString(playerDataJsonPtr);
+    yandexGames.playerAccountSetData(playerDataJson, flush, successCallbackPtr, errorCallbackPtr);
   },
 
   InterestialAdShow: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
