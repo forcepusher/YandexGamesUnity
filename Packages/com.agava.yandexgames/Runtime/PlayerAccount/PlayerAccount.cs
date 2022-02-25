@@ -158,6 +158,12 @@ namespace Agava.YandexGames
         /// <param name="flush">Whether new data should be immediately pushed to server or put in a queue.</param>
         public static void SetPlayerData(string playerDataJson, bool flush, Action onSuccessCallback = null, Action<string> onErrorCallback = null)
         {
+            if (playerDataJson == null)
+                throw new ArgumentNullException(nameof(playerDataJson));
+
+            if (string.IsNullOrEmpty(playerDataJson))
+                playerDataJson = "{}";
+
             s_onSetPlayerDataSuccessCallback = onSuccessCallback;
             s_onSetPlayerDataErrorCallback = onErrorCallback;
 
