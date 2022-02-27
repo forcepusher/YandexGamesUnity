@@ -46,6 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Renamed RequestProfileDataPermission to RequestPersonalProfileDataPermission.  
 - Renamed HasProfileDataPermission to HasPersonalProfileDataPermission.  
   
+[8.2.0] https://github.com/forcepusher/com.agava.yandexgames/compare/8.1.0...8.2.0  
 [8.1.0] https://github.com/forcepusher/com.agava.yandexgames/compare/8.0.1...8.1.0  
 [8.0.1] https://github.com/forcepusher/com.agava.yandexgames/compare/8.0.0...8.0.1  
 [8.0.0] https://github.com/forcepusher/com.agava.yandexgames/compare/7.0.0...8.0.0  
