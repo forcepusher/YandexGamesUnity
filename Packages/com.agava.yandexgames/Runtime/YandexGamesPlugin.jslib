@@ -84,7 +84,7 @@ const library = {
     },
 
     deviceGetType: function () {
-      const deviceType = yandexGames.sdk.deviceInfo;
+      const deviceType = yandexGames.sdk.deviceInfo.type;
 
       switch (deviceType) {
         case 'desktop':
@@ -96,7 +96,8 @@ const library = {
         case 'tv':
           return 3;
         default:
-          console.error('Unexpected ysdk.deviceInfo response from Yandex. Assuming that it is desktop. deviceType = ' + deviceType);
+          console.error('Unexpected ysdk.deviceInfo response from Yandex. Assuming that it is desktop. deviceType = '
+            + JSON.stringify(deviceType));
           return 0;
       }
     },
