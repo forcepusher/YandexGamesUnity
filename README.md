@@ -13,4 +13,4 @@ https://yandex.ru/dev/games/doc/dg/concepts/about.html
   
 Before publishing a new version, rename "Samples" folder to "Samples~" and remove the meta file for the folder.  
 https://forum.unity.com/threads/samples-in-packages-manual-setup.623080/#post-4991561  
-This is stupid, but that's Unity. Not the worst thing they've done so far.
+That's Unity, not the worst thing they've done so far.
