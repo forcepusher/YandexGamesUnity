@@ -33,6 +33,14 @@ namespace Agava.YandexGames
         [DllImport("__Internal")]
         private static extern bool GetYandexGamesSdkIsInitialized();
 
+        public static Environment Environment => GetYandexSdkEnvironment();
+
+        [DllImport("__Internal")]
+        private static extern bool GetYandexSdkEnvironment()
+        {
+
+        }
+
         /// <summary>
         /// Coroutine waiting for <see cref="IsInitialized"/> to return true.
         /// </summary>
