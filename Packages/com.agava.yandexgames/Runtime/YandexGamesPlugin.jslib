@@ -83,6 +83,14 @@ const library = {
       return false;
     },
 
+    getYandexGamesSdkEnvironment: function () {
+      const environment = yandexGames.sdk.environment;
+      console.log(environment);
+      const environmentJson = JSON.stringify(environment);
+      const environmentJsonUnmanagedStringPtr = yandexGames.allocateUnmanagedString(environmentJson);
+      return environmentJsonUnmanagedStringPtr;
+    },
+
     getDeviceType: function () {
       const deviceType = yandexGames.sdk.deviceInfo.type;
 
@@ -323,9 +331,9 @@ const library = {
     return yandexGames.isInitialized;
   },
 
-  // GetYandexGamesSdkEnvironment: function () {
-  //   return 
-  // },
+  GetYandexGamesSdkEnvironment: function () {
+    return yandexGames.getYandexGamesSdkEnvironment();
+  },
 
   GetDeviceType: function () {
     yandexGames.throwIfSdkNotInitialized();
