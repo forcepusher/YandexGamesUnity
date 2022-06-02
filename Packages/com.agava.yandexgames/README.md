@@ -6,6 +6,7 @@ Click the "+" sign on top left corner -> "Add package from git URL..."
 Paste this: `https://github.com/forcepusher/com.agava.yandexgames.git#8.2.0`  
 See minimum required Unity version in the `package.json` file.  
 Find "Samples" in the package window and click the "Import" button. Use it as a guide.  
+To update the package, simply add it again while using a different version tag. The "Update" button in the package manager does nothing.  
   
 This package automatically inserts YandexGames SDK script into HTML page at runtime and initializes itself. No need to mess with WebGLTemplates - just use the SDK methods.  
   
