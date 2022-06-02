@@ -84,9 +84,7 @@ const library = {
     },
 
     getYandexGamesSdkEnvironment: function () {
-      const environment = yandexGames.sdk.environment;
-      console.log(environment);
-      const environmentJson = JSON.stringify(environment);
+      const environmentJson = JSON.stringify(yandexGames.sdk.environment);
       const environmentJsonUnmanagedStringPtr = yandexGames.allocateUnmanagedString(environmentJson);
       return environmentJsonUnmanagedStringPtr;
     },
