@@ -37,13 +37,13 @@ namespace Agava.YandexGames
         {
             get
             {
-                string environmentJson = GetYandexSdkEnvironment();
-                return JsonUtility.FromJson<YandexGamesEnvironment>(environmentJson); ;
+                string environmentJson = GetYandexGamesSdkEnvironment();
+                return JsonUtility.FromJson<YandexGamesEnvironment>(environmentJson);
             }
         }
 
         [DllImport("__Internal")]
-        private static extern string GetYandexSdkEnvironment();
+        private static extern string GetYandexGamesSdkEnvironment();
 
         /// <summary>
         /// Coroutine waiting for <see cref="IsInitialized"/> to return true.
