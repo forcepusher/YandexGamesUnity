@@ -14,6 +14,11 @@ const library = {
     playerAccount: undefined,
 
     yandexGamesSdkInitialize: function () {
+      if (yandexGames.isInitialized) {
+        console.warn('Yandex Games SDK is already initialized. Please do not call YandexGamesSdk.Initialize twice.');
+        return;
+      }
+
       const sdkScript = document.createElement('script');
       sdkScript.src = 'https://yandex.ru/games/sdk/v2';
       document.head.appendChild(sdkScript);
@@ -49,7 +54,7 @@ const library = {
 
     throwIfSdkNotInitialized: function () {
       if (!yandexGames.isInitialized) {
-        throw new Error('SDK was not fast enough to initialize. Use YandexGamesSdk.Initialized or WaitForInitialization.');
+        throw new Error('SDK is not initialized. Invoke YandexGamesSdk.Initialize() coroutine and wait for it to finish.');
       }
     },
 
