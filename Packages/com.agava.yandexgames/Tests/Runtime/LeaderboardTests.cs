@@ -12,7 +12,7 @@ namespace YandexGames.Tests
         public IEnumerator InitializeSdk()
         {
             if (!YandexGamesSdk.IsInitialized)
-                yield return YandexGamesSdk.Initialize();
+                yield return YandexGamesSdk.Initialize(SdkTests.TrackSuccessCallback);
         }
 
         [Test]

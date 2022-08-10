@@ -1,11 +1,15 @@
+using System;
 using System.Collections;
 using System.Runtime.InteropServices;
+using AOT;
 using UnityEngine;
 
 namespace Agava.YandexGames
 {
     public static class YandexGamesSdk
     {
+        private static Action s_onInitializeSuccessCallback;
+
         /// <summary>
         /// Enable it to log SDK callbacks in the console.
         /// </summary>
@@ -37,15 +41,26 @@ namespace Agava.YandexGames
         /// Downloads Yandex SDK script and inserts it into the HTML page.
         /// </summary>
         /// <returns>Coroutine waiting for <see cref="IsInitialized"/> to return true.</returns>
-        public static IEnumerator Initialize()
+        public static IEnumerator Initialize(Action onSuccessCallback = null)
         {
-            YandexGamesSdkInitialize();
+            s_onInitializeSuccessCallback = onSuccessCallback;
+
+            YandexGamesSdkInitialize(OnInitializeSuccessCallback);
 
             while (!IsInitialized)
                 yield return null;
         }
 
         [DllImport("__Internal")]
-        private static extern void YandexGamesSdkInitialize();
+        private static extern void YandexGamesSdkInitialize(Action successCallback);
+
+        [MonoPInvokeCallback(typeof(Action))]
+        private static void OnInitializeSuccessCallback()
+        {
+            if (CallbackLogging)
+                Debug.Log($"{nameof(YandexGamesSdk)}.{nameof(OnInitializeSuccessCallback)} invoked");
+
+            s_onInitializeSuccessCallback?.Invoke();
+        }
     }
 }
