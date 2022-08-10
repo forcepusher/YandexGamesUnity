@@ -15,7 +15,7 @@ const library = {
 
     isInitializeCalled: false,
 
-    yandexGamesSdkInitialize: function () {
+    yandexGamesSdkInitialize: function (successCallbackPtr) {
       if (yandexGames.isInitializeCalled) {
         return;
       }
@@ -37,14 +37,15 @@ const library = {
 
             // Always contains permission info. Contains personal data as well if permissions were granted before.
             yandexGames.playerAccount = playerAccount;
-          }).catch(function () { throw new Error('Leaderboard failed to initialize.'); });
+          }).catch(function () { throw new Error('PlayerAccount failed to initialize.'); });
 
           const leaderboardInitializationPromise = sdk.getLeaderboards().then(function (leaderboard) {
             yandexGames.leaderboard = leaderboard;
-          }).catch(function () { throw new Error('PlayerAccount failed to initialize.'); });
+          }).catch(function () { throw new Error('Leaderboard failed to initialize.'); });
 
           Promise.allSettled([leaderboardInitializationPromise, playerAccountInitializationPromise]).then(function () {
             yandexGames.isInitialized = true;
+            dynCall('v', successCallbackPtr, []);
           });
         });
       }
@@ -323,8 +324,8 @@ const library = {
 
   // External C# calls.
 
-  YandexGamesSdkInitialize: function () {
-    yandexGames.yandexGamesSdkInitialize();
+  YandexGamesSdkInitialize: function (successCallbackPtr) {
+    yandexGames.yandexGamesSdkInitialize(successCallbackPtr);
   },
 
   GetYandexGamesSdkIsInitialized: function () {
