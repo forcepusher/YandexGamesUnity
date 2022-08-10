@@ -13,11 +13,13 @@ const library = {
 
     playerAccount: undefined,
 
+    isInitializeCalled: false,
+
     yandexGamesSdkInitialize: function () {
-      if (yandexGames.isInitialized) {
-        console.warn('Yandex Games SDK is already initialized. Please do not call YandexGamesSdk.Initialize twice.');
+      if (yandexGames.isInitializeCalled) {
         return;
       }
+      yandexGames.isInitializeCalled = true;
 
       const sdkScript = document.createElement('script');
       sdkScript.src = 'https://yandex.ru/games/sdk/v2';
