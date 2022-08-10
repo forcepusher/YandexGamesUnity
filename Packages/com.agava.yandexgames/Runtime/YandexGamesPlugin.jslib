@@ -37,17 +37,13 @@ const library = {
 
             // Always contains permission info. Contains personal data as well if permissions were granted before.
             yandexGames.playerAccount = playerAccount;
-          }).catch(function () { });
+          }).catch(function () { throw new Error('Leaderboard failed to initialize.'); });
 
           const leaderboardInitializationPromise = sdk.getLeaderboards().then(function (leaderboard) {
             yandexGames.leaderboard = leaderboard;
-          }).catch(function () { });
+          }).catch(function () { throw new Error('PlayerAccount failed to initialize.'); });
 
           Promise.allSettled([leaderboardInitializationPromise, playerAccountInitializationPromise]).then(function () {
-            if (yandexGames.leaderboard === undefined) {
-              throw new Error('Leaderboard caused Yandex Games SDK to fail initialization.');
-            }
-
             yandexGames.isInitialized = true;
           });
         });
