@@ -69,7 +69,7 @@ This was leading to errors that were difficult to reproduce and detect. Now you 
 - Renamed RequestProfileDataPermission to RequestPersonalProfileDataPermission.  
 - Renamed HasProfileDataPermission to HasPersonalProfileDataPermission.  
   
-[9.0.0] https://github.com/forcepusher/com.agava.yandexgames/compare/9.0.0...10.0.0  
+[10.0.0] https://github.com/forcepusher/com.agava.yandexgames/compare/9.0.0...10.0.0  
 [9.0.0] https://github.com/forcepusher/com.agava.yandexgames/compare/8.3.1...9.0.0  
 [8.3.1] https://github.com/forcepusher/com.agava.yandexgames/compare/8.3.0...8.3.1  
 [8.3.0] https://github.com/forcepusher/com.agava.yandexgames/compare/8.2.0...8.3.0  
