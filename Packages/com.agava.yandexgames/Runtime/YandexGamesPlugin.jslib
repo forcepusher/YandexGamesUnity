@@ -260,6 +260,14 @@ const library = {
       });
     },
 
+    stickyAdShow: function() {
+      yandexGames.sdk.adv.showBannerAdv();
+    },
+
+    stickyAdHide: function() {
+      yandexGames.sdk.adv.hideBannerAdv();
+    },
+
     leaderboardSetScore: function (leaderboardName, score, successCallbackPtr, errorCallbackPtr, extraData) {
       if (yandexGames.invokeErrorCallbackIfNotAuthorized(errorCallbackPtr)) {
         console.error('leaderboardSetScore requires authorization.');
