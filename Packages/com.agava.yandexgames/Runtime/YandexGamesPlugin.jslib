@@ -397,6 +397,18 @@ const library = {
     yandexGames.videoAdShow(openCallbackPtr, rewardedCallbackPtr, closeCallbackPtr, errorCallbackPtr);
   },
 
+  StickyAdShow: function () {
+    yandexGames.throwIfSdkNotInitialized();
+
+    yandexGames.stickyAdShow();
+  },
+
+  StickyAdHide: function () {
+    yandexGames.throwIfSdkNotInitialized();
+
+    yandexGames.stickyAdHide();
+  },
+
   LeaderboardSetScore: function (leaderboardNamePtr, score, successCallbackPtr, errorCallbackPtr, extraDataPtr) {
     yandexGames.throwIfSdkNotInitialized();
 
