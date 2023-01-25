@@ -334,7 +334,9 @@ const library = {
       }
 
       yandexGames.billing.purchase({ id: productId }).then(function (purchasedProduct) {
-
+        dynCall('v', successCallbackPtr, []);
+      }).catch(function (error) {
+        yandexGames.invokeErrorCallback(error, errorCallbackPtr);
       });
     },
 

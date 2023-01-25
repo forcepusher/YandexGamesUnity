@@ -14,20 +14,18 @@ namespace Agava.YandexGames.Tests
                 yield return YandexGamesSdk.Initialize(SdkTests.TrackSuccessCallback);
         }
 
-        [Test]
-        public void ShowShouldInvokeErrorCallback()
+        [UnityTest]
+        public IEnumerator PurchaseShouldInvokeErrorCallback()
         {
-            //bool callbackInvoked = false;
-            //VideoAd.Show(onErrorCallback: (message) =>
-            //{
-            //    callbackInvoked = true;
-            //});
+            bool callbackInvoked = false;
+            Billing.Purchase("adsfjoisadjfojds", onErrorCallback: (message) =>
+            {
+                callbackInvoked = true;
+            });
 
-            //yield return new WaitForSecondsRealtime(1);
+            yield return new WaitForSecondsRealtime(1);
 
-            //Assert.IsTrue(callbackInvoked);
-
-            Assert.DoesNotThrow(() => Billing.Purchase("asdasdjsa"));
+            Assert.IsTrue(callbackInvoked);
         }
     }
 }
