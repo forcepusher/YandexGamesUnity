@@ -13,6 +13,8 @@ const library = {
 
     playerAccount: undefined,
 
+    billing: undefined,
+
     isInitializeCalled: false,
 
     yandexGamesSdkInitialize: function (successCallbackPtr) {
@@ -43,7 +45,11 @@ const library = {
             yandexGames.leaderboard = leaderboard;
           }).catch(function () { throw new Error('Leaderboard failed to initialize.'); });
 
-          Promise.allSettled([leaderboardInitializationPromise, playerAccountInitializationPromise]).then(function () {
+          const billingInitializationPromise = sdk.getPayments({ signed: true }).then(function (billing) {
+            yandexGames.billing = billing;
+          }).catch(function () { throw new Error('Billing failed to initialize.'); });
+
+          Promise.allSettled([leaderboardInitializationPromise, playerAccountInitializationPromise, billingInitializationPromise]).then(function () {
             yandexGames.isInitialized = true;
             dynCall('v', successCallbackPtr, []);
           });
