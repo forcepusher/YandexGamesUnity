@@ -327,6 +327,13 @@ const library = {
       });
     },
 
+    billingPurchase: function (productId) {
+      console.log(yandexGames.billing);
+      // yandexGames.billing.purchase({ id: productId }).then(function (purchasedProduct) {
+
+      // });
+    },
+
     allocateUnmanagedString: function (string) {
       const stringBufferSize = lengthBytesUTF8(string) + 1;
       const stringBufferPtr = _malloc(stringBufferSize);
@@ -446,6 +453,10 @@ const library = {
 
     const leaderboardName = UTF8ToString(leaderboardNamePtr);
     yandexGames.leaderboardGetPlayerEntry(leaderboardName, successCallbackPtr, errorCallbackPtr);
+  },
+
+  BillingPurchase: function (productId) {
+    yandexGames.billingPurchase(productId);
   },
 }
 
