@@ -327,11 +327,15 @@ const library = {
       });
     },
 
-    billingPurchase: function (productId) {
-      console.log(yandexGames.billing);
-      // yandexGames.billing.purchase({ id: productId }).then(function (purchasedProduct) {
+    billingPurchase: function (productId, successCallbackPtr, errorCallbackPtr) {
+      if (yandexGames.invokeErrorCallbackIfNotAuthorized(errorCallbackPtr)) {
+        console.error('billingPurchase requires authorization.');
+        return;
+      }
 
-      // });
+      yandexGames.billing.purchase({ id: productId }).then(function (purchasedProduct) {
+
+      });
     },
 
     allocateUnmanagedString: function (string) {
@@ -455,8 +459,11 @@ const library = {
     yandexGames.leaderboardGetPlayerEntry(leaderboardName, successCallbackPtr, errorCallbackPtr);
   },
 
-  BillingPurchase: function (productId) {
-    yandexGames.billingPurchase(productId);
+  BillingPurchase: function (productIdPtr, successCallbackPtr, errorCallbackPtr) {
+    yandexGames.throwIfSdkNotInitialized();
+
+    const productId = UTF8ToString(productIdPtr);
+    yandexGames.billingPurchase(productId, successCallbackPtr, errorCallbackPtr);
   },
 }
 
