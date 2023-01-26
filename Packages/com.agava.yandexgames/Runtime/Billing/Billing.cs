@@ -10,16 +10,16 @@ namespace Agava.YandexGames
         private static Action s_onSuccessCallback;
         private static Action<string> s_onErrorCallback;
 
-        public static void Purchase(string productId, Action onSuccessCallback = null, Action<string> onErrorCallback = null)
+        public static void Purchase(string productId, Action onSuccessCallback = null, Action<string> onErrorCallback = null, string developerPayload = "")
         {
             s_onSuccessCallback = onSuccessCallback;
             s_onErrorCallback = onErrorCallback;
 
-            BillingPurchase(productId, OnSuccessCallback, OnErrorCallback);
+            BillingPurchase(productId, OnSuccessCallback, OnErrorCallback, developerPayload);
         }
 
         [DllImport("__Internal")]
-        private static extern void BillingPurchase(string productId, Action successCallback, Action<string> errorCallback);
+        private static extern void BillingPurchase(string productId, Action successCallback, Action<string> errorCallback, string developerPayload);
 
         [MonoPInvokeCallback(typeof(Action))]
         private static void OnSuccessCallback()

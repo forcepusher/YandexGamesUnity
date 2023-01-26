@@ -47,6 +47,13 @@ const library = {
 
           const billingInitializationPromise = sdk.getPayments({ signed: true }).then(function (billing) {
             yandexGames.billing = billing;
+
+            
+            billing.getPurchases().then(function (purchasedProducts) {
+              console.log(purchasedProducts);
+            });
+
+            
           }).catch(function () { throw new Error('Billing failed to initialize.'); });
 
           Promise.allSettled([leaderboardInitializationPromise, playerAccountInitializationPromise, billingInitializationPromise]).then(function () {
@@ -327,13 +334,13 @@ const library = {
       });
     },
 
-    billingPurchase: function (productId, successCallbackPtr, errorCallbackPtr) {
+    billingPurchase: function (productId, successCallbackPtr, errorCallbackPtr, developerPayload) {
       if (yandexGames.invokeErrorCallbackIfNotAuthorized(errorCallbackPtr)) {
         console.error('billingPurchase requires authorization.');
         return;
       }
 
-      yandexGames.billing.purchase({ id: productId }).then(function (purchasedProduct) {
+      yandexGames.billing.purchase({ id: productId, developerPayload: developerPayload }).then(function (purchasedProduct) {
         dynCall('v', successCallbackPtr, []);
       }).catch(function (error) {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
@@ -461,11 +468,13 @@ const library = {
     yandexGames.leaderboardGetPlayerEntry(leaderboardName, successCallbackPtr, errorCallbackPtr);
   },
 
-  BillingPurchase: function (productIdPtr, successCallbackPtr, errorCallbackPtr) {
+  BillingPurchase: function (productIdPtr, successCallbackPtr, errorCallbackPtr, developerPayloadPtr) {
     yandexGames.throwIfSdkNotInitialized();
 
     const productId = UTF8ToString(productIdPtr);
-    yandexGames.billingPurchase(productId, successCallbackPtr, errorCallbackPtr);
+    var developerPayload = UTF8ToString(developerPayloadPtr);
+    if (developerPayload.length === 0) { developerPayload = undefined; }
+    yandexGames.billingPurchase(productId, successCallbackPtr, errorCallbackPtr, developerPayload);
   },
 }
 
