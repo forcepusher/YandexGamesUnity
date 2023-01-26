@@ -334,7 +334,7 @@ const library = {
       });
     },
 
-    billingPurchase: function (productId, successCallbackPtr, errorCallbackPtr, developerPayload) {
+    billingPurchaseProduct: function (productId, successCallbackPtr, errorCallbackPtr, developerPayload) {
       if (yandexGames.invokeErrorCallbackIfNotAuthorized(errorCallbackPtr)) {
         console.error('billingPurchase requires authorization.');
         return;
@@ -469,13 +469,20 @@ const library = {
     yandexGames.leaderboardGetPlayerEntry(leaderboardName, successCallbackPtr, errorCallbackPtr);
   },
 
-  BillingPurchase: function (productIdPtr, successCallbackPtr, errorCallbackPtr, developerPayloadPtr) {
+  BillingPurchaseProduct: function (productIdPtr, successCallbackPtr, errorCallbackPtr, developerPayloadPtr) {
     yandexGames.throwIfSdkNotInitialized();
 
     const productId = UTF8ToString(productIdPtr);
     var developerPayload = UTF8ToString(developerPayloadPtr);
     if (developerPayload.length === 0) { developerPayload = undefined; }
-    yandexGames.billingPurchase(productId, successCallbackPtr, errorCallbackPtr, developerPayload);
+    yandexGames.billingPurchaseProduct(productId, successCallbackPtr, errorCallbackPtr, developerPayload);
+  },
+
+  BillingConsumeProduct: function (productTokenPtr, successCallbackPtr, errorCallbackPtr) {
+    yandexGames.throwIfSdkNotInitialized();
+
+    const productToken = UTF8ToString(productTokenPtr);
+    // yandexGames.billingPurchaseProduct(productToken, successCallbackPtr, errorCallbackPtr);
   },
 }
 
