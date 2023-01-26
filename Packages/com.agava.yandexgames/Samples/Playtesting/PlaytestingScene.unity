@@ -930,7 +930,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 303197021}
   m_TextComponent: {fileID: 2010787678}
   m_Placeholder: {fileID: 1751237491}
   m_ContentType: 0
@@ -1926,7 +1926,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2102737976}
         m_TargetAssemblyTypeName: Agava.YandexGames.Samples.PlaytestingCanvas, Agava.YandexGames.Samples.Playtesting
-        m_MethodName: OnHideStickyAdButtonClick
+        m_MethodName: OnConsumeProductButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2253,7 +2253,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2102737976}
         m_TargetAssemblyTypeName: Agava.YandexGames.Samples.PlaytestingCanvas, Agava.YandexGames.Samples.Playtesting
-        m_MethodName: OnHideStickyAdButtonClick
+        m_MethodName: OnPurchaseProductButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2810,7 +2810,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2102737976}
         m_TargetAssemblyTypeName: Agava.YandexGames.Samples.PlaytestingCanvas, Agava.YandexGames.Samples.Playtesting
-        m_MethodName: OnHideStickyAdButtonClick
+        m_MethodName: OnGetPurchasedProductsButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

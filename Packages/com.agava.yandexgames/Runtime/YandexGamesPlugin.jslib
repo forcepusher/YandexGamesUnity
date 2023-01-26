@@ -47,13 +47,6 @@ const library = {
 
           const billingInitializationPromise = sdk.getPayments({ signed: true }).then(function (billing) {
             yandexGames.billing = billing;
-
-            
-            billing.getPurchases().then(function (purchasedProducts) {
-              console.log(purchasedProducts);
-            });
-
-            
           }).catch(function () { throw new Error('Billing failed to initialize.'); });
 
           Promise.allSettled([leaderboardInitializationPromise, playerAccountInitializationPromise, billingInitializationPromise]).then(function () {
