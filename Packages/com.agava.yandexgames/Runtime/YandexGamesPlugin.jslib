@@ -341,6 +341,7 @@ const library = {
       }
 
       yandexGames.billing.purchase({ id: productId, developerPayload: developerPayload }).then(function (purchasedProduct) {
+        console.log(purchasedProduct);
         dynCall('v', successCallbackPtr, []);
       }).catch(function (error) {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
