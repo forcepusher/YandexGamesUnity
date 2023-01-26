@@ -18,7 +18,7 @@ namespace Agava.YandexGames.Tests
         public IEnumerator PurchaseShouldInvokeErrorCallback()
         {
             bool callbackInvoked = false;
-            Billing.Purchase("adsfjoisadjfojds", onErrorCallback: (message) =>
+            Billing.PurchaseProduct("adsfjoisadjfojds", onErrorCallback: (message) =>
             {
                 callbackInvoked = true;
             });

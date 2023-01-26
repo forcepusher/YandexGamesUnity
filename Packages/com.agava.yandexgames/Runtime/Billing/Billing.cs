@@ -10,7 +10,7 @@ namespace Agava.YandexGames
         private static Action s_onSuccessCallback;
         private static Action<string> s_onErrorCallback;
 
-        public static void Purchase(string productId, Action onSuccessCallback = null, Action<string> onErrorCallback = null, string developerPayload = "")
+        public static void PurchaseProduct(string productId, Action onSuccessCallback = null, Action<string> onErrorCallback = null, string developerPayload = "")
         {
             s_onSuccessCallback = onSuccessCallback;
             s_onErrorCallback = onErrorCallback;
