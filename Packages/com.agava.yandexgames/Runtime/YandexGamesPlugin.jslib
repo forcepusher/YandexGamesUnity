@@ -477,6 +477,13 @@ const library = {
     const productToken = UTF8ToString(productTokenPtr);
     // yandexGames.billingPurchaseProduct(productToken, successCallbackPtr, errorCallbackPtr);
   },
+
+  BillingGetPurchasedProducts: function (successCallbackPtr, errorCallbackPtr) {
+    yandexGames.throwIfSdkNotInitialized();
+
+    const productToken = UTF8ToString(productTokenPtr);
+    // yandexGames.billingPurchaseProduct(productToken, successCallbackPtr, errorCallbackPtr);
+  },
 }
 
 autoAddDeps(library, '$yandexGames');
