@@ -48,16 +48,16 @@ namespace Agava.YandexGames
         #endregion
 
         #region ConsumeProduct
-        public static void ConsumeProduct(string productToken, Action onSuccessCallback = null, Action<string> onErrorCallback = null)
+        public static void ConsumeProduct(string purchasedProductToken, Action onSuccessCallback = null, Action<string> onErrorCallback = null)
         {
             s_onConsumeProductSuccessCallback = onSuccessCallback;
             s_onConsumeProductErrorCallback = onErrorCallback;
 
-            BillingConsumeProduct(productToken, OnConsumeProductSuccessCallback, OnConsumeProductErrorCallback);
+            BillingConsumeProduct(purchasedProductToken, OnConsumeProductSuccessCallback, OnConsumeProductErrorCallback);
         }
 
         [DllImport("__Internal")]
-        private static extern void BillingConsumeProduct(string productId, Action successCallback, Action<string> errorCallback);
+        private static extern void BillingConsumeProduct(string purchasedProductToken, Action successCallback, Action<string> errorCallback);
 
         [MonoPInvokeCallback(typeof(Action))]
         private static void OnConsumeProductSuccessCallback()

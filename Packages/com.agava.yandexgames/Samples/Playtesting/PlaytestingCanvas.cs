@@ -154,6 +154,7 @@ namespace Agava.YandexGames.Samples
 
         public void OnGetPurchasedProductsButtonClick()
         {
+            Billing.GetPurchasedProducts();
             //Billing.GetPurchasedProducts((purchasedProducts) => Debug.Log($"PurchasedProducts = {JsonUtility.ToJson(purchasedProducts)}"));
         }
     }
