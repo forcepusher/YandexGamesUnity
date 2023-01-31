@@ -369,6 +369,20 @@ const library = {
       });
     },
 
+    billingGetProductCatalog: function (successCallbackPtr, errorCallbackPtr) {
+      if (yandexGames.invokeErrorCallbackIfNotAuthorized(errorCallbackPtr)) {
+        console.error('billingGetProductCatalog requires authorization.');
+        return;
+      }
+
+      yandexGames.billing.getCatalog().then(function (productCatalog) {
+        console.log(productCatalog);
+        dynCall('v', successCallbackPtr, []);
+      }).catch(function (error) {
+        yandexGames.invokeErrorCallback(error, errorCallbackPtr);
+      });
+    },
+
     allocateUnmanagedString: function (string) {
       const stringBufferSize = lengthBytesUTF8(string) + 1;
       const stringBufferPtr = _malloc(stringBufferSize);
@@ -510,6 +524,12 @@ const library = {
     yandexGames.throwIfSdkNotInitialized();
 
     yandexGames.billingGetPurchasedProducts(successCallbackPtr, errorCallbackPtr);
+  },
+
+  BillingGetProductCatalog: function (successCallbackPtr, errorCallbackPtr) {
+    yandexGames.throwIfSdkNotInitialized();
+
+    yandexGames.billingGetProductCatalog(successCallbackPtr, errorCallbackPtr);
   },
 }
 

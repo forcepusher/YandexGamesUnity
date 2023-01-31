@@ -112,7 +112,7 @@ namespace Agava.YandexGames
         }
         #endregion
 
-        #region GetPurchasedProducts
+        #region GetProductCatalog
         public static void GetProductCatalog(Action onSuccessCallback = null, Action<string> onErrorCallback = null)
         {
             s_onGetProductCatalogSuccessCallback = onSuccessCallback;
