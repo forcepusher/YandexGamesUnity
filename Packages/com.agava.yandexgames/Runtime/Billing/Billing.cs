@@ -16,6 +16,9 @@ namespace Agava.YandexGames
         private static Action s_onGetPurchasedProductsSuccessCallback;
         private static Action<string> s_onGetPurchasedProductsErrorCallback;
 
+        private static Action s_onGetProductCatalogSuccessCallback;
+        private static Action<string> s_onGetProductCatalogErrorCallback;
+
         #region PurchaseProduct
         public static void PurchaseProduct(string productId, Action onSuccessCallback = null, Action<string> onErrorCallback = null, string developerPayload = "")
         {
@@ -91,10 +94,10 @@ namespace Agava.YandexGames
         private static extern void BillingGetPurchasedProducts(Action<string> successCallback, Action<string> errorCallback);
 
         [MonoPInvokeCallback(typeof(Action<string>))]
-        private static void OnGetPurchasedProductsSuccessCallback(string productsResponseJson)
+        private static void OnGetPurchasedProductsSuccessCallback(string purchasedProductsResponseJson)
         {
             if (YandexGamesSdk.CallbackLogging)
-                Debug.Log($"{nameof(Billing)}.{nameof(OnGetPurchasedProductsSuccessCallback)} invoked, {nameof(productsResponseJson)} = {productsResponseJson}");
+                Debug.Log($"{nameof(Billing)}.{nameof(OnGetPurchasedProductsSuccessCallback)} invoked, {nameof(purchasedProductsResponseJson)} = {purchasedProductsResponseJson}");
 
             s_onGetPurchasedProductsSuccessCallback?.Invoke();
         }
@@ -106,6 +109,37 @@ namespace Agava.YandexGames
                 Debug.Log($"{nameof(Billing)}.{nameof(OnGetPurchasedProductsErrorCallback)} invoked, {nameof(errorMessage)} = {errorMessage}");
 
             s_onGetPurchasedProductsErrorCallback?.Invoke(errorMessage);
+        }
+        #endregion
+
+        #region GetPurchasedProducts
+        public static void GetProductCatalog(Action onSuccessCallback = null, Action<string> onErrorCallback = null)
+        {
+            s_onGetProductCatalogSuccessCallback = onSuccessCallback;
+            s_onGetProductCatalogErrorCallback = onErrorCallback;
+
+            BillingGetProductCatalog(OnGetProductCatalogSuccessCallback, OnGetProductCatalogErrorCallback);
+        }
+
+        [DllImport("__Internal")]
+        private static extern void BillingGetProductCatalog(Action<string> successCallback, Action<string> errorCallback);
+
+        [MonoPInvokeCallback(typeof(Action<string>))]
+        private static void OnGetProductCatalogSuccessCallback(string productCatalogResponseJson)
+        {
+            if (YandexGamesSdk.CallbackLogging)
+                Debug.Log($"{nameof(Billing)}.{nameof(OnGetProductCatalogSuccessCallback)} invoked, {nameof(productCatalogResponseJson)} = {productCatalogResponseJson}");
+
+            s_onGetProductCatalogSuccessCallback?.Invoke();
+        }
+
+        [MonoPInvokeCallback(typeof(Action<string>))]
+        private static void OnGetProductCatalogErrorCallback(string errorMessage)
+        {
+            if (YandexGamesSdk.CallbackLogging)
+                Debug.Log($"{nameof(Billing)}.{nameof(OnGetProductCatalogErrorCallback)} invoked, {nameof(errorMessage)} = {errorMessage}");
+
+            s_onGetProductCatalogErrorCallback?.Invoke(errorMessage);
         }
         #endregion
     }
