@@ -2,11 +2,11 @@ using UnityEngine;
 
 namespace Agava.YandexGames.Samples
 {
-    public class ProductCatalogPanel : MonoBehaviour
+    public class PurchasedProductsPanel : MonoBehaviour
     {
         private void OnEnable()
         {
-            Billing.GetProductCatalog();
+            Billing.GetPurchasedProducts();
         }
     }
 }
