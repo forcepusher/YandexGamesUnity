@@ -13,11 +13,11 @@ namespace Agava.YandexGames
         private static Action s_onConsumeProductSuccessCallback;
         private static Action<string> s_onConsumeProductErrorCallback;
 
-        private static Action s_onGetPurchasedProductsSuccessCallback;
-        private static Action<string> s_onGetPurchasedProductsErrorCallback;
-
         private static Action s_onGetProductCatalogSuccessCallback;
         private static Action<string> s_onGetProductCatalogErrorCallback;
+
+        private static Action s_onGetPurchasedProductsSuccessCallback;
+        private static Action<string> s_onGetPurchasedProductsErrorCallback;
 
         #region PurchaseProduct
         public static void PurchaseProduct(string productId, Action onSuccessCallback = null, Action<string> onErrorCallback = null, string developerPayload = "")
@@ -81,37 +81,6 @@ namespace Agava.YandexGames
         }
         #endregion
 
-        #region GetPurchasedProducts
-        public static void GetPurchasedProducts(Action onSuccessCallback = null, Action<string> onErrorCallback = null)
-        {
-            s_onGetPurchasedProductsSuccessCallback = onSuccessCallback;
-            s_onGetPurchasedProductsErrorCallback = onErrorCallback;
-
-            BillingGetPurchasedProducts(OnGetPurchasedProductsSuccessCallback, OnGetPurchasedProductsErrorCallback);
-        }
-
-        [DllImport("__Internal")]
-        private static extern void BillingGetPurchasedProducts(Action<string> successCallback, Action<string> errorCallback);
-
-        [MonoPInvokeCallback(typeof(Action<string>))]
-        private static void OnGetPurchasedProductsSuccessCallback(string purchasedProductsResponseJson)
-        {
-            if (YandexGamesSdk.CallbackLogging)
-                Debug.Log($"{nameof(Billing)}.{nameof(OnGetPurchasedProductsSuccessCallback)} invoked, {nameof(purchasedProductsResponseJson)} = {purchasedProductsResponseJson}");
-
-            s_onGetPurchasedProductsSuccessCallback?.Invoke();
-        }
-
-        [MonoPInvokeCallback(typeof(Action<string>))]
-        private static void OnGetPurchasedProductsErrorCallback(string errorMessage)
-        {
-            if (YandexGamesSdk.CallbackLogging)
-                Debug.Log($"{nameof(Billing)}.{nameof(OnGetPurchasedProductsErrorCallback)} invoked, {nameof(errorMessage)} = {errorMessage}");
-
-            s_onGetPurchasedProductsErrorCallback?.Invoke(errorMessage);
-        }
-        #endregion
-
         #region GetProductCatalog
         public static void GetProductCatalog(Action onSuccessCallback = null, Action<string> onErrorCallback = null)
         {
@@ -140,6 +109,37 @@ namespace Agava.YandexGames
                 Debug.Log($"{nameof(Billing)}.{nameof(OnGetProductCatalogErrorCallback)} invoked, {nameof(errorMessage)} = {errorMessage}");
 
             s_onGetProductCatalogErrorCallback?.Invoke(errorMessage);
+        }
+        #endregion
+
+        #region GetPurchasedProducts
+        public static void GetPurchasedProducts(Action onSuccessCallback = null, Action<string> onErrorCallback = null)
+        {
+            s_onGetPurchasedProductsSuccessCallback = onSuccessCallback;
+            s_onGetPurchasedProductsErrorCallback = onErrorCallback;
+
+            BillingGetPurchasedProducts(OnGetPurchasedProductsSuccessCallback, OnGetPurchasedProductsErrorCallback);
+        }
+
+        [DllImport("__Internal")]
+        private static extern void BillingGetPurchasedProducts(Action<string> successCallback, Action<string> errorCallback);
+
+        [MonoPInvokeCallback(typeof(Action<string>))]
+        private static void OnGetPurchasedProductsSuccessCallback(string purchasedProductsResponseJson)
+        {
+            if (YandexGamesSdk.CallbackLogging)
+                Debug.Log($"{nameof(Billing)}.{nameof(OnGetPurchasedProductsSuccessCallback)} invoked, {nameof(purchasedProductsResponseJson)} = {purchasedProductsResponseJson}");
+
+            s_onGetPurchasedProductsSuccessCallback?.Invoke();
+        }
+
+        [MonoPInvokeCallback(typeof(Action<string>))]
+        private static void OnGetPurchasedProductsErrorCallback(string errorMessage)
+        {
+            if (YandexGamesSdk.CallbackLogging)
+                Debug.Log($"{nameof(Billing)}.{nameof(OnGetPurchasedProductsErrorCallback)} invoked, {nameof(errorMessage)} = {errorMessage}");
+
+            s_onGetPurchasedProductsErrorCallback?.Invoke(errorMessage);
         }
         #endregion
     }

@@ -313,9 +313,9 @@ const library = {
 
       yandexGames.leaderboard.getLeaderboardPlayerEntry(leaderboardName).then(function (response) {
         const entryJson = JSON.stringify(response);
-        const entryUnmanagedStringPtr = yandexGames.allocateUnmanagedString(entryJson);
-        dynCall('vi', successCallbackPtr, [entryUnmanagedStringPtr]);
-        _free(entryUnmanagedStringPtr);
+        const entryJsonUnmanagedStringPtr = yandexGames.allocateUnmanagedString(entryJson);
+        dynCall('vi', successCallbackPtr, [entryJsonUnmanagedStringPtr]);
+        _free(entryJsonUnmanagedStringPtr);
       }).catch(function (error) {
         if (error.code === 'LEADERBOARD_PLAYER_NOT_PRESENT') {
           const nullUnmanagedStringPtr = yandexGames.allocateUnmanagedString('null');
@@ -334,7 +334,6 @@ const library = {
       }
 
       yandexGames.billing.purchase({ id: productId, developerPayload: developerPayload }).then(function (purchasedProduct) {
-        console.log(purchasedProduct);
         dynCall('v', successCallbackPtr, []);
       }).catch(function (error) {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
@@ -348,21 +347,6 @@ const library = {
       }
 
       yandexGames.billing.consumePurchase(purchasedProductToken).then(function () {
-        console.log('CONSUMED ' + purchasedProductToken);
-        dynCall('v', successCallbackPtr, []);
-      }).catch(function (error) {
-        yandexGames.invokeErrorCallback(error, errorCallbackPtr);
-      });
-    },
-
-    billingGetPurchasedProducts: function (successCallbackPtr, errorCallbackPtr) {
-      if (yandexGames.invokeErrorCallbackIfNotAuthorized(errorCallbackPtr)) {
-        console.error('billingGetPurchasedProducts requires authorization.');
-        return;
-      }
-
-      yandexGames.billing.getPurchases().then(function (purchasedProducts) {
-        console.log(purchasedProducts);
         dynCall('v', successCallbackPtr, []);
       }).catch(function (error) {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
@@ -376,8 +360,26 @@ const library = {
       }
 
       yandexGames.billing.getCatalog().then(function (productCatalog) {
-        console.log(productCatalog);
-        dynCall('v', successCallbackPtr, []);
+        const productCatalogJson = JSON.stringify(productCatalog);
+        const productCatalogJsonUnmanagedStringPtr = yandexGames.allocateUnmanagedString(productCatalogJson);
+        dynCall('vi', successCallbackPtr, [productCatalogJsonUnmanagedStringPtr]);
+        _free(productCatalogJsonUnmanagedStringPtr);
+      }).catch(function (error) {
+        yandexGames.invokeErrorCallback(error, errorCallbackPtr);
+      });
+    },
+
+    billingGetPurchasedProducts: function (successCallbackPtr, errorCallbackPtr) {
+      if (yandexGames.invokeErrorCallbackIfNotAuthorized(errorCallbackPtr)) {
+        console.error('billingGetPurchasedProducts requires authorization.');
+        return;
+      }
+
+      yandexGames.billing.getPurchases().then(function (purchasedProducts) {
+        const purchasedProductsJson = JSON.stringify(purchasedProducts);
+        const purchasedProductsJsonUnmanagedStringPtr = yandexGames.allocateUnmanagedString(purchasedProductsJson);
+        dynCall('vi', successCallbackPtr, [purchasedProductsJsonUnmanagedStringPtr]);
+        _free(purchasedProductsJsonUnmanagedStringPtr);
       }).catch(function (error) {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
       });
@@ -520,16 +522,16 @@ const library = {
     yandexGames.billingConsumeProduct(purchasedProductToken, successCallbackPtr, errorCallbackPtr);
   },
 
-  BillingGetPurchasedProducts: function (successCallbackPtr, errorCallbackPtr) {
-    yandexGames.throwIfSdkNotInitialized();
-
-    yandexGames.billingGetPurchasedProducts(successCallbackPtr, errorCallbackPtr);
-  },
-
   BillingGetProductCatalog: function (successCallbackPtr, errorCallbackPtr) {
     yandexGames.throwIfSdkNotInitialized();
 
     yandexGames.billingGetProductCatalog(successCallbackPtr, errorCallbackPtr);
+  },
+
+  BillingGetPurchasedProducts: function (successCallbackPtr, errorCallbackPtr) {
+    yandexGames.throwIfSdkNotInitialized();
+
+    yandexGames.billingGetPurchasedProducts(successCallbackPtr, errorCallbackPtr);
   },
 }
 
