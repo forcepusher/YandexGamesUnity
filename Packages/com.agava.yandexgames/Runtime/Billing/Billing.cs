@@ -14,7 +14,7 @@ namespace Agava.YandexGames
         private static Action<string> s_onConsumeProductErrorCallback;
         
         private static Action<GetProductCatalogResponse> s_onGetProductCatalogSuccessCallback;
-        private static Action s_onGetProductCatalogErrorCallback;
+        private static Action<string> s_onGetProductCatalogErrorCallback;
 
         private static Action s_onGetPurchasedProductsSuccessCallback;
         private static Action<string> s_onGetPurchasedProductsErrorCallback;
@@ -82,7 +82,7 @@ namespace Agava.YandexGames
         #endregion
 
         #region GetProductCatalog
-        public static void GetProductCatalog(Action onSuccessCallback = null, Action<string> onErrorCallback = null)
+        public static void GetProductCatalog(Action<GetProductCatalogResponse> onSuccessCallback = null, Action<string> onErrorCallback = null)
         {
             s_onGetProductCatalogSuccessCallback = onSuccessCallback;
             s_onGetProductCatalogErrorCallback = onErrorCallback;
@@ -99,9 +99,13 @@ namespace Agava.YandexGames
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(Billing)}.{nameof(OnGetProductCatalogSuccessCallback)} invoked, {nameof(productCatalogResponseJson)} = {productCatalogResponseJson}");
 
-            GetProductCatalogResponse productCatalogResponse = JsonUtility.FromJson<GetProductCatalogResponse>(productCatalogResponseJson);
+            //GetProductCatalogResponse productCatalogResponse = JsonUtility.FromJson<GetProductCatalogResponse>(productCatalogResponseJson);
 
-            s_onGetProductCatalogSuccessCallback?.Invoke(productCatalogResponse);
+            //Debug.Log(JsonUtility.ToJson(productCatalogResponse));
+
+            var temporaryMock = new GetProductCatalogResponse();
+
+            s_onGetProductCatalogSuccessCallback?.Invoke(temporaryMock);
         }
 
         [MonoPInvokeCallback(typeof(Action<string>))]
