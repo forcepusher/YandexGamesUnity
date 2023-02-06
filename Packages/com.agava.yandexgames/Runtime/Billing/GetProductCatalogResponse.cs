@@ -6,6 +6,7 @@ namespace Agava.YandexGames
     [Serializable]
     public class GetProductCatalogResponse
     {
-
+        [field: Preserve]
+        public ProductResponse[] products;
     }
 }
