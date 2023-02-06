@@ -334,6 +334,8 @@ const library = {
       }
 
       yandexGames.billing.purchase({ id: productId, developerPayload: developerPayload }).then(function (purchasedProduct) {
+        console.log(purchasedProduct);
+
         dynCall('v', successCallbackPtr, []);
       }).catch(function (error) {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
@@ -346,7 +348,9 @@ const library = {
         return;
       }
 
-      yandexGames.billing.consumePurchase(purchasedProductToken).then(function () {
+      yandexGames.billing.consumePurchase(purchasedProductToken).then(function (consumedProduct) {
+        console.log(consumedProduct);
+
         dynCall('v', successCallbackPtr, []);
       }).catch(function (error) {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
@@ -360,6 +364,8 @@ const library = {
       }
 
       yandexGames.billing.getCatalog().then(function (productCatalog) {
+        console.log(productCatalog);
+
         const productCatalogJson = JSON.stringify(productCatalog);
         const productCatalogJsonUnmanagedStringPtr = yandexGames.allocateUnmanagedString(productCatalogJson);
         dynCall('vi', successCallbackPtr, [productCatalogJsonUnmanagedStringPtr]);
@@ -376,6 +382,8 @@ const library = {
       }
 
       yandexGames.billing.getPurchases().then(function (purchasedProducts) {
+        console.log(purchasedProducts);
+
         const purchasedProductsJson = JSON.stringify(purchasedProducts);
         const purchasedProductsJsonUnmanagedStringPtr = yandexGames.allocateUnmanagedString(purchasedProductsJson);
         dynCall('vi', successCallbackPtr, [purchasedProductsJsonUnmanagedStringPtr]);
