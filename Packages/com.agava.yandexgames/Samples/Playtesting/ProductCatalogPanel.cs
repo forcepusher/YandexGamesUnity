@@ -6,7 +6,22 @@ namespace Agava.YandexGames.Samples
     {
         private void OnEnable()
         {
-            Billing.GetProductCatalog();
+            Billing.GetProductCatalog(productCatalogReponse => UpdateProductCatalog(productCatalogReponse.products));
+        }
+
+        private void UpdateProductCatalog(ProductResponse[] products)
+        {
+            ClearProductCatalog();
+
+            foreach (ProductResponse product in products)
+            {
+                
+            }
+        }
+
+        private void ClearProductCatalog()
+        {
+
         }
     }
 }

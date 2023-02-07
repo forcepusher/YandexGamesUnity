@@ -38,5 +38,15 @@ namespace Agava.YandexGames.Tests
             GetProductCatalogResponse response = GetProductCatalogResponse.ParseJson(responseSampleJson);
             Assert.IsNotEmpty(response.products);
         }
+
+        [Test]
+        public void GetPurchasedProductsResponseParsingTest()
+        {
+            //[{"productID":"TestProduct","purchaseTime":0,"purchaseToken":"070f028a-90d9-42da-95c4-53ef988bfe98"},{"productID":"TestProduct","purchaseTime":0,"purchaseToken":"a7afeaac-a694-4d39-a2eb-583f1bc19b1b"},{"productID":"TestProduct","purchaseTime":0,"purchaseToken":"4b512664-a2f9-4906-ad26-66db76a69b82"}]
+            string responseSampleJson = "[{\"productID\":\"TestProduct\",\"purchaseTime\":0,\"purchaseToken\":\"070f028a-90d9-42da-95c4-53ef988bfe98\"},{\"productID\":\"TestProduct\",\"purchaseTime\":0,\"purchaseToken\":\"a7afeaac-a694-4d39-a2eb-583f1bc19b1b\"},{\"productID\":\"TestProduct\",\"purchaseTime\":0,\"purchaseToken\":\"4b512664-a2f9-4906-ad26-66db76a69b82\"}]";
+
+            GetPurchasedProductsResponse response = GetPurchasedProductsResponse.ParseJson(responseSampleJson);
+            Assert.IsNotEmpty(response.purchasedProducts);
+        }
     }
 }

@@ -4413,8 +4413,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1389883701}
+  - component: {fileID: 1389883702}
   m_Layer: 5
-  m_Name: Product
+  m_Name: ProductPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4437,11 +4438,24 @@ RectTransform:
   m_Father: {fileID: 1546181201}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400, y: -75}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1389883702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1389883700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5819bae6a8760dc408cf0e97825f27f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _productIdText: {fileID: 1581236088}
 --- !u!1 &1406623324
 GameObject:
   m_ObjectHideFlags: 0
@@ -6064,7 +6078,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2040126971
 RectTransform:
   m_ObjectHideFlags: 0
