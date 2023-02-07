@@ -16,7 +16,7 @@ namespace Agava.YandexGames.Samples
             set
             {
                 _productIdText.text = value.id;
-                using (UnityWebRequest textureRequest = UnityWebRequestTexture.GetTexture(value.imageURI, true))
+                using (UnityWebRequest textureRequest = UnityWebRequestTexture.GetTexture(value.imageURI))
                 {
                     textureRequest.SendWebRequest().completed += (requestAsyncOperation) =>
                     {
