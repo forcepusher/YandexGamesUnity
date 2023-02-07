@@ -99,13 +99,9 @@ namespace Agava.YandexGames
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(Billing)}.{nameof(OnGetProductCatalogSuccessCallback)} invoked, {nameof(productCatalogResponseJson)} = {productCatalogResponseJson}");
 
-            //GetProductCatalogResponse productCatalogResponse = JsonUtility.FromJson<GetProductCatalogResponse>(productCatalogResponseJson);
+            GetProductCatalogResponse response = GetProductCatalogResponse.ParseJson(productCatalogResponseJson);
 
-            //Debug.Log(JsonUtility.ToJson(productCatalogResponse));
-
-            var temporaryMock = new GetProductCatalogResponse();
-
-            s_onGetProductCatalogSuccessCallback?.Invoke(temporaryMock);
+            s_onGetProductCatalogSuccessCallback?.Invoke(response);
         }
 
         [MonoPInvokeCallback(typeof(Action<string>))]

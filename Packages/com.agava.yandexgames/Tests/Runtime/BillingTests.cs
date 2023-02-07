@@ -37,7 +37,7 @@ namespace Agava.YandexGames.Tests
 
             string responseJson = "[{ \"id\":\"TestProduct\",\"title\":\"Тестлол\",\"description\":\"\",\"imageURI\":\"/default256x256\",\"price\":\"1 YAN\",\"priceValue\":\"1\",\"priceCurrencyCode\":\"YAN\"},{ \"id\":\"AnotherTestProduct\",\"title\":\"Желешечка\",\"description\":\"\",\"imageURI\":\"https://avatars.mds.yandex.net/get-games/2977039/2a0000018627c05340c1234f5ceb18517812//default256x256\",\"price\":\"4 YAN\",\"priceValue\":\"4\",\"priceCurrencyCode\":\"YAN\"}]";
             
-            GetProductCatalogResponse response = JsonUtility.FromJson<GetProductCatalogResponse>(GetProductCatalogResponse.WrapJson(responseJson));
+            GetProductCatalogResponse response = GetProductCatalogResponse.ParseJson(responseJson);
             Assert.IsNotEmpty(response.products);
         }
     }

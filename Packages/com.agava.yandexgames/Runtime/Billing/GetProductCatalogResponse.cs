@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using UnityEngine.Scripting;
 
 namespace Agava.YandexGames
@@ -9,7 +10,12 @@ namespace Agava.YandexGames
         [field: Preserve]
         public ProductResponse[] products;
 
-        public static string WrapJson(string arrayJson)
+        public static GetProductCatalogResponse ParseJson(string json)
+        {
+            return JsonUtility.FromJson<GetProductCatalogResponse>(WrapArrayJsonIntoObjectJson(json));
+        }
+
+        private static string WrapArrayJsonIntoObjectJson(string arrayJson)
         {
             return "{\"products\":" + arrayJson + "}";
         }
