@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using NUnit.Framework;
 using UnityEngine;
@@ -28,9 +29,16 @@ namespace Agava.YandexGames.Tests
             Assert.IsTrue(callbackInvoked);
         }
 
-        public void ParsingTest()
+        [Test]
+        public void GetProductCatalogResponseParsingTest()
         {
             //[{ "id":"TestProduct","title":"Тестлол","description":"","imageURI":"/default256x256","price":"1 YAN","priceValue":"1","priceCurrencyCode":"YAN"},{ "id":"AnotherTestProduct","title":"Желешечка","description":"","imageURI":"https://avatars.mds.yandex.net/get-games/2977039/2a0000018627c05340c1234f5ceb18517812//default256x256","price":"4 YAN","priceValue":"4","priceCurrencyCode":"YAN"}]
+            //"[{ \"id\":\"TestProduct\",\"title\":\"Тестлол\",\"description\":\"\",\"imageURI\":\"/default256x256\",\"price\":\"1 YAN\",\"priceValue\":\"1\",\"priceCurrencyCode\":\"YAN\"},{ \"id\":\"AnotherTestProduct\",\"title\":\"Желешечка\",\"description\":\"\",\"imageURI\":\"https://avatars.mds.yandex.net/get-games/2977039/2a0000018627c05340c1234f5ceb18517812//default256x256\",\"price\":\"4 YAN\",\"priceValue\":\"4\",\"priceCurrencyCode\":\"YAN\"}]"
+
+            string responseJson = "[{ \"id\":\"TestProduct\",\"title\":\"Тестлол\",\"description\":\"\",\"imageURI\":\"/default256x256\",\"price\":\"1 YAN\",\"priceValue\":\"1\",\"priceCurrencyCode\":\"YAN\"},{ \"id\":\"AnotherTestProduct\",\"title\":\"Желешечка\",\"description\":\"\",\"imageURI\":\"https://avatars.mds.yandex.net/get-games/2977039/2a0000018627c05340c1234f5ceb18517812//default256x256\",\"price\":\"4 YAN\",\"priceValue\":\"4\",\"priceCurrencyCode\":\"YAN\"}]";
+            
+            GetProductCatalogResponse response = JsonUtility.FromJson<GetProductCatalogResponse>(GetProductCatalogResponse.WrapJson(responseJson));
+            Assert.IsNotEmpty(response.products);
         }
     }
 }

@@ -8,5 +8,10 @@ namespace Agava.YandexGames
     {
         [field: Preserve]
         public ProductResponse[] products;
+
+        public static string WrapJson(string arrayJson)
+        {
+            return "{\"products\":" + arrayJson + "}";
+        }
     }
 }
