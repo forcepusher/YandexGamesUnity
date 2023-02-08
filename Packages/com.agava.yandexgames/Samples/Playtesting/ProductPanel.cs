@@ -13,10 +13,14 @@ namespace Agava.YandexGames.Samples
         [SerializeField]
         private Text _productIdText;
 
+        private ProductResponse _product;
+
         public ProductResponse Product
         {
             set
             {
+                _product = value;
+
                 _productIdText.text = value.id;
 
                 if (Uri.IsWellFormedUriString(value.imageURI, UriKind.Absolute))
@@ -35,12 +39,23 @@ namespace Agava.YandexGames.Samples
 
         public void OnPurchaseButtonClick()
         {
-
+            Billing.PurchaseProduct(_product.id, () =>
+            {
+                Debug.Log($"Purchased {_product.id}");
+            });
         }
 
         public void OnPurchaseAndConsumeButtonClick()
         {
+            Billing.PurchaseProduct(_product.id, () =>
+            {
+                Debug.Log($"Purchased {_product.id}");
 
+                Billing.ConsumeProduct(_product.id, () =>
+                {
+                    Debug.Log($"Consumed {_product.id}");
+                });
+            });
         }
     }
 }

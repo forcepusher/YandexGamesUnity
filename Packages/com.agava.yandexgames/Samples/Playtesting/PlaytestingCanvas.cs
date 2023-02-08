@@ -141,15 +141,5 @@ namespace Agava.YandexGames.Samples
         {
             Debug.Log($"Environment = {JsonUtility.ToJson(YandexGamesSdk.Environment)}");
         }
-
-        public void OnPurchaseProductButtonClick()
-        {
-            Billing.PurchaseProduct(_productIdInputField.text);
-        }
-
-        public void OnConsumeProductButtonClick()
-        {
-            Billing.ConsumeProduct(_productIdInputField.text);
-        }
     }
 }
