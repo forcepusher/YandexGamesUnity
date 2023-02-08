@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -16,13 +18,18 @@ namespace Agava.YandexGames.Samples
             set
             {
                 _productIdText.text = value.id;
-                using (UnityWebRequest textureRequest = UnityWebRequestTexture.GetTexture(value.imageURI))
-                {
-                    textureRequest.SendWebRequest().completed += (requestAsyncOperation) =>
-                    {
-                        _productImage.texture = DownloadHandlerTexture.GetContent(textureRequest);
-                    };
-                }
+
+                if (Uri.IsWellFormedUriString(value.imageURI, UriKind.Absolute))
+                    StartCoroutine(DownloadAndSetProductImage(value.imageURI));
+            }
+        }
+
+        private IEnumerator DownloadAndSetProductImage(string imageUri)
+        {
+            using (UnityWebRequest textureRequest = UnityWebRequestTexture.GetTexture(imageUri))
+            {
+                yield return textureRequest.SendWebRequest();
+                _productImage.texture = DownloadHandlerTexture.GetContent(textureRequest);
             }
         }
 

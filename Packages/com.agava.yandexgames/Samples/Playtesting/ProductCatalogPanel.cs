@@ -38,8 +38,10 @@ namespace Agava.YandexGames.Samples
             foreach (ProductResponse product in products)
             {
                 ProductPanel productPanel = Instantiate(_productPanelTemplate, _productCatalogLayoutGroup.transform);
-                productPanel.gameObject.SetActive(true);
                 _productPanels.Add(productPanel);
+
+                productPanel.gameObject.SetActive(true);
+                productPanel.Product = product;
             }
         }
 
