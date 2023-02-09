@@ -25,6 +25,7 @@ namespace Agava.YandexGames.Samples
             Billing.ConsumeProduct(_purchasedProduct.purchaseToken, () =>
             {
                 Debug.Log($"Consumed {_purchasedProduct.productID}");
+                Destroy(gameObject);
             });
         }
     }
