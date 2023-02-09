@@ -28,5 +28,47 @@ namespace Agava.YandexGames.Tests
 
             Assert.IsTrue(callbackInvoked);
         }
+
+        [UnityTest]
+        public IEnumerator ConsumeShouldInvokeErrorCallback()
+        {
+            bool callbackInvoked = false;
+            Billing.ConsumeProduct("adsfjoisadjfojds", onErrorCallback: (message) =>
+            {
+                callbackInvoked = true;
+            });
+
+            yield return new WaitForSecondsRealtime(1);
+
+            Assert.IsTrue(callbackInvoked);
+        }
+
+        [UnityTest]
+        public IEnumerator GetProductCatalogShouldInvokeErrorCallback()
+        {
+            bool callbackInvoked = false;
+            Billing.GetProductCatalog(onErrorCallback: (message) =>
+            {
+                callbackInvoked = true;
+            });
+
+            yield return new WaitForSecondsRealtime(1);
+
+            Assert.IsTrue(callbackInvoked);
+        }
+
+        [UnityTest]
+        public IEnumerator GetPurchasedProductsShouldInvokeErrorCallback()
+        {
+            bool callbackInvoked = false;
+            Billing.GetPurchasedProducts(onErrorCallback: (message) =>
+            {
+                callbackInvoked = true;
+            });
+
+            yield return new WaitForSecondsRealtime(1);
+
+            Assert.IsTrue(callbackInvoked);
+        }
     }
 }
