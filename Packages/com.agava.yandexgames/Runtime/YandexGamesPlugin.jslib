@@ -334,8 +334,6 @@ const library = {
       }
 
       yandexGames.billing.purchase({ id: productId, developerPayload: developerPayload }).then(function (purchaseResponse) {
-        console.log(purchaseResponse);
-
         purchaseResponse = { purchaseData: purchaseResponse.purchaseData, signature: purchaseResponse.signature };
 
         const purchasedProductJson = JSON.stringify(purchaseResponse);
@@ -354,8 +352,6 @@ const library = {
       }
 
       yandexGames.billing.consumePurchase(purchasedProductToken).then(function (consumedProduct) {
-        console.log(consumedProduct);
-
         dynCall('v', successCallbackPtr, []);
       }).catch(function (error) {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
@@ -369,8 +365,6 @@ const library = {
       }
 
       yandexGames.billing.getCatalog().then(function (productCatalogResponse) {
-        console.log(productCatalogResponse);
-
         productCatalogResponse = { products: productCatalogResponse, signature: productCatalogResponse.signature };
 
         const productCatalogJson = JSON.stringify(productCatalogResponse);
@@ -389,8 +383,6 @@ const library = {
       }
 
       yandexGames.billing.getPurchases().then(function (purchasesResponse) {
-        console.log(purchasesResponse);
-
         purchasesResponse = { purchasedProducts: purchasesResponse, signature: purchasesResponse.signature };
 
         const purchasedProductsJson = JSON.stringify(purchasesResponse);
