@@ -20,15 +20,12 @@ namespace Agava.YandexGames.Samples
 
         private void OnEnable()
         {
-            if (Application.isEditor)
-            {
-                string sampleResponseJson = "{\"products\":[{\"id\":\"TestProduct\",\"title\":\"Тестлол\",\"description\":\"\",\"imageURI\":\"/default256x256\",\"price\":\"1 YAN\",\"priceValue\":\"1\",\"priceCurrencyCode\":\"YAN\"},{\"id\":\"AnotherTestProduct\",\"title\":\"Желешечка\",\"description\":\"\",\"imageURI\":\"https://avatars.mds.yandex.net/get-games/2977039/2a0000018627c05340c1234f5ceb18517812//default256x256\",\"price\":\"4 YAN\",\"priceValue\":\"4\",\"priceCurrencyCode\":\"YAN\"}]}";
-                UpdateProductCatalog(JsonUtility.FromJson<GetProductCatalogResponse>(sampleResponseJson).products);
-            }
-            else
-            {
-                Billing.GetProductCatalog(productCatalogReponse => UpdateProductCatalog(productCatalogReponse.products));
-            }
+#if UNITY_EDITOR
+            string sampleResponseJson = "{\"products\":[{\"id\":\"TestProduct\",\"title\":\"Тестлол\",\"description\":\"\",\"imageURI\":\"/default256x256\",\"price\":\"1 YAN\",\"priceValue\":\"1\",\"priceCurrencyCode\":\"YAN\"},{\"id\":\"AnotherTestProduct\",\"title\":\"Желешечка\",\"description\":\"\",\"imageURI\":\"https://avatars.mds.yandex.net/get-games/2977039/2a0000018627c05340c1234f5ceb18517812//default256x256\",\"price\":\"4 YAN\",\"priceValue\":\"4\",\"priceCurrencyCode\":\"YAN\"}]}";
+            UpdateProductCatalog(JsonUtility.FromJson<GetProductCatalogResponse>(sampleResponseJson).products);
+#else
+            Billing.GetProductCatalog(productCatalogReponse => UpdateProductCatalog(productCatalogReponse.products));
+#endif
         }
 
         private void UpdateProductCatalog(CatalogProduct[] products)
