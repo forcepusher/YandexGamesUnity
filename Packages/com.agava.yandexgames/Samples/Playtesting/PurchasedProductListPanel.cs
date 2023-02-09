@@ -46,6 +46,8 @@ namespace Agava.YandexGames.Samples
         {
             foreach (PurchasedProductPanel purchasedProductPanel in _purchasedProductPanels)
                 Destroy(purchasedProductPanel.gameObject);
+
+            _purchasedProductPanels.Clear();
         }
     }
 }
