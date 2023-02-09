@@ -30,7 +30,10 @@ namespace Agava.YandexGames.Samples
 
         private void UpdateProductCatalog(CatalogProduct[] products)
         {
-            ClearProductCatalog();
+            foreach (ProductPanel productPanel in _productPanels)
+                Destroy(productPanel.gameObject);
+
+            _productPanels.Clear();
 
             foreach (CatalogProduct product in products)
             {
@@ -40,14 +43,6 @@ namespace Agava.YandexGames.Samples
                 productPanel.gameObject.SetActive(true);
                 productPanel.Product = product;
             }
-        }
-
-        private void ClearProductCatalog()
-        {
-            foreach (ProductPanel productPanel in _productPanels)
-                Destroy(productPanel.gameObject);
-
-            _productPanels.Clear();
         }
     }
 }

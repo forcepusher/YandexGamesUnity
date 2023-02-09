@@ -7,6 +7,8 @@ namespace Agava.YandexGames.Samples
     {
         [SerializeField]
         private Text _purchasedProductIdText;
+        [SerializeField]
+        private PurchasedProductListPanel _purchasedProductListPanel;
 
         private PurchasedProduct _purchasedProduct;
 
@@ -25,7 +27,8 @@ namespace Agava.YandexGames.Samples
             Billing.ConsumeProduct(_purchasedProduct.purchaseToken, () =>
             {
                 Debug.Log($"Consumed {_purchasedProduct.productID}");
-                Destroy(gameObject);
+
+                _purchasedProductListPanel.RemovePurchasedProductPanel(this);
             });
         }
     }

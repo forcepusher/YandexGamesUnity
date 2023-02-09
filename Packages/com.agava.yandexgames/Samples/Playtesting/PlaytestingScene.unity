@@ -2483,6 +2483,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _purchasedProductIdText: {fileID: 778805971}
+  _purchasedProductListPanel: {fileID: 639688515}
 --- !u!1 &734907766
 GameObject:
   m_ObjectHideFlags: 0

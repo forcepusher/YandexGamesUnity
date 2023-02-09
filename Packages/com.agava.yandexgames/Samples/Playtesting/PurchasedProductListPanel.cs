@@ -30,7 +30,10 @@ namespace Agava.YandexGames.Samples
 
         private void UpdatePurchasedProducts(PurchasedProduct[] purchasedProducts)
         {
-            ClearPurchasedProducts();
+            foreach (PurchasedProductPanel purchasedProductPanel in _purchasedProductPanels)
+                Destroy(purchasedProductPanel.gameObject);
+
+            _purchasedProductPanels.Clear();
 
             foreach (PurchasedProduct purchasedProduct in purchasedProducts)
             {
@@ -42,12 +45,11 @@ namespace Agava.YandexGames.Samples
             }
         }
 
-        private void ClearPurchasedProducts()
+        public void RemovePurchasedProductPanel(PurchasedProductPanel purchasedProductPanel)
         {
-            foreach (PurchasedProductPanel purchasedProductPanel in _purchasedProductPanels)
-                Destroy(purchasedProductPanel.gameObject);
+            _purchasedProductPanels.Remove(purchasedProductPanel);
 
-            _purchasedProductPanels.Clear();
+            Destroy(purchasedProductPanel.gameObject);
         }
     }
 }
