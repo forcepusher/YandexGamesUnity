@@ -333,10 +333,15 @@ const library = {
         return;
       }
 
-      yandexGames.billing.purchase({ id: productId, developerPayload: developerPayload }).then(function (purchasedProduct) {
-        console.log(purchasedProduct);
+      yandexGames.billing.purchase({ id: productId, developerPayload: developerPayload }).then(function (purchaseResponse) {
+        console.log(purchaseResponse);
 
-        dynCall('v', successCallbackPtr, []);
+        purchaseResponse = { purchaseData: purchaseResponse.purchaseData, signature: purchaseResponse.signature };
+
+        const purchasedProductJson = JSON.stringify(purchaseResponse);
+        const purchasedProductJsonUnmanagedStringPtr = yandexGames.allocateUnmanagedString(purchasedProductJson);
+        dynCall('vi', successCallbackPtr, [purchasedProductJsonUnmanagedStringPtr]);
+        _free(purchasedProductJsonUnmanagedStringPtr);
       }).catch(function (error) {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
       });
@@ -363,10 +368,12 @@ const library = {
         return;
       }
 
-      yandexGames.billing.getCatalog().then(function (productCatalog) {
-        console.log(productCatalog);
+      yandexGames.billing.getCatalog().then(function (productCatalogResponse) {
+        console.log(productCatalogResponse);
 
-        const productCatalogJson = JSON.stringify(productCatalog);
+        productCatalogResponse = { products: productCatalogResponse, signature: productCatalogResponse.signature };
+
+        const productCatalogJson = JSON.stringify(productCatalogResponse);
         const productCatalogJsonUnmanagedStringPtr = yandexGames.allocateUnmanagedString(productCatalogJson);
         dynCall('vi', successCallbackPtr, [productCatalogJsonUnmanagedStringPtr]);
         _free(productCatalogJsonUnmanagedStringPtr);
@@ -381,10 +388,12 @@ const library = {
         return;
       }
 
-      yandexGames.billing.getPurchases().then(function (purchasedProducts) {
-        console.log(purchasedProducts);
+      yandexGames.billing.getPurchases().then(function (purchasesResponse) {
+        console.log(purchasesResponse);
 
-        const purchasedProductsJson = JSON.stringify(purchasedProducts);
+        purchasesResponse = { purchasedProducts: purchasesResponse, signature: purchasesResponse.signature };
+
+        const purchasedProductsJson = JSON.stringify(purchasesResponse);
         const purchasedProductsJsonUnmanagedStringPtr = yandexGames.allocateUnmanagedString(purchasedProductsJson);
         dynCall('vi', successCallbackPtr, [purchasedProductsJsonUnmanagedStringPtr]);
         _free(purchasedProductsJsonUnmanagedStringPtr);

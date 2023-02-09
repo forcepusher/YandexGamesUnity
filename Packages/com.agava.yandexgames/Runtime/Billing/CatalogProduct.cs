@@ -4,7 +4,7 @@ using UnityEngine.Scripting;
 namespace Agava.YandexGames
 {
     [Serializable]
-    public class ProductResponse
+    public class CatalogProduct
     {
         [field: Preserve]
         public string description;

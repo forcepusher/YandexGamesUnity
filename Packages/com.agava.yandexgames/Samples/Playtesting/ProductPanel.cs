@@ -13,9 +13,9 @@ namespace Agava.YandexGames.Samples
         [SerializeField]
         private Text _productIdText;
 
-        private ProductResponse _product;
+        private CatalogProduct _product;
 
-        public ProductResponse Product
+        public CatalogProduct Product
         {
             set
             {
@@ -39,21 +39,21 @@ namespace Agava.YandexGames.Samples
 
         public void OnPurchaseButtonClick()
         {
-            Billing.PurchaseProduct(_product.id, () =>
+            Billing.PurchaseProduct(_product.id, (purchaseProductResponse) =>
             {
-                Debug.Log($"Purchased {_product.id}");
+                Debug.Log($"Purchased {purchaseProductResponse.purchaseData.productID}");
             });
         }
 
         public void OnPurchaseAndConsumeButtonClick()
         {
-            Billing.PurchaseProduct(_product.id, () =>
+            Billing.PurchaseProduct(_product.id, (purchaseProductResponse) =>
             {
-                Debug.Log($"Purchased {_product.id}");
+                Debug.Log($"Purchased {purchaseProductResponse.purchaseData.productID}");
 
-                Billing.ConsumeProduct(_product.id, () =>
+                Billing.ConsumeProduct(purchaseProductResponse.purchaseData.purchaseToken, () =>
                 {
-                    Debug.Log($"Consumed {_product.id}");
+                    Debug.Log($"Consumed {purchaseProductResponse.purchaseData.productID}");
                 });
             });
         }
