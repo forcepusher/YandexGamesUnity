@@ -271,6 +271,10 @@ const library = {
       yandexGames.leaderboard.getLeaderboardEntries(leaderboardName, {
         includeUser: includeSelf, quantityAround: competingPlayersCount, quantityTop: topPlayersCount
       }).then(function (response) {
+        response.entries.forEach(function(entry) {
+          entry.player.avatar = entry.player.getAvatarSrc({ size: 'medium' });
+        });
+
         const entriesJson = JSON.stringify(response);
         const entriesUnmanagedStringPtr = yandexGames.allocateUnmanagedString(entriesJson);
         dynCall('vi', successCallbackPtr, [entriesUnmanagedStringPtr]);
