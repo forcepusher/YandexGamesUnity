@@ -40,7 +40,7 @@ namespace Agava.YandexGames
             _url= url;
         }
 
-        public async Task Download(CancellationToken cancellationToken = default)
+        public async Task Download(Action<Texture2D> successCallback = null, Action<string> errorCallback = null, CancellationToken cancellationToken = default)
         {
             using (UnityWebRequest downloadTextureWebRequest = UnityWebRequestTexture.GetTexture(_url))
             {
@@ -51,9 +51,14 @@ namespace Agava.YandexGames
 
                 if (downloadOperation.webRequest.result != UnityWebRequest.Result.Success)
                     DownloadErrorMessage = downloadOperation.webRequest.error;
-
+                
                 Texture = DownloadHandlerTexture.GetContent(downloadTextureWebRequest);
             }
+
+            if (IsDownloadSuccessful)
+                successCallback?.Invoke(Texture);
+            else
+                errorCallback?.Invoke(DownloadErrorMessage);
         }
 
         //private IEnumerator DownloadAndSetProductImage(string imageUri)
