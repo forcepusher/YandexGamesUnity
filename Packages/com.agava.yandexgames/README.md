@@ -1,6 +1,6 @@
 # com.agava.yandexgames  
   
-[Try the SDK demo here.](https://yandex.ru/games/play/179973?draft=true)  
+[Try the SDK demo here.](https://yandex.ru/games/app/223976?draft=true)  
   
 Make sure you have standalone [Git](https://git-scm.com/downloads) installed first. Reboot after installation.  
 In Unity, open "Window" -> "Package Manager".  
