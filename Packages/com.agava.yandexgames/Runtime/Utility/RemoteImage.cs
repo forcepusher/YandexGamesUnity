@@ -42,9 +42,6 @@ namespace Agava.YandexGames
 
         public async Task Download(Action<Texture2D> successCallback = null, Action<string> errorCallback = null, CancellationToken cancellationToken = default)
         {
-            if (Uri.IsWellFormedUriString(_url, UriKind.Absolute))
-                throw new ArgumentException($"{_url} is not a well formed absolute URI string.");
-
             using (UnityWebRequest downloadTextureWebRequest = UnityWebRequestTexture.GetTexture(_url))
             {
                 UnityWebRequestAsyncOperation downloadOperation = downloadTextureWebRequest.SendWebRequest();
