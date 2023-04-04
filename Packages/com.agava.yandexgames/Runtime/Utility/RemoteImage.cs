@@ -60,14 +60,5 @@ namespace Agava.YandexGames
             else
                 errorCallback?.Invoke(DownloadErrorMessage);
         }
-
-        //private IEnumerator DownloadAndSetProductImage(string imageUri)
-        //{
-        //    using (UnityWebRequest textureRequest = UnityWebRequestTexture.GetTexture(imageUri))
-        //    {
-        //        yield return textureRequest.SendWebRequest();
-        //        _productImage.texture = DownloadHandlerTexture.GetContent(textureRequest);
-        //    }
-        //}
     }
 }
