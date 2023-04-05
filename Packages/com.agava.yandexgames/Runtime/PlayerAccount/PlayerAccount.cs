@@ -123,7 +123,7 @@ namespace Agava.YandexGames
         /// <remarks>
         /// Requires authorization. Use <see cref="IsAuthorized"/> and <see cref="Authorize"/>.
         /// </remarks>
-        public static void GetProfileData(Action<PlayerAccountProfileDataResponse> onSuccessCallback, Action<string> onErrorCallback = null, PlayerAccountProfilePictureSize pictureSize = PlayerAccountProfilePictureSize.medium)
+        public static void GetProfileData(Action<PlayerAccountProfileDataResponse> onSuccessCallback, Action<string> onErrorCallback = null, ProfilePictureSize pictureSize = ProfilePictureSize.medium)
         {
             s_onGetProfileDataSuccessCallback = onSuccessCallback;
             s_onGetProfileDataErrorCallback = onErrorCallback;

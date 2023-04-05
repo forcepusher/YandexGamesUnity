@@ -68,7 +68,7 @@ namespace Agava.YandexGames
         /// <remarks>
         /// Requires authorization. Use <see cref="PlayerAccount.IsAuthorized"/> and <see cref="PlayerAccount.Authorize"/>.
         /// </remarks>
-        public static void GetEntries(string leaderboardName, Action<LeaderboardGetEntriesResponse> onSuccessCallback, Action<string> onErrorCallback = null, int topPlayersCount = 5, int competingPlayersCount = 5, bool includeSelf = true, LeaderboardProfilePictureSize pictureSize = LeaderboardProfilePictureSize.medium)
+        public static void GetEntries(string leaderboardName, Action<LeaderboardGetEntriesResponse> onSuccessCallback, Action<string> onErrorCallback = null, int topPlayersCount = 5, int competingPlayersCount = 5, bool includeSelf = true, ProfilePictureSize pictureSize = ProfilePictureSize.medium)
         {
             if (leaderboardName == null)
                 throw new ArgumentNullException(nameof(leaderboardName));
@@ -110,7 +110,7 @@ namespace Agava.YandexGames
         /// <remarks>
         /// Requires authorization. Use <see cref="PlayerAccount.IsAuthorized"/> and <see cref="PlayerAccount.Authorize"/>.
         /// </remarks>
-        public static void GetPlayerEntry(string leaderboardName, Action<LeaderboardEntryResponse> onSuccessCallback, Action<string> onErrorCallback = null, LeaderboardProfilePictureSize pictureSize = LeaderboardProfilePictureSize.medium)
+        public static void GetPlayerEntry(string leaderboardName, Action<LeaderboardEntryResponse> onSuccessCallback, Action<string> onErrorCallback = null, ProfilePictureSize pictureSize = ProfilePictureSize.medium)
         {
             if (leaderboardName == null)
                 throw new ArgumentNullException(nameof(leaderboardName));

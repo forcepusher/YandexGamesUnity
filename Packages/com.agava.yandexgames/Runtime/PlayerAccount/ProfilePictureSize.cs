@@ -1,6 +1,6 @@
 namespace Agava.YandexGames
 {
-    public enum LeaderboardProfilePictureSize
+    public enum ProfilePictureSize
     {
         small,
         medium,
