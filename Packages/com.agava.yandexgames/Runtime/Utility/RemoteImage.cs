@@ -35,6 +35,10 @@ namespace Agava.YandexGames
 
         public string DownloadErrorMessage { get; private set; }
 
+        /// <summary>
+        /// Creates an instance of an image that can be downloaded from a remote server.
+        /// </summary>
+        /// <param name="url">It's actually a URL, not URI because <see cref="UnityWebRequestTexture"/> silently fails without a protocol (like https://).</param>
         public RemoteImage(string url)
         {
             _url= url;
