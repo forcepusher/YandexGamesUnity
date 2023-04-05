@@ -5,13 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).  
   
 ## [12.0.0] - 2000-00-00  
+### Added  
+- Profile pictures now will be fetched with `PlayerAccount.GetProfileData()`, `Leaderboard.GetPlayerEntry` and `GetEntries` methods.  
+Find profile picture URLs in `PlayerAccountProfileDataResponse.profilePicture` and download it via `RemoteImage` class.  
+  
 ### Changed  
+- `PlayerAccount.SetPlayerData` and `GetPlayerData` are renamed to `PlayerAccount.SetCloudSaveData` and `GetCloudSaveData`.  
 - Removed redundant authorization requirement for these methods: `PlayerAccount.HasPersonalProfileDataPermission()`,  `RequestPersonalProfileDataPermission()`, `GetProfileData()`, `GetPlayerData()`, `SetPlayerData()`.  
   
 ## [11.2.1] - 2023-03-17  
-### Changed  
-- `PlayerAccount.SetPlayerData` and `GetPlayerData` is renamed to `PlayerAccount.SetCloudSaveData` and `GetCloudSaveData`.  
-  
 ### Fixed  
 - The SDK now calls `ysdk.features.LoadingAPI.ready` method when initialization is complete.  
   

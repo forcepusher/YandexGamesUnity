@@ -157,7 +157,7 @@ namespace Agava.YandexGames
 
         #region PlayerData
         /// <summary>
-        /// Cloud save method, proxy for player.setData(), where "flush" setting is always true.
+        /// Proxy for player.setData() with "flush" setting set to true.
         /// </summary>
         public static void SetPlayerData(string playerDataJson, Action onSuccessCallback = null, Action<string> onErrorCallback = null)
         {
