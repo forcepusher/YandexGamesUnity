@@ -17,6 +17,6 @@ namespace Agava.YandexGames
         [field: Preserve]
         public string formattedScore;
         [field: Preserve]
-        public string avatar;
+        public string profilePicture;
     }
 }

@@ -177,7 +177,7 @@ const library = {
       yandexGames.sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
         yandexGames.playerAccount = playerAccount;
 
-        playerAccount._personalInfo.avatar = playerAccount.getPhoto(pictureSize);
+        playerAccount._personalInfo.profilePicture = playerAccount.getPhoto(pictureSize);
 
         const profileDataJson = JSON.stringify(playerAccount._personalInfo);
         const profileDataUnmanagedStringPtr = yandexGames.allocateUnmanagedString(profileDataJson);
@@ -276,7 +276,7 @@ const library = {
         includeUser: includeSelf, quantityAround: competingPlayersCount, quantityTop: topPlayersCount
       }).then(function (response) {
         response.entries.forEach(function(entry) {
-          entry.player.avatar = entry.player.getAvatarSrc({ size: pictureSize });
+          entry.player.profilePicture = entry.player.getAvatarSrc({ size: pictureSize });
         });
 
         const entriesJson = JSON.stringify(response);
@@ -295,7 +295,7 @@ const library = {
       }
 
       yandexGames.leaderboard.getLeaderboardPlayerEntry(leaderboardName).then(function (response) {
-        response.player.avatar = response.player.getAvatarSrc({ size: pictureSize });
+        response.player.profilePicture = response.player.getAvatarSrc({ size: pictureSize });
 
         const entryJson = JSON.stringify(response);
         const entryJsonUnmanagedStringPtr = yandexGames.allocateUnmanagedString(entryJson);
