@@ -52,11 +52,20 @@ namespace Agava.YandexGames
                 UnityWebRequestAsyncOperation downloadOperation = downloadTextureWebRequest.SendWebRequest();
 
                 while (!downloadOperation.isDone)
+                {
+                    if (cancellationToken.IsCancellationRequested)
+                        break;
+
                     await Task.Yield();
+                }
 
                 IsDownloadFinished = true;
 
-                if (downloadOperation.webRequest.result != UnityWebRequest.Result.Success)
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    DownloadErrorMessage = $"Download interrupted via {nameof(CancellationToken)}";
+                }
+                else if (downloadOperation.webRequest.result != UnityWebRequest.Result.Success)
                 {
                     DownloadErrorMessage = downloadOperation.webRequest.error;
                 }
