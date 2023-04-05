@@ -16,5 +16,7 @@ namespace Agava.YandexGames
         public PlayerAccountProfileDataResponse player;
         [field: Preserve]
         public string formattedScore;
+        [field: Preserve]
+        public string avatar;
     }
 }
