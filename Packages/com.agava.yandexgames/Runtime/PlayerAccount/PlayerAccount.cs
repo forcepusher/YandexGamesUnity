@@ -123,16 +123,16 @@ namespace Agava.YandexGames
         /// <remarks>
         /// Requires authorization. Use <see cref="IsAuthorized"/> and <see cref="Authorize"/>.
         /// </remarks>
-        public static void GetProfileData(Action<PlayerAccountProfileDataResponse> onSuccessCallback, Action<string> onErrorCallback = null)
+        public static void GetProfileData(Action<PlayerAccountProfileDataResponse> onSuccessCallback, Action<string> onErrorCallback = null, PlayerAccountProfilePictureSize pictureSize = PlayerAccountProfilePictureSize.medium)
         {
             s_onGetProfileDataSuccessCallback = onSuccessCallback;
             s_onGetProfileDataErrorCallback = onErrorCallback;
 
-            PlayerAccountGetProfileData(OnGetProfileDataSuccessCallback, OnGetProfileDataErrorCallback);
+            PlayerAccountGetProfileData(OnGetProfileDataSuccessCallback, OnGetProfileDataErrorCallback, pictureSize.ToString());
         }
 
         [DllImport("__Internal")]
-        private static extern void PlayerAccountGetProfileData(Action<string> successCallback, Action<string> errorCallback);
+        private static extern void PlayerAccountGetProfileData(Action<string> successCallback, Action<string> errorCallback, string pictureSize);
 
         [MonoPInvokeCallback(typeof(Action<string>))]
         private static void OnGetProfileDataSuccessCallback(string profileDataResponseJson)

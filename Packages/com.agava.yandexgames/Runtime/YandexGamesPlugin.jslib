@@ -173,9 +173,12 @@ const library = {
       });
     },
 
-    playerAccountGetProfileData: function (successCallbackPtr, errorCallbackPtr) {
+    playerAccountGetProfileData: function (successCallbackPtr, errorCallbackPtr, pictureSize) {
       yandexGames.sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
         yandexGames.playerAccount = playerAccount;
+
+        playerAccount._personalInfo.avatar = playerAccount.getPhoto(pictureSize);
+
         const profileDataJson = JSON.stringify(playerAccount._personalInfo);
         const profileDataUnmanagedStringPtr = yandexGames.allocateUnmanagedString(profileDataJson);
         dynCall('vi', successCallbackPtr, [profileDataUnmanagedStringPtr]);
@@ -429,10 +432,12 @@ const library = {
     yandexGames.playerAccountRequestPersonalProfileDataPermission(successCallbackPtr, errorCallbackPtr);
   },
 
-  PlayerAccountGetProfileData: function (successCallbackPtr, errorCallbackPtr) {
+  PlayerAccountGetProfileData: function (successCallbackPtr, errorCallbackPtr, pictureSizePtr) {
     yandexGames.throwIfSdkNotInitialized();
 
-    yandexGames.playerAccountGetProfileData(successCallbackPtr, errorCallbackPtr);
+    const pictureSize = UTF8ToString(pictureSizePtr);
+
+    yandexGames.playerAccountGetProfileData(successCallbackPtr, errorCallbackPtr, pictureSize);
   },
 
   PlayerAccountGetPlayerData: function (successCallbackPtr, errorCallbackPtr) {
