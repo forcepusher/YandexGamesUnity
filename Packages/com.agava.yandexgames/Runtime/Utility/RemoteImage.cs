@@ -44,7 +44,8 @@ namespace Agava.YandexGames
             _url= url;
         }
 
-        public async Task Download(Action<Texture2D> successCallback = null, Action<string> errorCallback = null, CancellationToken cancellationToken = default)
+        // Async is used here to avoid creation of coroutines that must be tied to a MonoBehaviour.
+        public async void Download(Action<Texture2D> successCallback = null, Action<string> errorCallback = null, CancellationToken cancellationToken = default)
         {
             using (UnityWebRequest downloadTextureWebRequest = UnityWebRequestTexture.GetTexture(_url))
             {
@@ -53,14 +54,25 @@ namespace Agava.YandexGames
                 while (!downloadOperation.isDone)
                     await Task.Yield();
 
+                IsDownloadFinished = true;
+
                 if (downloadOperation.webRequest.result != UnityWebRequest.Result.Success)
+                {
                     DownloadErrorMessage = downloadOperation.webRequest.error;
-                
-                Texture = DownloadHandlerTexture.GetContent(downloadTextureWebRequest);
+                }
+                else
+                {
+                    _texture = DownloadHandlerTexture.GetContent(downloadTextureWebRequest);
+
+                    if (_texture != null)
+                        IsDownloadSuccessful = true;
+                    else
+                        DownloadErrorMessage = "Getting content of a downloaded texture has failed.";
+                }
             }
 
             if (IsDownloadSuccessful)
-                successCallback?.Invoke(Texture);
+                successCallback?.Invoke(_texture);
             else
                 errorCallback?.Invoke(DownloadErrorMessage);
         }

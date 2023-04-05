@@ -30,7 +30,8 @@ namespace Agava.YandexGames.Samples
         private IEnumerator DownloadAndSetProductImage(string imageUrl)
         {
             var remoteImage = new RemoteImage(imageUrl);
-            _ = remoteImage.Download();
+            remoteImage.Download();
+
             while (!remoteImage.IsDownloadFinished)
                 yield return null;
 
