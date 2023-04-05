@@ -13,11 +13,9 @@ namespace Agava.YandexGames
         [field: Preserve]
         public string publicName;
         [field: Preserve]
-        public ScopePermissions scopePermissions;
-        [field: Preserve]
-        public string hasPremium;
-        [field: Preserve]
         public string profilePicture;
+        [field: Preserve]
+        public ScopePermissions scopePermissions;
 
         [Serializable]
         public class ScopePermissions
