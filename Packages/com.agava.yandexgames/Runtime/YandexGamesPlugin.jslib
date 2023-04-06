@@ -188,19 +188,19 @@ const library = {
       });
     },
 
-    playerAccountGetPlayerData: function (successCallbackPtr, errorCallbackPtr) {
-      yandexGames.playerAccount.getData().then(function (playerData) {
-        const playerDataUnmanagedStringPtr = yandexGames.allocateUnmanagedString(JSON.stringify(playerData));
-        dynCall('vi', successCallbackPtr, [playerDataUnmanagedStringPtr]);
-        _free(playerDataUnmanagedStringPtr);
+    playerAccountGetCloudSaveData: function (successCallbackPtr, errorCallbackPtr) {
+      yandexGames.playerAccount.getData().then(function (сloudSaveData) {
+        const сloudSaveDataUnmanagedStringPtr = yandexGames.allocateUnmanagedString(JSON.stringify(сloudSaveData));
+        dynCall('vi', successCallbackPtr, [сloudSaveDataUnmanagedStringPtr]);
+        _free(сloudSaveDataUnmanagedStringPtr);
       }).catch(function (error) {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
       });
     },
 
-    playerAccountSetPlayerData: function (playerDataJson, successCallbackPtr, errorCallbackPtr) {
-      var playerData = JSON.parse(playerDataJson);
-      yandexGames.playerAccount.setData(playerData, true).then(function () {
+    playerAccountSetCloudSaveData: function (сloudSaveDataJson, successCallbackPtr, errorCallbackPtr) {
+      var сloudSaveData = JSON.parse(сloudSaveDataJson);
+      yandexGames.playerAccount.setData(сloudSaveData, true).then(function () {
         dynCall('v', successCallbackPtr, []);
       }).catch(function (error) {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
@@ -440,18 +440,18 @@ const library = {
     yandexGames.playerAccountGetProfileData(successCallbackPtr, errorCallbackPtr, pictureSize);
   },
 
-  PlayerAccountGetPlayerData: function (successCallbackPtr, errorCallbackPtr) {
+  PlayerAccountGetCloudSaveData: function (successCallbackPtr, errorCallbackPtr) {
     yandexGames.throwIfSdkNotInitialized();
 
-    yandexGames.playerAccountGetPlayerData(successCallbackPtr, errorCallbackPtr);
+    yandexGames.playerAccountGetCloudSaveData(successCallbackPtr, errorCallbackPtr);
   },
 
-  PlayerAccountSetPlayerData: function (playerDataJsonPtr, successCallbackPtr, errorCallbackPtr) {
+  PlayerAccountSetCloudSaveData: function (сloudSaveDataJsonPtr, successCallbackPtr, errorCallbackPtr) {
     yandexGames.throwIfSdkNotInitialized();
 
-    const playerDataJson = UTF8ToString(playerDataJsonPtr);
+    const сloudSaveDataJson = UTF8ToString(сloudSaveDataJsonPtr);
 
-    yandexGames.playerAccountSetPlayerData(playerDataJson, successCallbackPtr, errorCallbackPtr);
+    yandexGames.playerAccountSetCloudSaveData(сloudSaveDataJson, successCallbackPtr, errorCallbackPtr);
   },
 
   InterstitialAdShow: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
