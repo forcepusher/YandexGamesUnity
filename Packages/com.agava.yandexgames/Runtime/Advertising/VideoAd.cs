@@ -68,6 +68,12 @@ namespace Agava.YandexGames
         [MonoPInvokeCallback(typeof(Action))]
         private static void OnCloseCallback()
         {
+            if (!s_isVideoAdOpen)
+            {
+                Debug.Log($"Ignoring {nameof(VideoAd)}.{nameof(OnCloseCallback)} because {nameof(s_isVideoAdOpen)} is {s_isVideoAdOpen}");
+                return;
+            }
+
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(VideoAd)}.{nameof(OnCloseCallback)} invoked");
 
