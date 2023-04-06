@@ -40,6 +40,10 @@ Find profile picture URLs in `PlayerAccountProfileDataResponse.profilePicture` a
 - The SDK is no longer initializing itself because developers often forget to use WaitForInitialization() coroutine.  
 This was leading to errors that were difficult to reproduce and detect. Now you have to call YandexGamesSdk.Initialize() on your own.  
   
+## [9.0.0] - 2022-07-22  
+### Fixed  
+- Interstitial misspelling.  
+  
 ## [8.3.1] - 2022-06-08  
 ### Fixed  
 - PlayerAccount.IsAuthorized was broken due to recent YandexGames API changes. This update solves it.  
