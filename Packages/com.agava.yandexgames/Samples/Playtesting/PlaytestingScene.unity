@@ -5648,7 +5648,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Load from cloud
+  m_Text: Save to cloud
 --- !u!222 &1644675228
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6135,7 +6135,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Save to cloud
+  m_Text: Load from cloud
 --- !u!222 &1853559957
 CanvasRenderer:
   m_ObjectHideFlags: 0
