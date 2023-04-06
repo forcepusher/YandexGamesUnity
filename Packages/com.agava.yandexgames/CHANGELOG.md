@@ -40,10 +40,6 @@ Find profile picture URLs in `PlayerAccountProfileDataResponse.profilePicture` a
 - The SDK is no longer initializing itself because developers often forget to use WaitForInitialization() coroutine.  
 This was leading to errors that were difficult to reproduce and detect. Now you have to call YandexGamesSdk.Initialize() on your own.  
   
-## [9.0.0] - 2022-07-22  
-### Fixed  
-- Interstitial misspelling.  
-  
 ## [8.3.1] - 2022-06-08  
 ### Fixed  
 - PlayerAccount.IsAuthorized was broken due to recent YandexGames API changes. This update solves it.  
@@ -99,16 +95,10 @@ This was leading to errors that were difficult to reproduce and detect. Now you 
 [11.2.0] https://github.com/forcepusher/com.agava.yandexgames/compare/11.1.0...11.2.0  
 [11.1.0] https://github.com/forcepusher/com.agava.yandexgames/compare/11.0.0...11.1.0  
 [11.0.0] https://github.com/forcepusher/com.agava.yandexgames/compare/10.0.0...11.0.0  
-[10.0.0] https://github.com/forcepusher/com.agava.yandexgames/compare/9.0.0...10.0.0  
-[9.0.0] https://github.com/forcepusher/com.agava.yandexgames/compare/8.3.1...9.0.0  
+[10.0.0] https://github.com/forcepusher/com.agava.yandexgames/compare/8.3.1...10.0.0  
 [8.3.1] https://github.com/forcepusher/com.agava.yandexgames/compare/8.3.0...8.3.1  
 [8.3.0] https://github.com/forcepusher/com.agava.yandexgames/compare/8.2.0...8.3.0  
 [8.2.0] https://github.com/forcepusher/com.agava.yandexgames/compare/8.1.0...8.2.0  
 [8.1.0] https://github.com/forcepusher/com.agava.yandexgames/compare/8.0.1...8.1.0  
 [8.0.1] https://github.com/forcepusher/com.agava.yandexgames/compare/8.0.0...8.0.1  
-[8.0.0] https://github.com/forcepusher/com.agava.yandexgames/compare/7.0.0...8.0.0  
-[7.0.0] https://github.com/forcepusher/com.agava.yandexgames/compare/6.0.0...7.0.0  
-[6.0.0] https://github.com/forcepusher/com.agava.yandexgames/compare/5.0.1...6.0.0  
-[5.0.1] https://github.com/forcepusher/com.agava.yandexgames/compare/5.0.0...5.0.1  
-[5.0.0] https://github.com/forcepusher/com.agava.yandexgames/compare/4.0.0...5.0.0  
-[4.0.0] https://github.com/forcepusher/com.agava.yandexgames/compare/3.0.0...4.0.0
+[8.0.0] https://github.com/forcepusher/com.agava.yandexgames/compare/7.0.0...8.0.0
