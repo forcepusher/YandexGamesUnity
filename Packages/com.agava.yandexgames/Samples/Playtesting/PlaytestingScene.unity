@@ -208,7 +208,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2102737976}
         m_TargetAssemblyTypeName: Agava.YandexGames.Samples.PlaytestingCanvas, Agava.YandexGames.Samples.Playtesting
-        m_MethodName: OnSetPlayerDataButtonClick
+        m_MethodName: OnSetCloudSaveDataButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -492,7 +492,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 52059681}
   m_HandleRect: {fileID: 52059680}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4155,7 +4155,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2102737976}
         m_TargetAssemblyTypeName: Agava.YandexGames.Samples.PlaytestingCanvas, Agava.YandexGames.Samples.Playtesting
-        m_MethodName: OnGetPlayerDataButtonClick
+        m_MethodName: OnGetCloudSaveDataButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5648,7 +5648,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Set player data
+  m_Text: Load from cloud
 --- !u!222 &1644675228
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6135,7 +6135,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Get player data
+  m_Text: Save to cloud
 --- !u!222 &1853559957
 CanvasRenderer:
   m_ObjectHideFlags: 0

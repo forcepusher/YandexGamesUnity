@@ -122,12 +122,12 @@ namespace Agava.YandexGames.Samples
             });
         }
 
-        public void OnSetPlayerDataButtonClick()
+        public void OnSetCloudSaveDataButtonClick()
         {
             PlayerAccount.SetCloudSaveData(_cloudSaveDataInputField.text);
         }
 
-        public void OnGetPlayerDataButtonClick()
+        public void OnGetCloudSaveDataButtonClick()
         {
             PlayerAccount.GetCloudSaveData((data) => _cloudSaveDataInputField.text = data);
         }
