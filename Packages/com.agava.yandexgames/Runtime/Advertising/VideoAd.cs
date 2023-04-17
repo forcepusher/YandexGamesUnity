@@ -55,7 +55,9 @@ namespace Agava.YandexGames
         {
             if (!s_isVideoAdOpen)
             {
-                Debug.Log($"Ignoring {nameof(VideoAd)}.{nameof(OnRewardedCallback)} because {nameof(s_isVideoAdOpen)} is {s_isVideoAdOpen}");
+                if (YandexGamesSdk.CallbackLogging)
+                    Debug.Log($"Ignoring {nameof(VideoAd)}.{nameof(OnRewardedCallback)} because {nameof(s_isVideoAdOpen)} is {s_isVideoAdOpen}");
+
                 return;
             }
 
@@ -70,7 +72,9 @@ namespace Agava.YandexGames
         {
             if (!s_isVideoAdOpen)
             {
-                Debug.Log($"Ignoring {nameof(VideoAd)}.{nameof(OnCloseCallback)} because {nameof(s_isVideoAdOpen)} is {s_isVideoAdOpen}");
+                if (YandexGamesSdk.CallbackLogging)
+                    Debug.Log($"Ignoring {nameof(VideoAd)}.{nameof(OnCloseCallback)} because {nameof(s_isVideoAdOpen)} is {s_isVideoAdOpen}");
+
                 return;
             }
 
