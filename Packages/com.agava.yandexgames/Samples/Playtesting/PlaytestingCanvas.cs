@@ -129,11 +129,6 @@ namespace Agava.YandexGames.Samples
             PlayerAccount.GetCloudSaveData((data) => _cloudSaveDataInputField.text = data);
         }
 
-        public void OnGetDeviceTypeButtonClick()
-        {
-            Debug.Log($"DeviceType = {Device.Type}");
-        }
-
         public void OnGetEnvironmentButtonClick()
         {
             Debug.Log($"Environment = {JsonUtility.ToJson(YandexGamesSdk.Environment)}");
