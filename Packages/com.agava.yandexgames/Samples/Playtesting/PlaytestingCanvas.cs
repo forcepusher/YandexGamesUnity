@@ -20,9 +20,6 @@ namespace Agava.YandexGames.Samples
         [SerializeField]
         private InputField _cloudSaveDataInputField;
 
-        [SerializeField]
-        private InputField _productIdInputField;
-
         private void Awake()
         {
             YandexGamesSdk.CallbackLogging = true;
