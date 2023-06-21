@@ -39,6 +39,7 @@ const library = {
 
             // Always contains permission info. Contains personal data as well if permissions were granted before.
             yandexGames.playerAccount = playerAccount;
+            console.log(playerAccount);
           }).catch(function () { throw new Error('PlayerAccount failed to initialize.'); });
 
           const leaderboardInitializationPromise = sdk.getLeaderboards().then(function (leaderboard) {
@@ -129,6 +130,7 @@ const library = {
         yandexGames.sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
           yandexGames.isAuthorized = true;
           yandexGames.playerAccount = playerAccount;
+          console.log(playerAccount);
           dynCall('v', successCallbackPtr, []);
         }).catch(function (error) {
           console.error('authorize failed to update playerAccount. Assuming authorization failed. Error was: ' + error.message);
@@ -162,7 +164,7 @@ const library = {
     playerAccountRequestPersonalProfileDataPermission: function (successCallbackPtr, errorCallbackPtr) {
       yandexGames.sdk.getPlayer({ scopes: true }).then(function (playerAccount) {
         yandexGames.playerAccount = playerAccount;
-
+        console.log(playerAccount);
         if (yandexGames.getPlayerAccountHasPersonalProfileDataPermission()) {
           dynCall('v', successCallbackPtr, []);
         } else {
@@ -176,7 +178,7 @@ const library = {
     playerAccountGetProfileData: function (successCallbackPtr, errorCallbackPtr, pictureSize) {
       yandexGames.sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
         yandexGames.playerAccount = playerAccount;
-
+        console.log(playerAccount);
         playerAccount._personalInfo.profilePicture = playerAccount.getPhoto(pictureSize);
 
         const profileDataJson = JSON.stringify(playerAccount._personalInfo);
