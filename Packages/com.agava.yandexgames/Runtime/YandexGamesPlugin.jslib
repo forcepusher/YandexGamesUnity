@@ -118,6 +118,33 @@ const library = {
       }
     },
 
+    playerAccountStartAuthorizationLoop: function (cooldown, successCallbackPtr, errorCallbackPtr) {
+      if (yandexGames.isAuthorized) {
+        console.error('Already authorized.');
+        dynCall('v', errorCallbackPtr, []);
+        return;
+      }
+
+      function authorizationLoop() {
+        if (yandexGames.isAuthorized) {
+          dynCall('v', successCallbackPtr, []);
+          return;
+        }
+
+        yandexGames.sdk.getPlayer({ scopes: false }).then(function (playerAccount) {
+          if (playerAccount.getMode() !== 'lite') {
+            yandexGames.isAuthorized = true;
+            yandexGames.playerAccount = playerAccount;
+            dynCall('v', successCallbackPtr, []);
+          } else {
+            setTimeout(authorizationLoop, cooldown);
+          }
+        });
+      };
+      
+      authorizationLoop();
+    },
+
     playerAccountAuthorize: function (successCallbackPtr, errorCallbackPtr) {
       if (yandexGames.isAuthorized) {
         console.error('Already authorized.');
@@ -386,6 +413,12 @@ const library = {
     yandexGames.throwIfSdkNotInitialized();
 
     return yandexGames.getDeviceType();
+  },
+
+  PlayerAccountStartAuthorizationLoop: function (cooldown, successCallbackPtr, errorCallbackPtr) {
+    yandexGames.throwIfSdkNotInitialized();
+
+    yandexGames.playerAccountStartAuthorizationLoop(cooldown, successCallbackPtr, errorCallbackPtr);
   },
 
   PlayerAccountAuthorize: function (successCallbackPtr, errorCallbackPtr) {

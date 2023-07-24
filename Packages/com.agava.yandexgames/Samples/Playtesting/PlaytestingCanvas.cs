@@ -23,6 +23,7 @@ namespace Agava.YandexGames.Samples
         private void Awake()
         {
             YandexGamesSdk.CallbackLogging = true;
+            PlayerAccount.AuthorizedAfterInitialize += OnAuthorizedAfterInitialize;
         }
 
         private IEnumerator Start()
@@ -33,6 +34,9 @@ namespace Agava.YandexGames.Samples
 
             // Always wait for it if invoking something immediately in the first scene.
             yield return YandexGamesSdk.Initialize();
+
+            if (PlayerAccount.IsAuthorized == false)
+                PlayerAccount.StartAuthorizationLoop(1500);
 
             while (true)
             {
@@ -45,6 +49,11 @@ namespace Agava.YandexGames.Samples
 
                 yield return new WaitForSecondsRealtime(0.25f);
             }
+        }
+
+        private void OnDestroy()
+        {
+            PlayerAccount.AuthorizedAfterInitialize -= OnAuthorizedAfterInitialize;
         }
 
         public void OnShowInterstitialButtonClick()
@@ -132,6 +141,11 @@ namespace Agava.YandexGames.Samples
         public void OnGetEnvironmentButtonClick()
         {
             Debug.Log($"Environment = {JsonUtility.ToJson(YandexGamesSdk.Environment)}");
+        }
+
+        private void OnAuthorizedAfterInitialize()
+        {
+            Debug.Log($"AuthorizedAfterInitialize {PlayerAccount.IsAuthorized}");
         }
     }
 }
