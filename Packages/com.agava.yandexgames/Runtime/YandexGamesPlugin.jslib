@@ -118,14 +118,14 @@ const library = {
       }
     },
 
-    playerAccountStartAuthorizationLoop: function (cooldown, successCallbackPtr, errorCallbackPtr) {
+    playerAccountStartAuthorizationLPolling: function (delay, successCallbackPtr, errorCallbackPtr) {
       if (yandexGames.isAuthorized) {
         console.error('Already authorized.');
         dynCall('v', errorCallbackPtr, []);
         return;
       }
 
-      function authorizationLoop() {
+      function authorizationPollingLoop() {
         if (yandexGames.isAuthorized) {
           dynCall('v', successCallbackPtr, []);
           return;
@@ -137,12 +137,12 @@ const library = {
             yandexGames.playerAccount = playerAccount;
             dynCall('v', successCallbackPtr, []);
           } else {
-            setTimeout(authorizationLoop, cooldown);
+            setTimeout(authorizationPollingLoop, delay);
           }
         });
       };
       
-      authorizationLoop();
+      authorizationPollingLoop();
     },
 
     playerAccountAuthorize: function (successCallbackPtr, errorCallbackPtr) {
@@ -415,10 +415,10 @@ const library = {
     return yandexGames.getDeviceType();
   },
 
-  PlayerAccountStartAuthorizationLoop: function (cooldown, successCallbackPtr, errorCallbackPtr) {
+  PlayerAccountStartAuthorizationPolling: function (delay, successCallbackPtr, errorCallbackPtr) {
     yandexGames.throwIfSdkNotInitialized();
 
-    yandexGames.playerAccountStartAuthorizationLoop(cooldown, successCallbackPtr, errorCallbackPtr);
+    yandexGames.playerAccountStartAuthorizationPolling(delay, successCallbackPtr, errorCallbackPtr);
   },
 
   PlayerAccountAuthorize: function (successCallbackPtr, errorCallbackPtr) {

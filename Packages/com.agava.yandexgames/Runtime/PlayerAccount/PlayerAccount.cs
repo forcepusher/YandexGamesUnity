@@ -10,10 +10,10 @@ namespace Agava.YandexGames
     /// </summary>
     public static class PlayerAccount
     {
-        public static event Action AuthorizedAfterInitialize;
+        public static event Action AuthorizedInBackground;
 
-        private static Action s_onStartAuthorizationLoopSuccessCallback;
-        private static Action s_onStartAuthorizationLoopErrorCallback;
+        private static Action s_onStartAuthorizationPollingSuccessCallback;
+        private static Action s_onStartAuthorizationPollingErrorCallback;
 
         private static Action s_onAuthorizeSuccessCallback;
         private static Action<string> s_onAuthorizeErrorCallback;
@@ -82,16 +82,16 @@ namespace Agava.YandexGames
             s_onAuthorizeErrorCallback?.Invoke(errorMessage);
         }
 
-        public static void StartAuthorizationLoop(int cooldown, Action successCallback = null, Action errorCallback = null)
+        public static void StartAuthorizationPolling(int delay, Action successCallback = null, Action errorCallback = null)
         {
-            s_onStartAuthorizationLoopSuccessCallback = successCallback;
-            s_onStartAuthorizationLoopErrorCallback = errorCallback;
+            s_onStartAuthorizationPollingSuccessCallback = successCallback;
+            s_onStartAuthorizationPollingErrorCallback = errorCallback;
 
-            PlayerAccountStartAuthorizationLoop(cooldown, OnStartAuthorizationLoopSuccessCallback, OnStartAuthorizationLoopErrorCallback);
+            PlayerAccountStartAuthorizationPolling(delay, OnStartAuthorizationLoopSuccessCallback, OnStartAuthorizationLoopErrorCallback);
         }
 
         [DllImport("__Internal")]
-        private static extern void PlayerAccountStartAuthorizationLoop(int cooldown, Action successCallback, Action errorCallback);
+        private static extern void PlayerAccountStartAuthorizationPolling(int cooldown, Action successCallback, Action errorCallback);
 
         [MonoPInvokeCallback(typeof(Action))]
         private static void OnStartAuthorizationLoopSuccessCallback()
@@ -99,8 +99,8 @@ namespace Agava.YandexGames
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnStartAuthorizationLoopSuccessCallback)} invoked");
 
-            AuthorizedAfterInitialize?.Invoke();
-            s_onStartAuthorizationLoopSuccessCallback?.Invoke();
+            AuthorizedInBackground?.Invoke();
+            s_onStartAuthorizationPollingSuccessCallback?.Invoke();
         }
 
         [MonoPInvokeCallback(typeof(Action))]
@@ -109,7 +109,7 @@ namespace Agava.YandexGames
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnStartAuthorizationLoopErrorCallback)} invoked");
 
-            s_onStartAuthorizationLoopErrorCallback?.Invoke();
+            s_onStartAuthorizationPollingErrorCallback?.Invoke();
         }
         #endregion
 

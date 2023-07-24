@@ -23,7 +23,7 @@ namespace Agava.YandexGames.Samples
         private void Awake()
         {
             YandexGamesSdk.CallbackLogging = true;
-            PlayerAccount.AuthorizedAfterInitialize += OnAuthorizedAfterInitialize;
+            PlayerAccount.AuthorizedInBackground += OnAuthorizedInBackground;
         }
 
         private IEnumerator Start()
@@ -36,7 +36,7 @@ namespace Agava.YandexGames.Samples
             yield return YandexGamesSdk.Initialize();
 
             if (PlayerAccount.IsAuthorized == false)
-                PlayerAccount.StartAuthorizationLoop(1500);
+                PlayerAccount.StartAuthorizationPolling(1500);
 
             while (true)
             {
@@ -53,7 +53,7 @@ namespace Agava.YandexGames.Samples
 
         private void OnDestroy()
         {
-            PlayerAccount.AuthorizedAfterInitialize -= OnAuthorizedAfterInitialize;
+            PlayerAccount.AuthorizedInBackground -= OnAuthorizedInBackground;
         }
 
         public void OnShowInterstitialButtonClick()
@@ -143,9 +143,9 @@ namespace Agava.YandexGames.Samples
             Debug.Log($"Environment = {JsonUtility.ToJson(YandexGamesSdk.Environment)}");
         }
 
-        private void OnAuthorizedAfterInitialize()
+        private void OnAuthorizedInBackground()
         {
-            Debug.Log($"AuthorizedAfterInitialize {PlayerAccount.IsAuthorized}");
+            Debug.Log($"{nameof(OnAuthorizedInBackground)} {PlayerAccount.IsAuthorized}");
         }
     }
 }
