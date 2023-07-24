@@ -87,27 +87,27 @@ namespace Agava.YandexGames
             s_onStartAuthorizationPollingSuccessCallback = successCallback;
             s_onStartAuthorizationPollingErrorCallback = errorCallback;
 
-            PlayerAccountStartAuthorizationPolling(delay, OnStartAuthorizationLoopSuccessCallback, OnStartAuthorizationLoopErrorCallback);
+            PlayerAccountStartAuthorizationPolling(delay, OnStartAuthorizationPollingSuccessCallback, OnStartAuthorizationPollingErrorCallback);
         }
 
         [DllImport("__Internal")]
         private static extern void PlayerAccountStartAuthorizationPolling(int cooldown, Action successCallback, Action errorCallback);
 
         [MonoPInvokeCallback(typeof(Action))]
-        private static void OnStartAuthorizationLoopSuccessCallback()
+        private static void OnStartAuthorizationPollingSuccessCallback()
         {
             if (YandexGamesSdk.CallbackLogging)
-                Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnStartAuthorizationLoopSuccessCallback)} invoked");
+                Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnStartAuthorizationPollingSuccessCallback)} invoked");
 
             AuthorizedInBackground?.Invoke();
             s_onStartAuthorizationPollingSuccessCallback?.Invoke();
         }
 
         [MonoPInvokeCallback(typeof(Action))]
-        private static void OnStartAuthorizationLoopErrorCallback()
+        private static void OnStartAuthorizationPollingErrorCallback()
         {
             if (YandexGamesSdk.CallbackLogging)
-                Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnStartAuthorizationLoopErrorCallback)} invoked");
+                Debug.Log($"{nameof(PlayerAccount)}.{nameof(OnStartAuthorizationPollingErrorCallback)} invoked");
 
             s_onStartAuthorizationPollingErrorCallback?.Invoke();
         }
