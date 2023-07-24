@@ -118,7 +118,7 @@ const library = {
       }
     },
 
-    playerAccountStartAuthorizationLPolling: function (delay, successCallbackPtr, errorCallbackPtr) {
+    playerAccountStartAuthorizationPolling: function (delay, successCallbackPtr, errorCallbackPtr) {
       if (yandexGames.isAuthorized) {
         console.error('Already authorized.');
         dynCall('v', errorCallbackPtr, []);
