@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -5,6 +6,9 @@ namespace Agava.YandexGames
 {
     public static class PlayerPrefs
     {
+        private static Action<string> s_onLoadSuccessCallback;
+        private static Action<string> s_onLoadErrorCallback;
+
         private static readonly Dictionary<string, string> s_prefs = new Dictionary<string, string>();
 
         private static void Save()
@@ -24,33 +28,40 @@ namespace Agava.YandexGames
             PlayerAccount.SetCloudSaveData(jsonData);
         }
 
-        public static void Load()
+        public static void Load(Action<string> onSuccessCallback = null, Action<string> onErrorCallback = null)
         {
+            s_onLoadSuccessCallback = onSuccessCallback;
+            s_onLoadErrorCallback = onErrorCallback;
+
             PlayerAccount.GetCloudSaveData(OnLoadSuccessCallback, OnLoadErrorCallback);
         }
 
         private static void OnLoadSuccessCallback(string jsonData)
         {
-            if (!string.IsNullOrEmpty(jsonData))
-            {
-                var jsonDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonData);
+            s_prefs.Clear();
 
-                s_prefs.Clear();
-                foreach (KeyValuePair<string, string> pref in jsonDict)
-                {
-                    s_prefs[pref.Key] = pref.Value;
-                }
-            }
-        }
+            if (string.IsNullOrEmpty(jsonData))
+                return;
 
-        private static void ParseJson()
-        {
 
+
+            //if (!string.IsNullOrEmpty(jsonData))
+            //{
+            //var jsonDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonData);
+            //s_prefs.Clear();
+
+            //foreach (KeyValuePair<string, string> pref in jsonDict)
+            //{
+            //    s_prefs[pref.Key] = pref.Value;
+            //}
+            //}
+
+            s_onLoadSuccessCallback?.Invoke(jsonData);
         }
 
         private static void OnLoadErrorCallback(string errorMessage)
         {
-            
+            s_onLoadErrorCallback?.Invoke(errorMessage);
         }
 
         public static bool HasKey(string key)
@@ -74,21 +85,14 @@ namespace Agava.YandexGames
                 s_prefs[key] = value;
             else
                 s_prefs.Add(key, value);
-
-            Save();
         }
 
         public static string GetString(string key, string defaultValue)
         {
             if (s_prefs.ContainsKey(key))
-            {
                 return s_prefs[key];
-            }
             else
-            {
-                SetString(key, defaultValue);
                 return defaultValue;
-            }
         }
 
         public static string GetString(string key)
@@ -107,17 +111,10 @@ namespace Agava.YandexGames
 
         public static int GetInt(string key, int defaultValue)
         {
-            int value;
-
-            if (s_prefs.ContainsKey(key) && int.TryParse(s_prefs[key], out value))
-            {
+            if (s_prefs.ContainsKey(key) && int.TryParse(s_prefs[key], out int value))
                 return value;
-            }
             else
-            {
-                SetInt(key, defaultValue);
                 return defaultValue;
-            }
         }
 
         public static int GetInt(string key)
@@ -136,17 +133,10 @@ namespace Agava.YandexGames
 
         public static float GetFloat(string key, float defaultValue)
         {
-            float value;
-
-            if (s_prefs.ContainsKey(key) && float.TryParse(s_prefs[key], out value))
-            {
+            if (s_prefs.ContainsKey(key) && float.TryParse(s_prefs[key], out float value))
                 return value;
-            }
             else
-            {
-                SetFloat(key, defaultValue);
                 return defaultValue;
-            }
         }
 
         public static float GetFloat(string key)
