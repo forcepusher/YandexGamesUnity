@@ -109,7 +109,7 @@ namespace Agava.YandexGames
 
                         break;
                 }
-                    
+                
                 characterIterator += 1;
             }
 
