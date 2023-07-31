@@ -61,7 +61,7 @@ namespace Agava.YandexGames
             int characterIterator = 0;
             while (characterIterator < unparsedData.Length)
             {
-                var character = unparsedData[characterIterator];
+                char character = unparsedData[characterIterator];
 
                 switch (iterationState)
                 {
