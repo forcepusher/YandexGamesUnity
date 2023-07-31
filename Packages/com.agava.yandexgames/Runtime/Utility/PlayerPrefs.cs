@@ -38,12 +38,16 @@ namespace Agava.YandexGames
 
         private static void OnLoadSuccessCallback(string jsonData)
         {
+            if (string.IsNullOrEmpty(jsonData))
+                jsonData = "{}";
+
             s_prefs.Clear();
 
-            if (string.IsNullOrEmpty(jsonData))
-                return;
-
-
+            string unparsedData = jsonData.Trim('{', '}');
+            while (unparsedData.Length > 0)
+            {
+                
+            }
 
             //if (!string.IsNullOrEmpty(jsonData))
             //{
