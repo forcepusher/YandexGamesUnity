@@ -46,6 +46,13 @@ namespace Agava.YandexGames
 
         private static void OnLoadSuccessCallback(string jsonData)
         {
+            ParseAndApplyData(jsonData);
+
+            s_onLoadSuccessCallback?.Invoke(jsonData);
+        }
+
+        public static void ParseAndApplyData(string jsonData)
+        {
             if (string.IsNullOrEmpty(jsonData))
                 jsonData = "{}";
 
@@ -109,34 +116,9 @@ namespace Agava.YandexGames
 
                         break;
                 }
-                
+
                 characterIterator += 1;
             }
-
-            //for (int characterIterator = 0; characterIterator < unparsedData.Length; characterIterator += 1)
-            //{
-            //    var character
-            //}
-            //while (unparsedData.Length > 0)
-            //{
-            //    int indexOfClosingQuotes = unparsedData.IndexOf('"', 1);
-            //    string key = unparsedData.Substring(1, indexOfClosingQuotes - 1);
-            //    unparsedData = unparsedData.Remove(0, indexOfClosingQuotes + 2);
-            //    string value = unparsedData.Substring(1, indexOfClosingQuotes - 1);
-            //}
-
-            //if (!string.IsNullOrEmpty(jsonData))
-            //{
-            //var jsonDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonData);
-            //s_prefs.Clear();
-
-            //foreach (KeyValuePair<string, string> pref in jsonDict)
-            //{
-            //    s_prefs[pref.Key] = pref.Value;
-            //}
-            //}
-
-            s_onLoadSuccessCallback?.Invoke(jsonData);
         }
 
         private static void OnLoadErrorCallback(string errorMessage)
