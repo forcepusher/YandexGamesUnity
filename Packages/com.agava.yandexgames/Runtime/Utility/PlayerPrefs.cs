@@ -36,6 +36,14 @@ namespace Agava.YandexGames
             PlayerAccount.GetCloudSaveData(OnLoadSuccessCallback, OnLoadErrorCallback);
         }
 
+        enum IterationState
+        {
+            StartingKeyQuote,
+            Key,
+            StartingValueQuote,
+            Value
+        }
+
         private static void OnLoadSuccessCallback(string jsonData)
         {
             if (string.IsNullOrEmpty(jsonData))
@@ -44,10 +52,78 @@ namespace Agava.YandexGames
             s_prefs.Clear();
 
             string unparsedData = jsonData.Trim('{', '}');
-            while (unparsedData.Length > 0)
+
+            var key = new StringBuilder();
+            var value = new StringBuilder();
+
+            IterationState iterationState = IterationState.StartingKeyQuote;
+
+            int characterIterator = 0;
+            while (characterIterator < unparsedData.Length)
             {
-                
+                var character = unparsedData[characterIterator];
+
+                switch (iterationState)
+                {
+                    case IterationState.StartingKeyQuote:
+                        if (character == '"')
+                        {
+                            iterationState = IterationState.Key;
+                        }
+
+                        break;
+
+                    case IterationState.Key:
+                        if (character == '"')
+                        {
+                            iterationState = IterationState.StartingValueQuote;
+                        }
+                        else
+                        {
+                            key.Append(character);
+                        }
+
+                        break;
+
+                    case IterationState.StartingValueQuote:
+                        if (character == '"')
+                        {
+                            iterationState = IterationState.Value;
+                        }
+
+                        break;
+
+                    case IterationState.Value:
+                        if (character == '"')
+                        {
+                            iterationState = IterationState.StartingKeyQuote;
+
+                            s_prefs[key.ToString()] = value.ToString();
+                            key.Clear();
+                            value.Clear();
+                        }
+                        else
+                        {
+                            value.Append(character);
+                        }
+
+                        break;
+                }
+                    
+                characterIterator += 1;
             }
+
+            //for (int characterIterator = 0; characterIterator < unparsedData.Length; characterIterator += 1)
+            //{
+            //    var character
+            //}
+            //while (unparsedData.Length > 0)
+            //{
+            //    int indexOfClosingQuotes = unparsedData.IndexOf('"', 1);
+            //    string key = unparsedData.Substring(1, indexOfClosingQuotes - 1);
+            //    unparsedData = unparsedData.Remove(0, indexOfClosingQuotes + 2);
+            //    string value = unparsedData.Substring(1, indexOfClosingQuotes - 1);
+            //}
 
             //if (!string.IsNullOrEmpty(jsonData))
             //{
