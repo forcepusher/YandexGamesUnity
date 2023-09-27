@@ -52,7 +52,6 @@ const library = {
           Promise.allSettled([leaderboardInitializationPromise, playerAccountInitializationPromise, billingInitializationPromise]).then(function () {
             yandexGames.isInitialized = true;
             dynCall('v', successCallbackPtr, []);
-            yandexGames.sdk.features.LoadingAPI.ready();
           });
         });
       }
@@ -62,6 +61,10 @@ const library = {
       if (!yandexGames.isInitialized) {
         throw new Error('SDK is not initialized. Invoke YandexGamesSdk.Initialize() coroutine and wait for it to finish.');
       }
+    },
+
+    gameReadyNotifyLoadingCompleted: function() {
+      yandexGames.sdk.features.LoadingAPI.ready();
     },
 
     invokeErrorCallback: function (error, errorCallbackPtr) {
@@ -573,7 +576,13 @@ const library = {
 
   SuggestShortcut: function (successCallbackPtr, errorCallbackPtr) {
     yandexGames.suggestShortcut(successCallbackPtr, errorCallbackPtr);
-  }
+  },
+
+  GameReadyLoadingCompleted: function() {
+    yandexGames.throwIfSdkNotInitialized();
+
+    yandexGames.gameReadyNotifyLoadingCompleted();
+  },
 }
 
 autoAddDeps(library, '$yandexGames');
