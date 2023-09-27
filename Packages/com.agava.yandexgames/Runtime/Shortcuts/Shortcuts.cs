@@ -7,7 +7,7 @@ namespace Agava.YandexGames
 {
     public static class Shortcuts
     {
-        private static Action<bool> s_canSuggestCallback;
+        private static Action<bool> s_onCanSuggestCallback;
         private static Action s_onSuggestionAcceptCallback;
         private static Action s_onSuggestionDeclineCallback;
 
@@ -16,21 +16,21 @@ namespace Agava.YandexGames
             s_onSuggestionAcceptCallback = onAccept;
             s_onSuggestionDeclineCallback = onDecline;
 
-            SuggestShortcut(SuggestShortcutCallbackAccept, SuggestShortcutCallbackDecline);
+            ShortcutsSuggestShortcut(SuggestShortcutAcceptCallback, SuggestShortcutDeclineCallback);
         }
 
-        public static void IsCanSuggest(Action<bool> onSuccessCallback)
+        public static void CanSuggest(Action<bool> onSuccessCallback)
         {
-            s_canSuggestCallback = onSuccessCallback;
+            s_onCanSuggestCallback = onSuccessCallback;
 
-            CanSuggestShortcut(CanSuggestShortcutCallback);
+            ShortcutsCanSuggestShortcut(CanSuggestShortcutCallback);
         }
 
         [DllImport("__Internal")]
-        private static extern void CanSuggestShortcut(Action<int> onSuccess);
+        private static extern void ShortcutsCanSuggestShortcut(Action<int> onSuccess);
 
         [DllImport("__Internal")]
-        private static extern void SuggestShortcut(Action onAccept, Action onDecline);
+        private static extern void ShortcutsSuggestShortcut(Action onAccept, Action onDecline);
 
         [MonoPInvokeCallback(typeof(Action<bool>))]
         private static void CanSuggestShortcutCallback(int isCan)
@@ -38,23 +38,23 @@ namespace Agava.YandexGames
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(Shortcuts)}.{nameof(CanSuggestShortcutCallback)} called. {nameof(isCan)}={isCan}");
 
-            s_canSuggestCallback.Invoke(isCan == 1);
+            s_onCanSuggestCallback.Invoke(isCan == 1);
         }
 
         [MonoPInvokeCallback(typeof(Action))]
-        private static void SuggestShortcutCallbackAccept()
+        private static void SuggestShortcutAcceptCallback()
         {
             if (YandexGamesSdk.CallbackLogging)
-                Debug.Log($"{nameof(Shortcuts)}.{nameof(SuggestShortcutCallbackAccept)} called");
+                Debug.Log($"{nameof(Shortcuts)}.{nameof(SuggestShortcutAcceptCallback)} called");
 
             s_onSuggestionAcceptCallback?.Invoke();
         }
 
         [MonoPInvokeCallback(typeof(Action))]
-        private static void SuggestShortcutCallbackDecline()
+        private static void SuggestShortcutDeclineCallback()
         {
             if (YandexGamesSdk.CallbackLogging)
-                Debug.Log($"{nameof(Shortcuts)}.{nameof(SuggestShortcutCallbackDecline)} called");
+                Debug.Log($"{nameof(Shortcuts)}.{nameof(SuggestShortcutDeclineCallback)} called");
 
             s_onSuggestionDeclineCallback?.Invoke();
         }

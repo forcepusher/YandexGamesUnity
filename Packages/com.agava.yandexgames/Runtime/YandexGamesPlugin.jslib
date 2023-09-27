@@ -570,11 +570,11 @@ const library = {
     yandexGames.billingGetPurchasedProducts(successCallbackPtr, errorCallbackPtr);
   },
 
-  CanSuggestShortcut: function (boolCallbackPtr) {
+  ShortcutsCanSuggestShortcut: function (boolCallbackPtr) {
     yandexGames.canSuggestShortcut(boolCallbackPtr);
   },
 
-  SuggestShortcut: function (successCallbackPtr, errorCallbackPtr) {
+  ShortcutsSuggestShortcut: function (successCallbackPtr, errorCallbackPtr) {
     yandexGames.suggestShortcut(successCallbackPtr, errorCallbackPtr);
   },
 

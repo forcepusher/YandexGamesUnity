@@ -16,7 +16,7 @@ namespace Agava.YandexGames.Tests
         [Test]
         public void IsCanSuggestShouldNotThrow()
         {
-            Assert.DoesNotThrow(() => Shortcuts.IsCanSuggest(result => {}));
+            Assert.DoesNotThrow(() => Shortcuts.CanSuggest(result => {}));
         }
 
         [Test]
