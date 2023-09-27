@@ -141,7 +141,7 @@ const library = {
           }
         });
       };
-      
+
       authorizationPollingLoop();
     },
 
@@ -386,6 +386,22 @@ const library = {
       });
     },
 
+    canSuggestShortcut: function(boolCallbackPtr) {
+      yandexGames.sdk.shortcut.canShowPrompt().then(function(prompt) {
+        dynCall('vi', boolCallbackPtr, [prompt.canShow]);
+      });
+    },
+
+    suggestShortcut: function(successCallbackPtr, errorCallbackPtr) {
+      yandexGames.sdk.shortcut.showPrompt().then(function(result) {
+        if (result.outcome === 'accepted') {
+          dynCall('v', successCallbackPtr, []);
+          return;
+        }
+        dynCall('v', errorCallbackPtr, []);
+      });
+    },
+
     allocateUnmanagedString: function (string) {
       const stringBufferSize = lengthBytesUTF8(string) + 1;
       const stringBufferPtr = _malloc(stringBufferSize);
@@ -550,6 +566,14 @@ const library = {
 
     yandexGames.billingGetPurchasedProducts(successCallbackPtr, errorCallbackPtr);
   },
+
+  CanSuggestShortcut: function (boolCallbackPtr) {
+    yandexGames.canSuggestShortcut(boolCallbackPtr);
+  },
+
+  SuggestShortcut: function (successCallbackPtr, errorCallbackPtr) {
+    yandexGames.suggestShortcut(successCallbackPtr, errorCallbackPtr);
+  }
 }
 
 autoAddDeps(library, '$yandexGames');
