@@ -6,12 +6,15 @@ namespace Agava.YandexGames
 {
     public static class PlayerPrefs
     {
-        private static Action<string> s_onLoadSuccessCallback;
+        private static Action s_onSaveSuccessCallback;
+        private static Action<string> s_onSaveErrorCallback;
+
+        private static Action s_onLoadSuccessCallback;
         private static Action<string> s_onLoadErrorCallback;
 
         private static readonly Dictionary<string, string> s_prefs = new Dictionary<string, string>();
 
-        private static void Save()
+        public static void Save(Action onSuccessCallback = null, Action<string> onErrorCallback = null)
         {
             var jsonStringBuilder = new StringBuilder();
             jsonStringBuilder.Append('{');
@@ -25,10 +28,24 @@ namespace Agava.YandexGames
             jsonStringBuilder.Append('}');
 
             string jsonData = jsonStringBuilder.ToString();
-            PlayerAccount.SetCloudSaveData(jsonData);
+
+            s_onSaveSuccessCallback = onSuccessCallback;
+            s_onSaveErrorCallback = onErrorCallback;
+
+            PlayerAccount.SetCloudSaveData(jsonData, OnSaveSuccessCallback, OnSaveErrorCallback);
         }
 
-        public static void Load(Action<string> onSuccessCallback = null, Action<string> onErrorCallback = null)
+        private static void OnSaveSuccessCallback()
+        {
+            s_onSaveSuccessCallback?.Invoke();
+        }
+
+        private static void OnSaveErrorCallback(string errorMessage)
+        {
+            s_onSaveErrorCallback?.Invoke(errorMessage);
+        }
+
+        public static void Load(Action onSuccessCallback = null, Action<string> onErrorCallback = null)
         {
             s_onLoadSuccessCallback = onSuccessCallback;
             s_onLoadErrorCallback = onErrorCallback;
@@ -48,7 +65,7 @@ namespace Agava.YandexGames
         {
             ParseAndApplyData(jsonData);
 
-            s_onLoadSuccessCallback?.Invoke(jsonData);
+            s_onLoadSuccessCallback?.Invoke();
         }
 
         public static void ParseAndApplyData(string jsonData)
