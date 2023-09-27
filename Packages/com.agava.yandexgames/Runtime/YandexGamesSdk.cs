@@ -42,10 +42,10 @@ namespace Agava.YandexGames
         /// Downloads Yandex SDK script and inserts it into the HTML page.
         /// </summary>
         /// <returns>Coroutine waiting for <see cref="IsInitialized"/> to return true.</returns>
-        public static IEnumerator Initialize(Action onSuccessCallback = null, bool ready = true)
+        public static IEnumerator Initialize(Action onSuccessCallback = null, bool callReadyOnCompletion = true)
         {
             s_onInitializeSuccessCallback = onSuccessCallback;
-            s_notifyLoadingCompletedOnInitialize = ready;
+            s_notifyLoadingCompletedOnInitialize = callReadyOnCompletion;
 
             YandexGamesSdkInitialize(OnInitializeSuccessCallback);
 
