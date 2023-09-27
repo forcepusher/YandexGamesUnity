@@ -7,21 +7,21 @@ namespace Agava.YandexGames
 {
     public static class Shortcuts
     {
-        private static Action<bool> m_canSuggestCallback;
-        private static Action m_onSuggestionAcceptCallback;
-        private static Action m_onSuggestionDeclineCallback;
+        private static Action<bool> s_canSuggestCallback;
+        private static Action s_onSuggestionAcceptCallback;
+        private static Action s_onSuggestionDeclineCallback;
 
         public static void Suggest(Action onAccept = null, Action onDecline = null)
         {
-            m_onSuggestionAcceptCallback = onAccept;
-            m_onSuggestionDeclineCallback = onDecline;
+            s_onSuggestionAcceptCallback = onAccept;
+            s_onSuggestionDeclineCallback = onDecline;
 
             SuggestShortcut(SuggestShortcutCallbackAccept, SuggestShortcutCallbackDecline);
         }
 
         public static void IsCanSuggest(Action<bool> onSuccessCallback)
         {
-            m_canSuggestCallback = onSuccessCallback;
+            s_canSuggestCallback = onSuccessCallback;
 
             CanSuggestShortcut(CanSuggestShortcutCallback);
         }
@@ -38,7 +38,7 @@ namespace Agava.YandexGames
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(Shortcuts)}.{nameof(CanSuggestShortcutCallback)} called. {nameof(isCan)}={isCan}");
 
-            m_canSuggestCallback.Invoke(isCan == 1);
+            s_canSuggestCallback.Invoke(isCan == 1);
         }
 
         [MonoPInvokeCallback(typeof(Action))]
@@ -47,7 +47,7 @@ namespace Agava.YandexGames
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(Shortcuts)}.{nameof(SuggestShortcutCallbackAccept)} called");
 
-            m_onSuggestionAcceptCallback?.Invoke();
+            s_onSuggestionAcceptCallback?.Invoke();
         }
 
         [MonoPInvokeCallback(typeof(Action))]
@@ -56,7 +56,7 @@ namespace Agava.YandexGames
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(Shortcuts)}.{nameof(SuggestShortcutCallbackDecline)} called");
 
-            m_onSuggestionDeclineCallback?.Invoke();
+            s_onSuggestionDeclineCallback?.Invoke();
         }
     }
 }
