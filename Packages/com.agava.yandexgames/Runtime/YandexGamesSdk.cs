@@ -65,6 +65,9 @@ namespace Agava.YandexGames
 
         public static void GameReady()
         {
+            if (CallbackLogging)
+                Debug.Log($"{nameof(YandexGamesSdk)}.{nameof(GameReady)} invoked");
+
             YandexGamesSdkGameReady();
         }
 

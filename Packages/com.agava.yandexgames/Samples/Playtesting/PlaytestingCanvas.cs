@@ -143,6 +143,11 @@ namespace Agava.YandexGames.Samples
             Debug.Log($"Environment = {JsonUtility.ToJson(YandexGamesSdk.Environment)}");
         }
 
+        public void OnCallGameReadyButtonClick()
+        {
+            YandexGamesSdk.GameReady();
+        }
+
         private void OnAuthorizedInBackground()
         {
             Debug.Log($"{nameof(OnAuthorizedInBackground)} {PlayerAccount.IsAuthorized}");
