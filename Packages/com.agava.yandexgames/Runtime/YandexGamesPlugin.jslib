@@ -63,7 +63,7 @@ const library = {
       }
     },
 
-    gameReadyNotifyLoadingCompleted: function() {
+    gameReady: function() {
       yandexGames.sdk.features.LoadingAPI.ready();
     },
 
@@ -578,10 +578,10 @@ const library = {
     yandexGames.suggestShortcut(successCallbackPtr, errorCallbackPtr);
   },
 
-  GameReadyLoadingCompleted: function() {
+  YandexGamesSdkGameReady: function() {
     yandexGames.throwIfSdkNotInitialized();
 
-    yandexGames.gameReadyNotifyLoadingCompleted();
+    yandexGames.gameReady();
   },
 }
 
