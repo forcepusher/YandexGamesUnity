@@ -41,11 +41,11 @@ namespace Agava.YandexGames.Samples
             if (PlayerAccount.IsAuthorized == false)
                 PlayerAccount.StartAuthorizationPolling(1500);
 
+            Shortcut.CanSuggest((result) => _canSuggestShortcutStatusText.color = result ? Color.green : Color.red);
+
             while (true)
             {
                 _authorizationStatusText.color = PlayerAccount.IsAuthorized ? Color.green : Color.red;
-
-                Shortcut.CanSuggest((result) => _canSuggestShortcutStatusText.color = result ? Color.green : Color.red);
 
                 if (PlayerAccount.IsAuthorized)
                     _personalProfileDataPermissionStatusText.color = PlayerAccount.HasPersonalProfileDataPermission ? Color.green : Color.red;

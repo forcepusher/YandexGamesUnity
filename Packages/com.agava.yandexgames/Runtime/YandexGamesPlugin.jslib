@@ -389,9 +389,9 @@ const library = {
       });
     },
 
-    canSuggestShortcut: function(boolCallbackPtr) {
+    canSuggestShortcut: function(canSuggestCallbackPtr) {
       yandexGames.sdk.shortcut.canShowPrompt().then(function(prompt) {
-        dynCall('vi', boolCallbackPtr, [prompt.canShow]);
+        dynCall('vi', canSuggestCallbackPtr, [prompt.canShow]);
       });
     },
 
@@ -570,8 +570,8 @@ const library = {
     yandexGames.billingGetPurchasedProducts(successCallbackPtr, errorCallbackPtr);
   },
 
-  ShortcutCanSuggestShortcut: function (boolCallbackPtr) {
-    yandexGames.canSuggestShortcut(boolCallbackPtr);
+  ShortcutCanSuggestShortcut: function (canSuggestCallbackPtr) {
+    yandexGames.canSuggestShortcut(canSuggestCallbackPtr);
   },
 
   ShortcutSuggestShortcut: function (successCallbackPtr, errorCallbackPtr) {
