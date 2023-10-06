@@ -18,6 +18,9 @@ namespace Agava.YandexGames.Samples
         private Text _personalProfileDataPermissionStatusText;
 
         [SerializeField]
+        private Text _canSuggestShortcutStatusText;
+
+        [SerializeField]
         private InputField _cloudSaveDataInputField;
 
         private void Awake()
@@ -41,6 +44,8 @@ namespace Agava.YandexGames.Samples
             while (true)
             {
                 _authorizationStatusText.color = PlayerAccount.IsAuthorized ? Color.green : Color.red;
+
+                Shortcut.CanSuggest((result) => _canSuggestShortcutStatusText.color = result ? Color.green : Color.red);
 
                 if (PlayerAccount.IsAuthorized)
                     _personalProfileDataPermissionStatusText.color = PlayerAccount.HasPersonalProfileDataPermission ? Color.green : Color.red;
@@ -146,6 +151,11 @@ namespace Agava.YandexGames.Samples
         public void OnCallGameReadyButtonClick()
         {
             YandexGamesSdk.GameReady();
+        }
+
+        public void OnSuggestShortcutButtonClick()
+        {
+            Shortcut.Suggest();
         }
 
         private void OnAuthorizedInBackground()
