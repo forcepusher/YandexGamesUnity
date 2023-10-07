@@ -407,7 +407,7 @@ const library = {
 
     canRequestReview: function(resultCallbackPtr) {
       yandexGames.sdk.feedback.canReview().then(function(result, reason) {
-        if (!reason) { reason = ''; }
+        if (!reason) { reason = 'No reason'; }
         const reasonUnmanagedStringPtr = yandexGames.allocateUnmanagedString(reason);
         dynCall('vii', resultCallbackPtr, [result, reasonUnmanagedStringPtr]);
         _free(reasonUnmanagedStringPtr);

@@ -18,12 +18,6 @@ namespace Agava.YandexGames.Samples
         private Text _personalProfileDataPermissionStatusText;
 
         [SerializeField]
-        private Text _canSuggestShortcutStatusText;
-
-        [SerializeField]
-        private Text _canRequestReviewStatusText;
-
-        [SerializeField]
         private InputField _cloudSaveDataInputField;
 
         private void Awake()
@@ -43,10 +37,6 @@ namespace Agava.YandexGames.Samples
 
             if (PlayerAccount.IsAuthorized == false)
                 PlayerAccount.StartAuthorizationPolling(1500);
-
-            Shortcut.CanSuggest((result) => _canSuggestShortcutStatusText.color = result ? Color.green : Color.red);
-
-            ReviewPopup.CanRequestReview((result, reason) => _canRequestReviewStatusText.color = result ? Color.green : Color.red);
 
             while (true)
             {
@@ -166,6 +156,16 @@ namespace Agava.YandexGames.Samples
         public void OnRequestReviewButtonClick()
         {
             ReviewPopup.RequestReview();
+        }
+
+        public void OnCanSuggestShortcutButtonClick()
+        {
+            Shortcut.CanSuggest(result => { });
+        }
+
+        public void OnCanRequestReviewButtonClick()
+        {
+            ReviewPopup.CanRequestReview((result, reason) => { });
         }
 
         private void OnAuthorizedInBackground()
