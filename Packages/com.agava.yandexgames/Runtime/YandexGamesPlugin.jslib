@@ -389,9 +389,9 @@ const library = {
       });
     },
 
-    canSuggestShortcut: function(canSuggestCallbackPtr) {
+    canSuggestShortcut: function(resultCallbackPtr) {
       yandexGames.sdk.shortcut.canShowPrompt().then(function(prompt) {
-        dynCall('vi', canSuggestCallbackPtr, [prompt.canShow]);
+        dynCall('vi', resultCallbackPtr, [prompt.canShow]);
       });
     },
 
@@ -405,9 +405,17 @@ const library = {
       });
     },
 
-    canRequestReview: function(canSuggestCallbackPtr) {
-      yandexGames.sdk.shortcut.canShowPrompt().then(function(prompt) {
-        dynCall('vi', canSuggestCallbackPtr, [prompt.canShow]);
+    canRequestReview: function(resultCallbackPtr) {
+      yandexGames.sdk.feedback.canReview().then(function(result, reason) {
+        const reasonUnmanagedStringPtr = yandexGames.allocateUnmanagedString(reason);
+        dynCall('vi', resultCallbackPtr, [result, reasonUnmanagedStringPtr]);
+        _free(reasonUnmanagedStringPtr);
+      });
+    },
+
+    requestReview: function(resultCallbackPtr) {
+      yandexGames.sdk.feedback.requestReview().then(function(result) {
+        dynCall('vi', resultCallbackPtr, [result]);
       });
     },
 
@@ -576,10 +584,10 @@ const library = {
     yandexGames.billingGetPurchasedProducts(successCallbackPtr, errorCallbackPtr);
   },
 
-  ShortcutCanSuggestShortcut: function (canSuggestCallbackPtr) {
+  ShortcutCanSuggestShortcut: function (resultCallbackPtr) {
     yandexGames.throwIfSdkNotInitialized();
 
-    yandexGames.canSuggestShortcut(canSuggestCallbackPtr);
+    yandexGames.canSuggestShortcut(resultCallbackPtr);
   },
 
   ShortcutSuggestShortcut: function (successCallbackPtr, errorCallbackPtr) {
@@ -588,16 +596,16 @@ const library = {
     yandexGames.suggestShortcut(successCallbackPtr, errorCallbackPtr);
   },
 
-  ReviewPopupCanRequestReview: function (onResultCallbackPtr) {
+  ReviewPopupCanRequestReview: function (resultCallbackPtr) {
     yandexGames.throwIfSdkNotInitialized();
 
-    yandexGames.canRequestReview(onResultCallbackPtr);
+    yandexGames.canRequestReview(resultCallbackPtr);
   },
 
-  ReviewPopupRequestReview: function (onResultCallbackPtr) {
+  ReviewPopupRequestReview: function (resultCallbackPtr) {
     yandexGames.throwIfSdkNotInitialized();
 
-    yandexGames.requestReview(onResultCallbackPtr);
+    yandexGames.requestReview(resultCallbackPtr);
   },
 
   YandexGamesSdkGameReady: function() {
