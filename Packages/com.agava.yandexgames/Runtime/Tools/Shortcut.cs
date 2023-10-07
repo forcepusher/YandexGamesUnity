@@ -38,7 +38,7 @@ namespace Agava.YandexGames
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(Shortcut)}.{nameof(CanSuggestShortcutCallback)} called. {nameof(canSuggest)}={canSuggest}");
 
-            s_onCanSuggestCallback.Invoke(canSuggest);
+            s_onCanSuggestCallback?.Invoke(canSuggest);
         }
 
         [MonoPInvokeCallback(typeof(Action))]

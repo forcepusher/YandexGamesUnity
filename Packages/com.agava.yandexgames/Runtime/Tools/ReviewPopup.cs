@@ -26,10 +26,10 @@ namespace Agava.YandexGames
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(Shortcut)}.{nameof(CanRequestReviewCallback)} called. {nameof(canRequestReview)}={canRequestReview} {nameof(reason)}={reason}");
 
-            s_onCanRequestReviewCallback.Invoke(canRequestReview, reason);
+            s_onCanRequestReviewCallback?.Invoke(canRequestReview, reason);
         }
 
-        public static void RequestReview(Action<bool> onResultCallback)
+        public static void RequestReview(Action<bool> onResultCallback = null)
         {
             s_onRequestReviewCallback = onResultCallback;
 
@@ -45,7 +45,7 @@ namespace Agava.YandexGames
             if (YandexGamesSdk.CallbackLogging)
                 Debug.Log($"{nameof(Shortcut)}.{nameof(RequestReviewCallback)} called. {nameof(reviewResult)}={reviewResult}");
 
-            s_onRequestReviewCallback.Invoke(reviewResult);
+            s_onRequestReviewCallback?.Invoke(reviewResult);
         }
     }
 }
