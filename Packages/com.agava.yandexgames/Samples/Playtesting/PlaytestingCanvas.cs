@@ -46,7 +46,7 @@ namespace Agava.YandexGames.Samples
 
             Shortcut.CanSuggest((result) => _canSuggestShortcutStatusText.color = result ? Color.green : Color.red);
 
-            ReviewPopup.RequestReview((result) => _canRequestReviewStatusText.color = result ? Color.green : Color.red);
+            ReviewPopup.CanRequestReview((result, reason) => _canRequestReviewStatusText.color = result ? Color.green : Color.red);
 
             while (true)
             {

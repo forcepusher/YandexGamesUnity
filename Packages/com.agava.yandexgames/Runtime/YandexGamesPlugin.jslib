@@ -409,7 +409,7 @@ const library = {
       yandexGames.sdk.feedback.canReview().then(function(result, reason) {
         if (!reason) { reason = ''; }
         const reasonUnmanagedStringPtr = yandexGames.allocateUnmanagedString(reason);
-        dynCall('vi', resultCallbackPtr, [result, reasonUnmanagedStringPtr]);
+        dynCall('vii', resultCallbackPtr, [result, reasonUnmanagedStringPtr]);
         _free(reasonUnmanagedStringPtr);
       });
     },

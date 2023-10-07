@@ -16,7 +16,7 @@ namespace Agava.YandexGames.Tests
         [Test]
         public void CanReviewShouldNotThrow()
         {
-            Assert.DoesNotThrow(() => ReviewPopup.CanRequestReview((result, reason) => { }));
+            Assert.DoesNotThrow(() => ReviewPopup.CanRequestReview());
         }
 
         [Test]

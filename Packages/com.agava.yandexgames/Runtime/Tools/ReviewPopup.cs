@@ -10,7 +10,7 @@ namespace Agava.YandexGames
         private static Action<bool, string> s_onCanRequestReviewCallback;
         private static Action<bool> s_onRequestReviewCallback;
 
-        public static void CanRequestReview(Action<bool, string> onResultCallback)
+        public static void CanRequestReview(Action<bool, string> onResultCallback = null)
         {
             s_onCanRequestReviewCallback = onResultCallback;
 
