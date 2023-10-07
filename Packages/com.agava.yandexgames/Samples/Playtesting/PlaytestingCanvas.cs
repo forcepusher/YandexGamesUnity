@@ -155,7 +155,7 @@ namespace Agava.YandexGames.Samples
 
         public void OnRequestReviewButtonClick()
         {
-            ReviewPopup.RequestReview();
+            ReviewPopup.Open();
         }
 
         public void OnCanSuggestShortcutButtonClick()
@@ -165,7 +165,7 @@ namespace Agava.YandexGames.Samples
 
         public void OnCanRequestReviewButtonClick()
         {
-            ReviewPopup.CanRequestReview((result, reason) => { });
+            ReviewPopup.CanOpen((result, reason) => { });
         }
 
         private void OnAuthorizedInBackground()

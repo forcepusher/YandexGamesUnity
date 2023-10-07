@@ -16,13 +16,13 @@ namespace Agava.YandexGames.Tests
         [Test]
         public void CanReviewShouldNotThrow()
         {
-            Assert.DoesNotThrow(() => ReviewPopup.CanRequestReview((result, reason) => { }));
+            Assert.DoesNotThrow(() => ReviewPopup.CanOpen((result, reason) => { }));
         }
 
         [Test]
         public void ReviewShouldNotThrow()
         {
-            Assert.DoesNotThrow(() => ReviewPopup.RequestReview());
+            Assert.DoesNotThrow(() => ReviewPopup.Open());
         }
     }
 }

@@ -14,11 +14,11 @@ namespace Agava.YandexGames
         {
             s_onCanSuggestCallback = onResultCallback;
 
-            ShortcutCanSuggestShortcut(OnCanSuggestShortcutCallback);
+            ShortcutCanSuggest(OnCanSuggestShortcutCallback);
         }
 
         [DllImport("__Internal")]
-        private static extern void ShortcutCanSuggestShortcut(Action<bool> onResultCallback);
+        private static extern void ShortcutCanSuggest(Action<bool> onResultCallback);
 
         [MonoPInvokeCallback(typeof(Action<bool>))]
         private static void OnCanSuggestShortcutCallback(bool result)
@@ -33,11 +33,11 @@ namespace Agava.YandexGames
         {
             s_onSuggestCallback = onResultCallback;
 
-            ShortcutSuggestShortcut(OnSuggestShortcutCallback);
+            ShortcutSuggest(OnSuggestShortcutCallback);
         }
 
         [DllImport("__Internal")]
-        private static extern void ShortcutSuggestShortcut(Action<bool> onAcceptCallback);
+        private static extern void ShortcutSuggest(Action<bool> onAcceptCallback);
 
         [MonoPInvokeCallback(typeof(Action<bool>))]
         private static void OnSuggestShortcutCallback(bool result)
