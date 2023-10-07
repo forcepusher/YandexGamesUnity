@@ -7,10 +7,10 @@ namespace Agava.YandexGames
 {
     public class ReviewPopup
     {
-        private static Action<bool, string> s_onCanRequestReviewCallback;
+        private static Action<bool> s_onCanRequestReviewCallback;
         private static Action<bool> s_onRequestReviewCallback;
 
-        public static void CanRequestReview(Action<bool, string> onResultCallback)
+        public static void CanRequestReview(Action<bool> onResultCallback = null)
         {
             s_onCanRequestReviewCallback = onResultCallback;
 
@@ -18,15 +18,15 @@ namespace Agava.YandexGames
         }
 
         [DllImport("__Internal")]
-        private static extern void ReviewPopupCanRequestReview(Action<bool, string> onResultCallback);
+        private static extern void ReviewPopupCanRequestReview(Action<bool> onResultCallback);
 
-        [MonoPInvokeCallback(typeof(Action<bool, string>))]
-        private static void CanRequestReviewCallback(bool canRequestReview, string reason)
+        [MonoPInvokeCallback(typeof(Action<bool>))]
+        private static void CanRequestReviewCallback(bool canRequestReview)
         {
             if (YandexGamesSdk.CallbackLogging)
-                Debug.Log($"{nameof(Shortcut)}.{nameof(CanRequestReviewCallback)} called. {nameof(canRequestReview)}={canRequestReview} {nameof(reason)}={reason}");
+                Debug.Log($"{nameof(Shortcut)}.{nameof(CanRequestReviewCallback)} called. {nameof(canRequestReview)}={canRequestReview}");
 
-            s_onCanRequestReviewCallback?.Invoke(canRequestReview, reason);
+            s_onCanRequestReviewCallback?.Invoke(canRequestReview);
         }
 
         public static void RequestReview(Action<bool> onResultCallback = null)
