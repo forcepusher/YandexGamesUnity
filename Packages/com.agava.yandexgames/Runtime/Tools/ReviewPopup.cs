@@ -14,38 +14,38 @@ namespace Agava.YandexGames
         {
             s_onCanRequestReviewCallback = onResultCallback;
 
-            ReviewPopupCanRequestReview(CanRequestReviewCallback);
+            ReviewPopupCanRequestReview(OnCanRequestReviewCallback);
         }
 
         [DllImport("__Internal")]
         private static extern void ReviewPopupCanRequestReview(Action<bool, string> onResultCallback);
 
         [MonoPInvokeCallback(typeof(Action<bool, string>))]
-        private static void CanRequestReviewCallback(bool canRequestReview, string reason)
+        private static void OnCanRequestReviewCallback(bool result, string reason)
         {
             if (YandexGamesSdk.CallbackLogging)
-                Debug.Log($"{nameof(Shortcut)}.{nameof(CanRequestReviewCallback)} called. {nameof(canRequestReview)}={canRequestReview} {nameof(reason)}={reason}");
+                Debug.Log($"{nameof(Shortcut)}.{nameof(OnCanRequestReviewCallback)} called. {nameof(result)}={result} {nameof(reason)}={reason}");
 
-            s_onCanRequestReviewCallback?.Invoke(canRequestReview, reason);
+            s_onCanRequestReviewCallback?.Invoke(result, reason);
         }
 
         public static void RequestReview(Action<bool> onResultCallback = null)
         {
             s_onRequestReviewCallback = onResultCallback;
 
-            ReviewPopupRequestReview(RequestReviewCallback);
+            ReviewPopupRequestReview(OnRequestReviewCallback);
         }
 
         [DllImport("__Internal")]
         private static extern void ReviewPopupRequestReview(Action<bool> onResultCallback);
 
         [MonoPInvokeCallback(typeof(Action<bool>))]
-        private static void RequestReviewCallback(bool reviewResult)
+        private static void OnRequestReviewCallback(bool result)
         {
             if (YandexGamesSdk.CallbackLogging)
-                Debug.Log($"{nameof(Shortcut)}.{nameof(RequestReviewCallback)} called. {nameof(reviewResult)}={reviewResult}");
+                Debug.Log($"{nameof(Shortcut)}.{nameof(OnRequestReviewCallback)} called. {nameof(result)}={result}");
 
-            s_onRequestReviewCallback?.Invoke(reviewResult);
+            s_onRequestReviewCallback?.Invoke(result);
         }
     }
 }
