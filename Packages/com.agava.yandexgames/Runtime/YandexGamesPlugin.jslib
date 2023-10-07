@@ -405,6 +405,12 @@ const library = {
       });
     },
 
+    canRequestReview: function(canSuggestCallbackPtr) {
+      yandexGames.sdk.shortcut.canShowPrompt().then(function(prompt) {
+        dynCall('vi', canSuggestCallbackPtr, [prompt.canShow]);
+      });
+    },
+
     allocateUnmanagedString: function (string) {
       const stringBufferSize = lengthBytesUTF8(string) + 1;
       const stringBufferPtr = _malloc(stringBufferSize);
@@ -571,11 +577,27 @@ const library = {
   },
 
   ShortcutCanSuggestShortcut: function (canSuggestCallbackPtr) {
+    yandexGames.throwIfSdkNotInitialized();
+
     yandexGames.canSuggestShortcut(canSuggestCallbackPtr);
   },
 
   ShortcutSuggestShortcut: function (successCallbackPtr, errorCallbackPtr) {
+    yandexGames.throwIfSdkNotInitialized();
+
     yandexGames.suggestShortcut(successCallbackPtr, errorCallbackPtr);
+  },
+
+  ReviewPopupCanRequestReview: function (onResultCallbackPtr) {
+    yandexGames.throwIfSdkNotInitialized();
+
+    yandexGames.canRequestReview(onResultCallbackPtr);
+  },
+
+  ReviewPopupRequestReview: function (onResultCallbackPtr) {
+    yandexGames.throwIfSdkNotInitialized();
+
+    yandexGames.requestReview(onResultCallbackPtr);
   },
 
   YandexGamesSdkGameReady: function() {
