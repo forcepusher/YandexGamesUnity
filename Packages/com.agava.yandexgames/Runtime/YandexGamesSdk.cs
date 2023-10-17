@@ -22,7 +22,8 @@ namespace Agava.YandexGames
         public static bool IsInitialized => GetYandexGamesSdkIsInitialized();
 
         /// <summary>
-        /// Use it to check whether you're using Build and Run.
+        /// Use it to check whether you're using Build and Run.<br/>
+        /// Can be called without initializing the SDK.
         /// </summary>
         public static bool IsRunningOnYandex => YandexGamesSdkIsRunningOnYandex();
 
