@@ -612,7 +612,7 @@ const library = {
   },
 
   YandexGamesSdkIsRunningOnYandex: function() {
-    return window.top.location.hostname.includes('yandex');
+    return window.location.hostname.includes('yandex');
   }
 }
 
