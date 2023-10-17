@@ -21,6 +21,11 @@ namespace Agava.YandexGames
         /// </summary>
         public static bool IsInitialized => GetYandexGamesSdkIsInitialized();
 
+        /// <summary>
+        /// Use it to check whether you're using Build and Run.
+        /// </summary>
+        public static bool IsRunningOnYandex => YandexGamesSdkIsRunningOnYandex();
+
         [DllImport("__Internal")]
         private static extern bool GetYandexGamesSdkIsInitialized();
 
@@ -73,5 +78,8 @@ namespace Agava.YandexGames
 
         [DllImport("__Internal")]
         private static extern void YandexGamesSdkGameReady();
+
+        [DllImport("__Internal")]
+        private static extern bool YandexGamesSdkIsRunningOnYandex();
     }
 }

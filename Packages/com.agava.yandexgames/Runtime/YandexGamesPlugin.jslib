@@ -610,6 +610,10 @@ const library = {
 
     yandexGames.gameReady();
   },
+
+  YandexGamesSdkIsRunningOnYandex: function() {
+    return window.top.location.hostname.includes('yandex');
+  }
 }
 
 autoAddDeps(library, '$yandexGames');
