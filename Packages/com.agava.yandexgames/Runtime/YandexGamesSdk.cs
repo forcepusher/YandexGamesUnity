@@ -22,10 +22,20 @@ namespace Agava.YandexGames
         public static bool IsInitialized => GetYandexGamesSdkIsInitialized();
 
         /// <summary>
-        /// Use it to check whether you're using Build and Run.<br/>
-        /// Can be called without initializing the SDK.
+        /// Use it to check whether you're using Build and Run or running in the editor.<br/>
+        /// Can be called without initializing the SDK, can be called in Editor.
         /// </summary>
-        public static bool IsRunningOnYandex => YandexGamesSdkIsRunningOnYandex();
+        public static bool IsRunningOnYandex
+        {
+            get
+            {
+#if UNITY_WEBGL && !UNITY_EDITOR
+                return YandexGamesSdkIsRunningOnYandex();
+#else
+                return false;
+#endif
+            }
+        }
 
         [DllImport("__Internal")]
         private static extern bool GetYandexGamesSdkIsInitialized();
