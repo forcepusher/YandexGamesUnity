@@ -228,9 +228,9 @@ const library = {
       });
     },
 
-    playerAccountSetCloudSaveData: function (сloudSaveDataJson, successCallbackPtr, errorCallbackPtr) {
+    playerAccountSetCloudSaveData: function (сloudSaveDataJson, flush, successCallbackPtr, errorCallbackPtr) {
       var сloudSaveData = JSON.parse(сloudSaveDataJson);
-      yandexGames.playerAccount.setData(сloudSaveData, true).then(function () {
+      yandexGames.playerAccount.setData(сloudSaveData, flush).then(function () {
         dynCall('v', successCallbackPtr, []);
       }).catch(function (error) {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
@@ -491,12 +491,12 @@ const library = {
     yandexGames.playerAccountGetCloudSaveData(successCallbackPtr, errorCallbackPtr);
   },
 
-  PlayerAccountSetCloudSaveData: function (сloudSaveDataJsonPtr, successCallbackPtr, errorCallbackPtr) {
+  PlayerAccountSetCloudSaveData: function (сloudSaveDataJsonPtr, flush, successCallbackPtr, errorCallbackPtr) {
     yandexGames.throwIfSdkNotInitialized();
 
     const сloudSaveDataJson = UTF8ToString(сloudSaveDataJsonPtr);
 
-    yandexGames.playerAccountSetCloudSaveData(сloudSaveDataJson, successCallbackPtr, errorCallbackPtr);
+    yandexGames.playerAccountSetCloudSaveData(сloudSaveDataJson, flush, successCallbackPtr, errorCallbackPtr);
   },
 
   InterstitialAdShow: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
