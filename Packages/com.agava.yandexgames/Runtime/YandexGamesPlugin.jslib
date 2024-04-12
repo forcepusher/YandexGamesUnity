@@ -224,7 +224,6 @@ const library = {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
       });
     },
-
     playerAccountGetCloudSaveData: function (successCallbackPtr, errorCallbackPtr) {
       yandexGames.playerAccount.getData().then(function (сloudSaveData) {
         const сloudSaveDataUnmanagedStringPtr = yandexGames.allocateUnmanagedString(JSON.stringify(сloudSaveData));
@@ -243,6 +242,16 @@ const library = {
         yandexGames.invokeErrorCallback(error, errorCallbackPtr);
       });
     },
+
+      getFlags: function (defaultFlags, clientFeatures, successCallbackFlagsPtr, errorCallbackFlagsPtr){
+        yandexGames.sdk.getFlags({defaultFlags, clientFeatures})
+            .then(function (flags) {
+                var flagsStringJsonPtr = yandexGames.allocateUnmanagedString(JSON.stringify(flags));
+                dynCall('vi', successCallbackFlagsPtr, [flagsStringJsonPtr]);
+          }).catch(function (error) {
+            yandexGames.invokeErrorCallback(error, errorCallbackFlagsPtr);
+        });
+      },
 
     interstitialAdShow: function (openCallbackPtr, closeCallbackPtr, errorCallbackPtr, offlineCallbackPtr) {
       yandexGames.sdk.adv.showFullscreenAdv({
@@ -497,6 +506,15 @@ const library = {
 
     yandexGames.playerAccountGetCloudSaveData(successCallbackPtr, errorCallbackPtr);
   },
+
+    FlagsGet: function (defaultFlagsStringPtr, clientFeaturesPtr, successCallbackFlagsPtr, errorCallbackFlagsPtr){
+      yandexGames.throwIfSdkNotInitialized();
+
+      const defaultFlags = JSON.parse(UTF8ToString(defaultFlagsStringPtr));
+      const clientFeatures = JSON.parse(UTF8ToString(clientFeaturesPtr));
+
+      yandexGames.getFlags(defaultFlags, clientFeatures, successCallbackFlagsPtr, errorCallbackFlagsPtr);
+    },
 
   PlayerAccountSetCloudSaveData: function (сloudSaveDataJsonPtr, flush, successCallbackPtr, errorCallbackPtr) {
     yandexGames.throwIfSdkNotInitialized();

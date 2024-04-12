@@ -30,6 +30,9 @@ namespace Agava.YandexGames
         private static Action<string> s_onGetCloudSaveDataSuccessCallback;
         private static Action<string> s_onGetCloudSaveDataErrorCallback;
 
+        private static Action<string> s_onGetFlagsSuccessCallback;
+        private static Action<string> s_onGetFlagsErrorCallback;
+
         /// <summary>
         /// Use this before calling SDK methods that require authorization.
         /// </summary>
@@ -205,7 +208,7 @@ namespace Agava.YandexGames
             s_onSetCloudSaveDataSuccessCallback = onSuccessCallback;
             s_onSetCloudSaveDataErrorCallback = onErrorCallback;
 
-            PlayerAccountSetCloudSaveData(cloudSaveDataJson, flash, OnSetCloudSaveDataSuccessCallback, OnSetCloudSaveDataErrorCallback);
+            PlayerAccountSetCloudSaveData(cloudSaveDataJson, flush, OnSetCloudSaveDataSuccessCallback, OnSetCloudSaveDataErrorCallback);
         }
 
         [DllImport("__Internal")]
