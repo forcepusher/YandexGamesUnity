@@ -17,6 +17,8 @@ const library = {
 
     isInitializeCalled: false,
 
+    flags: undefined,
+
     yandexGamesSdkInitialize: function (successCallbackPtr) {
       if (yandexGames.isInitializeCalled) {
         return;
@@ -49,7 +51,12 @@ const library = {
             yandexGames.billing = billing;
           }).catch(function () { throw new Error('Billing failed to initialize.'); });
 
-          Promise.allSettled([leaderboardInitializationPromise, playerAccountInitializationPromise, billingInitializationPromise]).then(function () {
+          const getFlagsInitializationPromise = sdk.getFlags().then(flags => {
+              yandexGames.flags = flags;
+          }).catch(function () { throw new Error('Flags failed to initialize.'); });
+
+          Promise.allSettled([leaderboardInitializationPromise, playerAccountInitializationPromise, billingInitializationPromise,
+              getFlagsInitializationPromise]).then(function () {
             yandexGames.isInitialized = true;
             dynCall('v', successCallbackPtr, []);
           });
