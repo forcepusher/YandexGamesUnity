@@ -11,9 +11,9 @@ namespace Agava.YandexGames
 {
     public static class Flags
     {
-         #region Flags
+        #region Flags
 
-		private static Action<KeyValuePair<string, string>[]> s_onGetFlagsSuccessCallback;
+        private static Action<KeyValuePair<string, string>[]> s_onGetFlagsSuccessCallback;
         private static Action<string> s_onGetFlagsErrorCallback;
 
         /// <summary>
@@ -22,7 +22,8 @@ namespace Agava.YandexGames
         /// <param name="flag"></param>
         /// <returns></returns>
         [DllImport("__Internal")]
-        private static extern void FlagsGet(string defaultFlags, string clientFeatures, Action<string> successCallback, Action<string> errorCallback);
+        private static extern void FlagsGet(string defaultFlags, string clientFeatures, Action<string> successCallback,
+            Action<string> errorCallback);
 
 
         [MonoPInvokeCallback(typeof(Action<string>))]
@@ -33,6 +34,8 @@ namespace Agava.YandexGames
 
             var dict = Json.Deserialize(flags).ToArray();
 
+            Debug.Log("FirstFlagSuccessKey: " + dict[0].Key);
+            Debug.Log("FirstFlagSuccessValue: " + dict[0].Value);
             s_onGetFlagsSuccessCallback?.Invoke(dict);
         }
 
@@ -46,16 +49,23 @@ namespace Agava.YandexGames
             s_onGetFlagsErrorCallback?.Invoke(errorMessage);
         }
 
-		public static void Get(Action<KeyValuePair<string, string>[]> onSuccessCallback,
- KeyValuePair<string, string>[] defaultFlags = null, KeyValuePair<string, string>[] clientFeatures = null)
+        public static void Get(Action<KeyValuePair<string, string>[]> onSuccessCallback,
+            KeyValuePair<string, string>[] defaultFlags = null, KeyValuePair<string, string>[] clientFeatures = null)
         {
-			s_onGetFlagsSuccessCallback = onSuccessCallback;
+            s_onGetFlagsSuccessCallback = onSuccessCallback;
 
-			var serializedDefaultFlags = Json.Serialize(defaultFlags);
-			var serializedClientFeatures = Json.Serialize(clientFeatures);
+            string serializedClientFeatures = "{}";
+            string serializedDefaultFlags = "{}";
 
-			FlagsGet(serializedDefaultFlags, serializedClientFeatures, OnGetFlagsSuccessCallback, OnGetFlagsErrorCallback);
+            if (defaultFlags != null)
+                serializedDefaultFlags = Json.Serialize(defaultFlags);
+            if (clientFeatures != null)
+                serializedClientFeatures = Json.Serialize(clientFeatures);
+
+            FlagsGet(serializedDefaultFlags, serializedClientFeatures, OnGetFlagsSuccessCallback,
+                OnGetFlagsErrorCallback);
         }
+
         #endregion
     }
 }

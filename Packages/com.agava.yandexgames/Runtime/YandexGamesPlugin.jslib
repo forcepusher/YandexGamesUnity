@@ -247,6 +247,7 @@ const library = {
         yandexGames.sdk.getFlags({defaultFlags, clientFeatures})
             .then(function (flags) {
                 var flagsStringJsonPtr = yandexGames.allocateUnmanagedString(JSON.stringify(flags));
+                console.log("JSFlagsStringJsonPTR: " + flagsStringJsonPtr);
                 dynCall('vi', successCallbackFlagsPtr, [flagsStringJsonPtr]);
           }).catch(function (error) {
             yandexGames.invokeErrorCallback(error, errorCallbackFlagsPtr);
@@ -510,8 +511,14 @@ const library = {
     FlagsGet: function (defaultFlagsStringPtr, clientFeaturesPtr, successCallbackFlagsPtr, errorCallbackFlagsPtr){
       yandexGames.throwIfSdkNotInitialized();
 
+        console.log("JSDefaultFlagsPTR: " + defaultFlagsStringPtr);
+        console.log("JSClientFeaturesPTR:  " + clientFeaturesPtr);
+
       const defaultFlags = JSON.parse(UTF8ToString(defaultFlagsStringPtr));
       const clientFeatures = JSON.parse(UTF8ToString(clientFeaturesPtr));
+
+        console.log("JSDefaultFlagsParsed: " + JSON.stringify(defaultFlags));
+        console.log("JSClientFeaturesParsed: " + JSON.stringify(clientFeatures));
 
       yandexGames.getFlags(defaultFlags, clientFeatures, successCallbackFlagsPtr, errorCallbackFlagsPtr);
     },
