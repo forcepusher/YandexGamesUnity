@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Packages/com.agava.yandexgames/Samples/Playtesting/PlaytestingScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Empty Scene For Flags.unity
+    guid: 073bc28d716f7ef46886ebf5502cc779
   m_configObjects: {}
