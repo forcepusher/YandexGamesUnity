@@ -13,8 +13,21 @@ namespace Agava.YandexGames
     {
         #region Flags
 
+        public static Flag[] flags;
+
+
         private static Action<KeyValuePair<string, string>[]> s_onGetFlagsSuccessCallback;
         private static Action<string> s_onGetFlagsErrorCallback;
+
+        public static string GetFlag(string name)
+        {
+            for (int i = 0; i < flags.Length; i++)
+            {
+                if (flags[i].name == name)
+                    return flags[i].value;
+            }
+            return null;
+        }
 
         /// <summary>
         ///
@@ -22,8 +35,7 @@ namespace Agava.YandexGames
         /// <param name="flag"></param>
         /// <returns></returns>
         [DllImport("__Internal")]
-        private static extern void FlagsGet(string defaultFlags, string clientFeatures, Action<string> successCallback,
-            Action<string> errorCallback);
+        private static extern void GetFlags();
 
 
         [MonoPInvokeCallback(typeof(Action<string>))]
@@ -62,8 +74,44 @@ namespace Agava.YandexGames
             if (clientFeatures != null)
                 serializedClientFeatures = Json.Serialize(clientFeatures);
 
-            FlagsGet(serializedDefaultFlags, serializedClientFeatures, OnGetFlagsSuccessCallback,
-                OnGetFlagsErrorCallback);
+            GetFlags();
+        }
+
+
+
+        [DllImport("__Internal")]
+        private static extern string FlagsInit_js();
+
+        public static void FlagsInit()
+        {
+#if !UNITY_EDITOR
+            string data = FlagsInit_js();
+            Debug.Log("Init Flags inGame");
+
+            JsonFlags jsonFlags = JsonUtility.FromJson<JsonFlags>(FlagsInit_js());
+            flags = new Flag[jsonFlags.names.Length];
+
+            for (int i = 0; i < jsonFlags.names.Length; i++)
+            {
+                flags[i].name = jsonFlags.names[i];
+                flags[i].value = jsonFlags.values[i];
+            }
+#else
+            flags = YandexGames.Flags.flags;
+#endif
+        }
+
+        public struct Flag
+        {
+            public string name;
+            public string value;
+        }
+
+        [Serializable]
+        private struct JsonFlags
+        {
+            public string[] names;
+            public string[] values;
         }
 
         #endregion

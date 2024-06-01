@@ -1,0 +1,2 @@
+Build path: E:/UnityProjects/YandexGamesUnity/Build
+Build number: 7

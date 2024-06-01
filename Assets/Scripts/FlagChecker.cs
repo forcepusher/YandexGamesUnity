@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Agava.YandexGames;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 
 public class FlagChecker : MonoBehaviour
 {
@@ -19,39 +20,32 @@ public class FlagChecker : MonoBehaviour
         yield return YandexGamesSdk.Initialize();
 #endif
         yield return new WaitForSeconds(2f);
-        InitFlags();
-    }
-
-    private void InitFlags()
-    {
-        Debug.Log("SDK Initialized");
-
-        flagInitedText.text = "Flags disabled";
-#if !UNITY_EDITOR
-        Flags.Get(pairs => _flags = pairs);
-#else
-        _flags = new KeyValuePair<string, string>[1];
-        _flags[0] = new KeyValuePair<string, string>("AdEnabled", adsValue.ToString());
-#endif
-
-        Debug.Log("SharpFlags: " + _flags);
-        Debug.Log("SharpFirstFlag: " + _flags[0]);
-        Debug.Log("SharpFirstFlagKey: " + _flags[0].Key);
-        Debug.Log("SharpFirstFlagValue: " + _flags[0].Value);
-
-        flagInitedText.text = _flags[0].Key + _flags[0].Value;
+        Flags.FlagsInit();
     }
 
     public void OnClick()
     {
-        if (_flags[0].Key == "AdEnabled" && _flags[0].Value == "1")
+//         if (_flags[0].Key == "AdEnabled" && _flags[0].Value == "1")
+//         {
+// #if !UNITY_EDITOR
+//             InterstitialAd.Show();
+// #endif
+//             Debug.Log("Interstitial enabled");
+//         }
+//         else
+//             Debug.Log("Interstitial disabled");
+
+        string value = Flags.GetFlag("AdsEnabled");
+
+        if (value == "0")
         {
-#if !UNITY_EDITOR
-            InterstitialAd.Show();
-#endif
+            Debug.Log("Interstitial disabled");
+        }
+        else if (value == "1")
+        {
             Debug.Log("Interstitial enabled");
         }
-        else
-            Debug.Log("Interstitial disabled");
+
+        flagInitedText.text = value;
     }
 }
