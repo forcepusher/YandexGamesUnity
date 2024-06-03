@@ -10,6 +10,9 @@ namespace Agava.YandexGames.Utility
     {
         public static string Serialize(IEnumerable<KeyValuePair<string, string>> stringPairsToSerialize)
         {
+            if (stringPairsToSerialize == null)
+                return "{}";
+
             var jsonStringBuilder = new StringBuilder();
             jsonStringBuilder.Append('{');
 
@@ -22,7 +25,7 @@ namespace Agava.YandexGames.Utility
                 jsonStringBuilder.Append($"\"{pair.Key}\":\"{pair.Value}\",");
             }
 
-            if (stringPairsToSerialize.Count() > 0)
+            if (stringPairsToSerialize.Any())
                 jsonStringBuilder.Length -= 1;
 
             jsonStringBuilder.Append('}');
@@ -32,22 +35,7 @@ namespace Agava.YandexGames.Utility
             return jsonStringBuilder.ToString();
         }
 
-        public static string SerializeArray(IEnumerable<KeyValuePair<string, string>> stringPairsToSerialize)
-        {
-            var jsonStringBuilder = new StringBuilder();
-            jsonStringBuilder.Append('[');
 
-            foreach (KeyValuePair<string, string> pair in stringPairsToSerialize)
-                jsonStringBuilder.Append($"name: \"{pair.Key}\", \"{pair.Value}\"");
-
-            if (stringPairsToSerialize.Count() > 0)
-                jsonStringBuilder.Length -= 1;
-
-            jsonStringBuilder.Append(']');
-
-
-            return jsonStringBuilder.ToString();
-        }
 
         public static IEnumerable<KeyValuePair<string, string>> Deserialize(string jsonData)
         {

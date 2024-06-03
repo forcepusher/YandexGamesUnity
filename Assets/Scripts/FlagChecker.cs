@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Agava.YandexGames;
 using UnityEngine;
 using UnityEngine.UI;
+using Utility;
 using YG;
 
 public class FlagChecker : MonoBehaviour
@@ -11,7 +12,7 @@ public class FlagChecker : MonoBehaviour
 
     [SerializeField] [Range(0, 1)] private int adsValue = 0;
 
-    private KeyValuePair<string, string>[] _flags;
+    private Dictionary<string, string> _flags;
 
     IEnumerator Start()
     {
@@ -20,7 +21,7 @@ public class FlagChecker : MonoBehaviour
         yield return YandexGamesSdk.Initialize();
 #endif
         yield return new WaitForSeconds(2f);
-        Flags.FlagsInit();
+        FlagsUtility.GetFlagsCollection(dictionary => _flags = (Dictionary<string, string>)dictionary);
     }
 
     public void OnClick()
@@ -35,7 +36,7 @@ public class FlagChecker : MonoBehaviour
 //         else
 //             Debug.Log("Interstitial disabled");
 
-        string value = Flags.GetFlag("AdsEnabled");
+        string value = _flags["AdsEnabled"];
 
         if (value == "0")
         {

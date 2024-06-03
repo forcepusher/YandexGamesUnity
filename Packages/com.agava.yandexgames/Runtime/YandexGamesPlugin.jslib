@@ -257,12 +257,11 @@ const library = {
 
         getFlags: function (defaultFlags, clientFeatures, successCallbackFlagsPtr, errorCallbackFlagsPtr) {
             yandexGames.sdk.getFlags({
-                defaultFlags: {AdEnabled: '1'},
-                clientFeatures: [{name: 'inAppPurchased', value: 'yes'}]
+                defaultFlags: JSON.parse(defaultFlags),
+                clientFeatures: JSON.parse(clientFeatures)
             })
                 .then(function (flags) {
                     var flagsStringJsonPtr = yandexGames.allocateUnmanagedString(JSON.stringify(flags));
-                    console.log("JSFlagsStringJsonPTR: " + flagsStringJsonPtr);
                     dynCall('vi', successCallbackFlagsPtr, [flagsStringJsonPtr]);
                 }).catch(function (error) {
                 yandexGames.invokeErrorCallback(error, errorCallbackFlagsPtr);
@@ -531,36 +530,13 @@ const library = {
         yandexGames.playerAccountGetCloudSaveData(successCallbackPtr, errorCallbackPtr);
     },
 
-    GetFlags: function () {
-        return new Promise((resolve) => {
-            if (ysdk == null) {
-                resolve('null');
-                return;
-            }
-            try {
-                ysdk.getFlags().then(flags => {
-                    let names = [];
-                    let values = [];
+    GetFlags: function (defaultFlags, clientFeatures, successCallbackPtr, errorCallbackPtr) {
+        yandexGames.throwIfSdkNotInitialized();
 
-                    for (let key in flags) {
-                        if (flags.hasOwnProperty(key)) {
-                            names.push(key);
-                            values.push(flags[key]);
-                        }
-                    }
+        const defaultFlagsJson = UTF8ToString(defaultFlags);
+        const clientFeaturesJson = UTF8ToString(clientFeatures);
 
-                    let jsonFlags = {
-                        "names": names,
-                        "values": values
-                    };
-
-                    resolve(JSON.stringify(jsonFlags));
-                });
-            } catch (e) {
-                console.error('CRASH Get Flags: ', e.message);
-                resolve('null');
-            }
-        });
+        yandexGames.getFlags(defaultFlagsJson, clientFeaturesJson, successCallbackPtr, errorCallbackPtr);
     },
 
     PlayerAccountSetCloudSaveData: function (сloudSaveDataJsonPtr, flush, successCallbackPtr, errorCallbackPtr) {
@@ -593,15 +569,6 @@ const library = {
         yandexGames.throwIfSdkNotInitialized();
 
         yandexGames.stickyAdHide();
-    },
-
-
-    FlagsInit_js: function () {
-        var returnStr = flagsData;
-        var bufferSize = lengthBytesUTF8(returnStr) + 1;
-        var buffer = _malloc(bufferSize);
-        stringToUTF8(returnStr, buffer, bufferSize);
-        return buffer;
     },
 
     LeaderboardSetScore: function (leaderboardNamePtr, score, successCallbackPtr, errorCallbackPtr, extraDataPtr) {
