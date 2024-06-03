@@ -15,7 +15,8 @@ namespace Agava.YandexGames
         private static Action<string> s_onGetFlagsErrorCallback;
 
         [DllImport("__Internal")]
-        private static extern void GetFlags(string defaultFlags, string clientFeatures, Action<string> onResultSuccess, Action<string> onErrorCallback);
+        private static extern void GetFlags(string defaultFlags, string clientFeatures, Action<string> onResultSuccess,
+            Action<string> onErrorCallback);
 
 
         [MonoPInvokeCallback(typeof(Action<string>))]
@@ -37,15 +38,16 @@ namespace Agava.YandexGames
             s_onGetFlagsErrorCallback?.Invoke(errorMessage);
         }
 
-        public static void Get(Action<string> onSuccessCallback, string clientFeatures = null, string defaultFlags = null, Action<string> onErrorCallback = null)
+        public static void Get(Action<string> onSuccessCallback, string clientFeatures = null,
+            string defaultFlags = null, Action<string> onErrorCallback = null)
         {
             s_onGetFlagsSuccessCallback = onSuccessCallback;
             s_onGetFlagsErrorCallback = onErrorCallback;
 
-            if (clientFeatures == null)
-                clientFeatures = "{}";
-            if (defaultFlags == null)
-                defaultFlags = "[]";
+            if (string.IsNullOrEmpty(clientFeatures))
+                clientFeatures = "[]";
+            if (string.IsNullOrEmpty(defaultFlags))
+                defaultFlags = "{}";
 
             GetFlags(defaultFlags, clientFeatures, OnGetFlagsSuccessCallback, OnGetFlagsErrorCallback);
         }
