@@ -4,7 +4,6 @@ using Agava.YandexGames;
 using UnityEngine;
 using UnityEngine.UI;
 using Utility;
-using YG;
 
 public class FlagChecker : MonoBehaviour
 {
@@ -13,6 +12,8 @@ public class FlagChecker : MonoBehaviour
     [SerializeField] [Range(0, 1)] private int adsValue = 0;
 
     private Dictionary<string, string> _flags;
+
+    private const string Ads_Enabled_Key = "AdsEnabled";
 
     IEnumerator Start()
     {
@@ -26,26 +27,9 @@ public class FlagChecker : MonoBehaviour
 
     public void OnClick()
     {
-//         if (_flags[0].Key == "AdEnabled" && _flags[0].Value == "1")
-//         {
-// #if !UNITY_EDITOR
-//             InterstitialAd.Show();
-// #endif
-//             Debug.Log("Interstitial enabled");
-//         }
-//         else
-//             Debug.Log("Interstitial disabled");
+        string value = _flags[Ads_Enabled_Key];
 
-        string value = _flags["AdsEnabled"];
-
-        if (value == "0")
-        {
-            Debug.Log("Interstitial disabled");
-        }
-        else if (value == "1")
-        {
-            Debug.Log("Interstitial enabled");
-        }
+        Debug.Log($"{_flags[Ads_Enabled_Key]} + {value}");
 
         flagInitedText.text = value;
     }
