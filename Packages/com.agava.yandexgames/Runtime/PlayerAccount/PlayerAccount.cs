@@ -30,6 +30,9 @@ namespace Agava.YandexGames
         private static Action<string> s_onGetCloudSaveDataSuccessCallback;
         private static Action<string> s_onGetCloudSaveDataErrorCallback;
 
+        private static Action<string> s_onGetFlagsSuccessCallback;
+        private static Action<string> s_onGetFlagsErrorCallback;
+
         /// <summary>
         /// Use this before calling SDK methods that require authorization.
         /// </summary>
@@ -194,7 +197,7 @@ namespace Agava.YandexGames
         /// <summary>
         /// Stores Cloud Save data in the player account. Proxy for player.setData() with "flush" setting set to true.
         /// </summary>
-        public static void SetCloudSaveData(string cloudSaveDataJson, Action onSuccessCallback = null, Action<string> onErrorCallback = null)
+        public static void SetCloudSaveData(string cloudSaveDataJson, bool flush = false, Action onSuccessCallback = null, Action<string> onErrorCallback = null)
         {
             if (cloudSaveDataJson == null)
                 throw new ArgumentNullException(nameof(cloudSaveDataJson));
@@ -205,11 +208,11 @@ namespace Agava.YandexGames
             s_onSetCloudSaveDataSuccessCallback = onSuccessCallback;
             s_onSetCloudSaveDataErrorCallback = onErrorCallback;
 
-            PlayerAccountSetCloudSaveData(cloudSaveDataJson, OnSetCloudSaveDataSuccessCallback, OnSetCloudSaveDataErrorCallback);
+            PlayerAccountSetCloudSaveData(cloudSaveDataJson, flush, OnSetCloudSaveDataSuccessCallback, OnSetCloudSaveDataErrorCallback);
         }
 
         [DllImport("__Internal")]
-        private static extern void PlayerAccountSetCloudSaveData(string cloudSaveDataJson, Action successCallback, Action<string> errorCallback);
+        private static extern void PlayerAccountSetCloudSaveData(string cloudSaveDataJson, bool flush, Action successCallback, Action<string> errorCallback);
 
         [MonoPInvokeCallback(typeof(Action))]
         private static void OnSetCloudSaveDataSuccessCallback()

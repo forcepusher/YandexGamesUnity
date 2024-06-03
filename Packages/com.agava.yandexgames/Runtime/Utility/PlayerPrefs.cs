@@ -16,23 +16,12 @@ namespace Agava.YandexGames.Utility
 
         public static void Save(Action onSuccessCallback = null, Action<string> onErrorCallback = null)
         {
-            var jsonStringBuilder = new StringBuilder();
-            jsonStringBuilder.Append('{');
-
-            foreach (KeyValuePair<string, string> pref in s_prefs)
-                jsonStringBuilder.Append($"\"{pref.Key}\":\"{pref.Value}\",");
-
-            if (s_prefs.Count > 0)
-                jsonStringBuilder.Length -= 1;
-
-            jsonStringBuilder.Append('}');
-
-            string jsonData = jsonStringBuilder.ToString();
+            var jsonData = Json.Serialize(s_prefs);
 
             s_onSaveSuccessCallback = onSuccessCallback;
             s_onSaveErrorCallback = onErrorCallback;
 
-            PlayerAccount.SetCloudSaveData(jsonData, OnSaveSuccessCallback, OnSaveErrorCallback);
+            PlayerAccount.SetCloudSaveData(jsonData, true, OnSaveSuccessCallback, OnSaveErrorCallback);
         }
 
         private static void OnSaveSuccessCallback()
@@ -53,12 +42,9 @@ namespace Agava.YandexGames.Utility
             PlayerAccount.GetCloudSaveData(OnLoadSuccessCallback, OnLoadErrorCallback);
         }
 
-        enum IterationState
+        public static void WritePrefsKeyValue(StringBuilder key, StringBuilder value)
         {
-            StartingKeyQuote,
-            Key,
-            StartingValueQuote,
-            Value
+            s_prefs[key.ToString()] = value.ToString();
         }
 
         private static void OnLoadSuccessCallback(string jsonData)
@@ -68,75 +54,13 @@ namespace Agava.YandexGames.Utility
             s_onLoadSuccessCallback?.Invoke();
         }
 
-        public static void ParseAndApplyData(string jsonData)
+        private static void ParseAndApplyData(string jsonData)
         {
-            if (string.IsNullOrEmpty(jsonData))
-                jsonData = "{}";
-
             s_prefs.Clear();
 
-            string unparsedData = jsonData.Trim('{', '}');
-
-            var key = new StringBuilder();
-            var value = new StringBuilder();
-
-            IterationState iterationState = IterationState.StartingKeyQuote;
-
-            int characterIterator = 0;
-            while (characterIterator < unparsedData.Length)
-            {
-                char character = unparsedData[characterIterator];
-
-                switch (iterationState)
-                {
-                    case IterationState.StartingKeyQuote:
-                        if (character == '"')
-                        {
-                            iterationState = IterationState.Key;
-                        }
-
-                        break;
-
-                    case IterationState.Key:
-                        if (character == '"')
-                        {
-                            iterationState = IterationState.StartingValueQuote;
-                        }
-                        else
-                        {
-                            key.Append(character);
-                        }
-
-                        break;
-
-                    case IterationState.StartingValueQuote:
-                        if (character == '"')
-                        {
-                            iterationState = IterationState.Value;
-                        }
-
-                        break;
-
-                    case IterationState.Value:
-                        if (character == '"')
-                        {
-                            iterationState = IterationState.StartingKeyQuote;
-
-                            s_prefs[key.ToString()] = value.ToString();
-                            key.Clear();
-                            value.Clear();
-                        }
-                        else
-                        {
-                            value.Append(character);
-                        }
-
-                        break;
-                }
-
-                characterIterator += 1;
-            }
+            Json.Deserialize(jsonData);
         }
+
 
         private static void OnLoadErrorCallback(string errorMessage)
         {

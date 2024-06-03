@@ -1,27 +1,30 @@
 #pragma warning disable
 
 using System.Collections;
+using System.Collections.Generic;
 using Agava.YandexGames;
 using Agava.YandexGames.Samples;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Utility;
 
 namespace Agava.YandexGames.Samples
 {
     public class PlaytestingCanvas : MonoBehaviour
     {
-        [SerializeField]
-        private Text _authorizationStatusText;
+        [SerializeField] private Text _authorizationStatusText;
 
-        [SerializeField]
-        private Text _personalProfileDataPermissionStatusText;
+        [SerializeField] private Text _personalProfileDataPermissionStatusText;
 
-        [SerializeField]
-        private Text _isRunningOnYandexStatusText;
+        [SerializeField] private Text _isRunningOnYandexStatusText;
 
-        [SerializeField]
-        private InputField _cloudSaveDataInputField;
+        [SerializeField] private InputField _clientFeaturesInputField;
+
+        [SerializeField] private InputField _defaultFlagsInputField;
+
+        [SerializeField] private InputField _cloudSaveDataInputField;
+
 
         private void Awake()
         {
@@ -48,7 +51,8 @@ namespace Agava.YandexGames.Samples
                 _authorizationStatusText.color = PlayerAccount.IsAuthorized ? Color.green : Color.red;
 
                 if (PlayerAccount.IsAuthorized)
-                    _personalProfileDataPermissionStatusText.color = PlayerAccount.HasPersonalProfileDataPermission ? Color.green : Color.red;
+                    _personalProfileDataPermissionStatusText.color =
+                        PlayerAccount.HasPersonalProfileDataPermission ? Color.green : Color.red;
                 else
                     _personalProfileDataPermissionStatusText.color = Color.red;
 
@@ -176,6 +180,12 @@ namespace Agava.YandexGames.Samples
         private void OnAuthorizedInBackground()
         {
             Debug.Log($"{nameof(OnAuthorizedInBackground)} {PlayerAccount.IsAuthorized}");
+        }
+
+        public void OnCheckFlagButtonClick()
+        {
+            Flags.Get(s => Debug.Log($"{nameof(OnCheckFlagButtonClick)} Flags: {s}"), _clientFeaturesInputField.text,
+                _defaultFlagsInputField.text);
         }
     }
 }
