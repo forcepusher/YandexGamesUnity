@@ -614,7 +614,8 @@ const library = {
   },
 
   YandexGamesSdkIsRunningOnYandex: function() {
-    return window.location.hostname.includes('yandex');
+    const hostname = window.location.hostname;
+    return hostname.includes('yandex') || hostname.includes('playhop');
   }
 }
 
