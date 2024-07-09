@@ -121,7 +121,7 @@ const library = {
       }
     },
 
-    playerAccountStartAuthorizationPolling: function (delay, successCallbackPtr, errorCallbackPtr) {
+    playerAccountStartAuthorizationPolling: function (repeatDelay, successCallbackPtr, errorCallbackPtr) {
       if (yandexGames.isAuthorized) {
         console.error('Already authorized.');
         dynCall('v', errorCallbackPtr, []);
@@ -140,7 +140,7 @@ const library = {
             yandexGames.playerAccount = playerAccount;
             dynCall('v', successCallbackPtr, []);
           } else {
-            setTimeout(authorizationPollingLoop, delay);
+            setTimeout(authorizationPollingLoop, repeatDelay);
           }
         });
       };
