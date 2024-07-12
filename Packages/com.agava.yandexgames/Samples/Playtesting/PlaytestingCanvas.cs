@@ -31,9 +31,8 @@ namespace Agava.YandexGames.Samples
 
         private IEnumerator Start()
         {
-#if !UNITY_WEBGL || UNITY_EDITOR
-            yield break;
-#endif
+            if (!YandexGamesSdk.IsRunningOnYandex)
+                yield break;
 
             CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
             canvasGroup.interactable = false;
