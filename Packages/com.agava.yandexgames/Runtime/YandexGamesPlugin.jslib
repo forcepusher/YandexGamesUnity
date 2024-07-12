@@ -365,25 +365,37 @@ const library = {
 
     billingGetProductCatalog: function (successCallbackPtr, errorCallbackPtr) {
       yandexGames.billing.getCatalog().then(function (productCatalogResponse) {
-        const products = [];
+        productCatalogResponse = { products: productCatalogResponse, signature: productCatalogResponse.signature };
 
-        for (var catalogIterator = 0; catalogIterator < productCatalogResponse.length; catalogIterator++) {
-          products[catalogIterator] = {
-            description: productCatalogResponse[catalogIterator].description,
-            id: productCatalogResponse[catalogIterator].id,
-            imageURI: productCatalogResponse[catalogIterator].imageURI,
-            price: productCatalogResponse[catalogIterator].price,
-            priceCurrencyCode: productCatalogResponse[catalogIterator].priceCurrencyCode,
-            priceCurrencyImage: productCatalogResponse[catalogIterator].getPriceCurrencyImage('medium'),
-            priceValue: productCatalogResponse[catalogIterator].priceValue,
-            title: productCatalogResponse[catalogIterator].title
-          };
-        }
+        productCatalogResponse.products.forEach(function(product) {
+          product.priceCurrencyImage = product.getPriceCurrencyImage('medium');
+        });
 
-        productCatalogResponse = {
-          products: products,
-          signature: productCatalogResponse.signature
-        };
+        //products.forEach()
+
+        // response.entries.forEach(function(entry) {
+        //   entry.player.profilePicture = entry.player.getAvatarSrc({ size: pictureSize });
+        // });
+
+        // const products = [];
+
+        // for (var catalogIterator = 0; catalogIterator < productCatalogResponse.length; catalogIterator++) {
+        //   products[catalogIterator] = {
+        //     description: productCatalogResponse[catalogIterator].description,
+        //     id: productCatalogResponse[catalogIterator].id,
+        //     imageURI: productCatalogResponse[catalogIterator].imageURI,
+        //     price: productCatalogResponse[catalogIterator].price,
+        //     priceCurrencyCode: productCatalogResponse[catalogIterator].priceCurrencyCode,
+        //     priceCurrencyImage: productCatalogResponse[catalogIterator].getPriceCurrencyImage('medium'),
+        //     priceValue: productCatalogResponse[catalogIterator].priceValue,
+        //     title: productCatalogResponse[catalogIterator].title
+        //   };
+        // }
+
+        // productCatalogResponse = {
+        //   products: products,
+        //   signature: productCatalogResponse.signature
+        // };
 
         const productCatalogJson = JSON.stringify(productCatalogResponse);
         const productCatalogJsonUnmanagedStringPtr = yandexGames.allocateUnmanagedString(productCatalogJson);
