@@ -229,7 +229,14 @@ const yandexGamesLibrary = {
     },
 
     playerAccountSetCloudSaveData: function (сloudSaveDataJson, successCallbackPtr, errorCallbackPtr) {
-      var сloudSaveData = JSON.parse(сloudSaveDataJson);
+      var сloudSaveData;
+      try {
+        сloudSaveData = JSON.parse(сloudSaveDataJson);
+      } catch (error) {
+        yandexGames.invokeErrorCallback(error, errorCallbackPtr);
+        return;
+      }
+
       yandexGames.playerAccount.setData(сloudSaveData, true).then(function () {
         dynCall('v', successCallbackPtr, []);
       }).catch(function (error) {
