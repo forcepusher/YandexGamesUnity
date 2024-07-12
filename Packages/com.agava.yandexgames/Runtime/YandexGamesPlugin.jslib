@@ -365,23 +365,23 @@ const library = {
 
     billingGetProductCatalog: function (successCallbackPtr, errorCallbackPtr) {
       yandexGames.billing.getCatalog().then(function (productCatalogResponse) {
-        const productCatalog = [];
+        const products = [];
 
-        for (var i = 0; i < productCatalogResponse.length; i++) {
-          productCatalog[i] = {
-            description: productCatalogResponse[i].description,
-            id: productCatalogResponse[i].id,
-            imageURI: productCatalogResponse[i].imageURI,
-            price: productCatalogResponse[i].price,
-            priceCurrencyCode: productCatalogResponse[i].priceCurrencyCode,
-            priceValue: productCatalogResponse[i].priceValue,
-            title: productCatalogResponse[i].title,
-            priceCurrencyImage: productCatalogResponse[i].getPriceCurrencyImage('medium')
+        for (var catalogIterator = 0; catalogIterator < productCatalogResponse.length; catalogIterator++) {
+          products[catalogIterator] = {
+            description: productCatalogResponse[catalogIterator].description,
+            id: productCatalogResponse[catalogIterator].id,
+            imageURI: productCatalogResponse[catalogIterator].imageURI,
+            price: productCatalogResponse[catalogIterator].price,
+            priceCurrencyCode: productCatalogResponse[catalogIterator].priceCurrencyCode,
+            priceCurrencyImage: productCatalogResponse[catalogIterator].getPriceCurrencyImage('medium'),
+            priceValue: productCatalogResponse[catalogIterator].priceValue,
+            title: productCatalogResponse[catalogIterator].title
           };
         }
 
         productCatalogResponse = {
-          products: productCatalog,
+          products: products,
           signature: productCatalogResponse.signature
         };
 
