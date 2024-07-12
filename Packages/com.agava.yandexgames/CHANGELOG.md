@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   
 ## [16.1.0] - 2024-07-13  
 ### Fixed  
-- Fixed saving JSON fields via `Utility.PlayerPrefs`.  
+- Fixed saving JSON fields via `PlayerPrefs` cloud save utility.  
 - `YandexGamesSdk.IsRunningOnYandex` now works when used within european Yandex Games reskin [Playhop](https://playhop.com/).  
 - Added error callback when trying to save invalid JSON via `PlayerAccount.SetCloudSaveData()`.  
   
