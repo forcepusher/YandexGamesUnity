@@ -35,8 +35,11 @@ namespace Agava.YandexGames.Samples
             yield break;
 #endif
 
+            CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
+            canvasGroup.interactable = false;
             // Always wait for it if invoking something immediately in the first scene.
             yield return YandexGamesSdk.Initialize();
+            canvasGroup.interactable = true;
 
             if (PlayerAccount.IsAuthorized == false)
                 PlayerAccount.StartAuthorizationPolling(1500);
