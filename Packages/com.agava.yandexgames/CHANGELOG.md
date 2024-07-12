@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed  
 - Fixed saving JSON fields via `Utility.PlayerPrefs`.  
 - `YandexGamesSdk.IsRunningOnYandex` now works when used within european Yandex Games reskin [Playhop](https://playhop.com/).  
+- Added error callback when trying to save invalid JSON via `PlayerAccount.SetCloudSaveData()`.  
   
 ### Added  
 - Added `CatalogProduct.priceCurrencyImage` for passing an IAP moderation.  
