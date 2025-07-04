@@ -207,7 +207,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2102737976}
-        m_TargetAssemblyTypeName: Agava.YandexGames.Samples.PlaytestingCanvas, Agava.YandexGames.Samples.Playtesting
+        m_TargetAssemblyTypeName: BananaParty.YandexGames.Samples.PlaytestingCanvas, BananaParty.YandexGames.Samples.Playtesting
         m_MethodName: OnSetCloudSaveDataButtonClick
         m_Mode: 1
         m_Arguments:
@@ -860,7 +860,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2102737976}
-        m_TargetAssemblyTypeName: Agava.YandexGames.Samples.PlaytestingCanvas, Agava.YandexGames.Samples.Playtesting
+        m_TargetAssemblyTypeName: BananaParty.YandexGames.Samples.PlaytestingCanvas, BananaParty.YandexGames.Samples.Playtesting
         m_MethodName: OnCanRequestReviewButtonClick
         m_Mode: 1
         m_Arguments:
@@ -1072,7 +1072,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1389883702}
-        m_TargetAssemblyTypeName: Agava.YandexGames.Samples.ProductPanel, Agava.YandexGames.Samples.Playtesting
+        m_TargetAssemblyTypeName: BananaParty.YandexGames.Samples.ProductPanel, BananaParty.YandexGames.Samples.Playtesting
         m_MethodName: OnPurchaseAndConsumeButtonClick
         m_Mode: 1
         m_Arguments:
@@ -1205,7 +1205,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2102737976}
-        m_TargetAssemblyTypeName: Agava.YandexGames.Samples.PlaytestingCanvas, Agava.YandexGames.Samples.Playtesting
+        m_TargetAssemblyTypeName: BananaParty.YandexGames.Samples.PlaytestingCanvas, BananaParty.YandexGames.Samples.Playtesting
         m_MethodName: OnCanSuggestShortcutButtonClick
         m_Mode: 1
         m_Arguments:
@@ -1789,7 +1789,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2102737976}
-        m_TargetAssemblyTypeName: YandexGames.Samples.PlaytestingCanvas, Agava.YandexGames.Samples.Playtesting
+        m_TargetAssemblyTypeName: YandexGames.Samples.PlaytestingCanvas, BananaParty.YandexGames.Samples.Playtesting
         m_MethodName: OnSetLeaderboardScoreButtonClick
         m_Mode: 1
         m_Arguments:
@@ -2048,7 +2048,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2102737976}
-        m_TargetAssemblyTypeName: YandexGames.Samples.PlaytestingCanvas, Agava.YandexGames.Samples.Playtesting
+        m_TargetAssemblyTypeName: YandexGames.Samples.PlaytestingCanvas, BananaParty.YandexGames.Samples.Playtesting
         m_MethodName: OnRequestPersonalProfileDataPermissionButtonClick
         m_Mode: 1
         m_Arguments:
@@ -3086,8 +3086,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 697611064}
-        m_TargetAssemblyTypeName: Agava.YandexGames.Samples.PurchasedProductPanel,
-          Agava.YandexGames.Samples.Playtesting
+        m_TargetAssemblyTypeName: BananaParty.YandexGames.Samples.PurchasedProductPanel,
+          BananaParty.YandexGames.Samples.Playtesting
         m_MethodName: OnConsumeButtonClick
         m_Mode: 1
         m_Arguments:
@@ -3220,7 +3220,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2102737976}
-        m_TargetAssemblyTypeName: Agava.YandexGames.Samples.PlaytestingCanvas, Agava.YandexGames.Samples.Playtesting
+        m_TargetAssemblyTypeName: BananaParty.YandexGames.Samples.PlaytestingCanvas, BananaParty.YandexGames.Samples.Playtesting
         m_MethodName: OnCallGameReadyButtonClick
         m_Mode: 1
         m_Arguments:
@@ -3389,7 +3389,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2102737976}
-        m_TargetAssemblyTypeName: YandexGames.Samples.PlaytestingCanvas, Agava.YandexGames.Samples.Playtesting
+        m_TargetAssemblyTypeName: YandexGames.Samples.PlaytestingCanvas, BananaParty.YandexGames.Samples.Playtesting
         m_MethodName: OnAuthorizeButtonClick
         m_Mode: 1
         m_Arguments:
@@ -3585,7 +3585,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2102737976}
-        m_TargetAssemblyTypeName: YandexGames.Samples.PlaytestingCanvas, Agava.YandexGames.Samples.Playtesting
+        m_TargetAssemblyTypeName: YandexGames.Samples.PlaytestingCanvas, BananaParty.YandexGames.Samples.Playtesting
         m_MethodName: OnGetLeaderboardPlayerEntryButtonClick
         m_Mode: 1
         m_Arguments:
@@ -3955,7 +3955,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2102737976}
-        m_TargetAssemblyTypeName: Agava.YandexGames.Samples.PlaytestingCanvas, Agava.YandexGames.Samples.Playtesting
+        m_TargetAssemblyTypeName: BananaParty.YandexGames.Samples.PlaytestingCanvas, BananaParty.YandexGames.Samples.Playtesting
         m_MethodName: OnHideStickyAdButtonClick
         m_Mode: 1
         m_Arguments:
@@ -4088,7 +4088,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2102737976}
-        m_TargetAssemblyTypeName: Agava.YandexGames.Samples.PlaytestingCanvas, Agava.YandexGames.Samples.Playtesting
+        m_TargetAssemblyTypeName: BananaParty.YandexGames.Samples.PlaytestingCanvas, BananaParty.YandexGames.Samples.Playtesting
         m_MethodName: OnSuggestShortcutButtonClick
         m_Mode: 1
         m_Arguments:
@@ -4221,7 +4221,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2102737976}
-        m_TargetAssemblyTypeName: YandexGames.Samples.PlaytestingCanvas, Agava.YandexGames.Samples.Playtesting
+        m_TargetAssemblyTypeName: YandexGames.Samples.PlaytestingCanvas, BananaParty.YandexGames.Samples.Playtesting
         m_MethodName: OnGetLeaderboardEntriesButtonClick
         m_Mode: 1
         m_Arguments:
@@ -4354,7 +4354,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2102737976}
-        m_TargetAssemblyTypeName: Agava.YandexGames.Samples.PlaytestingCanvas, Agava.YandexGames.Samples.Playtesting
+        m_TargetAssemblyTypeName: BananaParty.YandexGames.Samples.PlaytestingCanvas, BananaParty.YandexGames.Samples.Playtesting
         m_MethodName: OnRequestReviewButtonClick
         m_Mode: 1
         m_Arguments:
@@ -4487,7 +4487,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2102737976}
-        m_TargetAssemblyTypeName: Agava.YandexGames.Samples.PlaytestingCanvas, Agava.YandexGames.Samples.Playtesting
+        m_TargetAssemblyTypeName: BananaParty.YandexGames.Samples.PlaytestingCanvas, BananaParty.YandexGames.Samples.Playtesting
         m_MethodName: OnShowInterstitialButtonClick
         m_Mode: 1
         m_Arguments:
@@ -4780,7 +4780,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2102737976}
-        m_TargetAssemblyTypeName: YandexGames.Samples.PlaytestingCanvas, Agava.YandexGames.Samples.Playtesting
+        m_TargetAssemblyTypeName: YandexGames.Samples.PlaytestingCanvas, BananaParty.YandexGames.Samples.Playtesting
         m_MethodName: OnGetProfileDataButtonClick
         m_Mode: 1
         m_Arguments:
@@ -4913,7 +4913,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2102737976}
-        m_TargetAssemblyTypeName: Agava.YandexGames.Samples.PlaytestingCanvas, Agava.YandexGames.Samples.Playtesting
+        m_TargetAssemblyTypeName: BananaParty.YandexGames.Samples.PlaytestingCanvas, BananaParty.YandexGames.Samples.Playtesting
         m_MethodName: OnGetCloudSaveDataButtonClick
         m_Mode: 1
         m_Arguments:
@@ -5046,7 +5046,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2102737976}
-        m_TargetAssemblyTypeName: Agava.YandexGames.Samples.PlaytestingCanvas, Agava.YandexGames.Samples.Playtesting
+        m_TargetAssemblyTypeName: BananaParty.YandexGames.Samples.PlaytestingCanvas, BananaParty.YandexGames.Samples.Playtesting
         m_MethodName: OnShowStickyAdButtonClick
         m_Mode: 1
         m_Arguments:
@@ -5179,7 +5179,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2102737976}
-        m_TargetAssemblyTypeName: Agava.YandexGames.Samples.PlaytestingCanvas, Agava.YandexGames.Samples.Playtesting
+        m_TargetAssemblyTypeName: BananaParty.YandexGames.Samples.PlaytestingCanvas, BananaParty.YandexGames.Samples.Playtesting
         m_MethodName: OnGetEnvironmentButtonClick
         m_Mode: 1
         m_Arguments:
@@ -7344,7 +7344,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1389883702}
-        m_TargetAssemblyTypeName: Agava.YandexGames.Samples.ProductPanel, Agava.YandexGames.Samples.Playtesting
+        m_TargetAssemblyTypeName: BananaParty.YandexGames.Samples.ProductPanel, BananaParty.YandexGames.Samples.Playtesting
         m_MethodName: OnPurchaseButtonClick
         m_Mode: 1
         m_Arguments:
