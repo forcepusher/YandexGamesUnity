@@ -1,7 +1,7 @@
 # YandexGamesUnity  
   
 This is a development repository. To install the package, use this repo instead:  
-https://github.com/forcepusher/com.agava.yandexgames  
+https://github.com/forcepusher/com.bananaparty.yandexgames  
   
 To run unit tests: in Unity, go to "Window" -> "General" -> "Test Runner".  
 Make sure your target platform is set to WebGL in build settings.  
