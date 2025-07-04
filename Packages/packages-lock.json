@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "com.agava.yandexgames": {
-      "version": "file:com.agava.yandexgames",
+    "com.bananaparty.yandexgames": {
+      "version": "file:com.bananaparty.yandexgames",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
