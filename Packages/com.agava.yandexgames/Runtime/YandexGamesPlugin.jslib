@@ -24,7 +24,13 @@ const yandexGamesLibrary = {
       yandexGames.isInitializeCalled = true;
 
       const sdkScript = document.createElement('script');
-      sdkScript.src = '/sdk.js';
+      
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        sdkScript.src = 'https://yandex.ru/games/sdk/v2';
+      } else {
+        sdkScript.src = '/sdk.js';
+      }
+
       document.head.appendChild(sdkScript);
 
       sdkScript.onload = function () {
