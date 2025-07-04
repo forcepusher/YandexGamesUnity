@@ -4,9 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),  
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).  
   
-## [16.2.0] - 2025-07-04  
+## [17.0.0] - 2025-07-04  
 ### Added  
 - WebAssembly 2023 support.  
+  
+### Changed  
+- Minimal Unity version is now 2022.3.  
   
 ## [16.1.1] - 2024-07-31  
 ### Changed  
@@ -164,7 +167,7 @@ This was leading to errors that were difficult to reproduce and detect. Now you 
 - Renamed RequestProfileDataPermission to RequestPersonalProfileDataPermission.  
 - Renamed HasProfileDataPermission to HasPersonalProfileDataPermission.  
   
-[16.2.0] https://github.com/forcepusher/com.agava.yandexgames/compare/16.1.1...16.2.0  
+[17.0.0] https://github.com/forcepusher/com.agava.yandexgames/compare/16.1.1...17.0.0  
 [16.1.1] https://github.com/forcepusher/com.agava.yandexgames/compare/16.1.0...16.1.1  
 [16.1.0] https://github.com/forcepusher/com.agava.yandexgames/compare/16.0.0...16.1.0  
 [16.0.0] https://github.com/forcepusher/com.agava.yandexgames/compare/15.1.1...16.0.0  
