@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   
 ## [16.0.0] - 2023-08-11  
 ### Changed  
-- Moved PlayerPrefs utility to its own `Agava.YandexGames.Utility` namespace to prevent unintentional naming clashes.  
+- Moved PlayerPrefs utility to its own `BananaParty.YandexGames.Utility` namespace to prevent unintentional naming clashes.  
   
 ## [15.1.1] - 2023-11-01  
 ### Fixed  
@@ -59,7 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   
 ## [13.2.0] - 2023-07-31  
 ### Added  
-- `Agava.YandexGames.PlayerPrefs` utility script for migrating from PlayerPrefs-based saves to `PlayerAccount.SetCloudSaveData`.  
+- `BananaParty.YandexGames.PlayerPrefs` utility script for migrating from PlayerPrefs-based saves to `PlayerAccount.SetCloudSaveData`.  
   
 ## [13.1.0] - 2023-07-24  
 ### Added  
@@ -71,7 +71,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   
 ### Removed  
 - Removed Device.Type since it does not detect an iPad as a tablet.  
-Proper device type detection is implemented in [WebUtility](https://github.com/forcepusher/com.agava.webutility) package.  
+Proper device type detection is implemented in [WebUtility](https://github.com/forcepusher/com.bananaparty.webutility) package.  
   
 ## [12.0.1] - 2023-04-06  
 ### Fixed  
@@ -100,7 +100,7 @@ Find profile picture URLs in `PlayerAccountProfileDataResponse.profilePicture` a
   
 ## [11.0.0] - 2022-08-29  
 ### Removed  
-- WebApplication and WebEventSystem are now split into a separate [WebUtility](https://github.com/forcepusher/com.agava.webutility) package.  
+- WebApplication and WebEventSystem are now split into a separate [WebUtility](https://github.com/forcepusher/com.bananaparty.webutility) package.  
   
 ## [10.0.0] - 2022-08-10  
 ### Added  
@@ -139,7 +139,7 @@ This was leading to errors that were difficult to reproduce and detect. Now you 
   
 ## [8.0.0] - 2022-01-24  
 ### Changed  
-- Added Agava prefix in front of all namespaces to comply with MSDN C# standard.  
+- Added BananaParty prefix in front of all namespaces to comply with MSDN C# standard.  
   
 ## [7.0.0] - 2021-12-24  
 ### Changed  
@@ -167,28 +167,28 @@ This was leading to errors that were difficult to reproduce and detect. Now you 
 - Renamed RequestProfileDataPermission to RequestPersonalProfileDataPermission.  
 - Renamed HasProfileDataPermission to HasPersonalProfileDataPermission.  
   
-[17.0.0] https://github.com/forcepusher/com.agava.yandexgames/compare/16.1.1...17.0.0  
-[16.1.1] https://github.com/forcepusher/com.agava.yandexgames/compare/16.1.0...16.1.1  
-[16.1.0] https://github.com/forcepusher/com.agava.yandexgames/compare/16.0.0...16.1.0  
-[16.0.0] https://github.com/forcepusher/com.agava.yandexgames/compare/15.1.1...16.0.0  
-[15.1.1] https://github.com/forcepusher/com.agava.yandexgames/compare/15.1.0...15.1.1  
-[15.1.0] https://github.com/forcepusher/com.agava.yandexgames/compare/15.0.0...15.1.0  
-[15.0.0] https://github.com/forcepusher/com.agava.yandexgames/compare/14.0.0...15.0.0  
-[14.0.0] https://github.com/forcepusher/com.agava.yandexgames/compare/13.3.0...14.0.0  
-[13.3.0] https://github.com/forcepusher/com.agava.yandexgames/compare/13.2.0...13.3.0  
-[13.2.0] https://github.com/forcepusher/com.agava.yandexgames/compare/13.1.0...13.2.0  
-[13.1.0] https://github.com/forcepusher/com.agava.yandexgames/compare/13.0.0...13.1.0  
-[13.0.0] https://github.com/forcepusher/com.agava.yandexgames/compare/12.0.1...13.0.0  
-[12.0.1] https://github.com/forcepusher/com.agava.yandexgames/compare/12.0.0...12.0.1  
-[12.0.0] https://github.com/forcepusher/com.agava.yandexgames/compare/11.2.1...12.0.0  
-[11.2.1] https://github.com/forcepusher/com.agava.yandexgames/compare/11.2.0...11.2.1  
-[11.2.0] https://github.com/forcepusher/com.agava.yandexgames/compare/11.1.0...11.2.0  
-[11.1.0] https://github.com/forcepusher/com.agava.yandexgames/compare/11.0.0...11.1.0  
-[11.0.0] https://github.com/forcepusher/com.agava.yandexgames/compare/10.0.0...11.0.0  
-[10.0.0] https://github.com/forcepusher/com.agava.yandexgames/compare/8.3.1...10.0.0  
-[8.3.1] https://github.com/forcepusher/com.agava.yandexgames/compare/8.3.0...8.3.1  
-[8.3.0] https://github.com/forcepusher/com.agava.yandexgames/compare/8.2.0...8.3.0  
-[8.2.0] https://github.com/forcepusher/com.agava.yandexgames/compare/8.1.0...8.2.0  
-[8.1.0] https://github.com/forcepusher/com.agava.yandexgames/compare/8.0.1...8.1.0  
-[8.0.1] https://github.com/forcepusher/com.agava.yandexgames/compare/8.0.0...8.0.1  
-[8.0.0] https://github.com/forcepusher/com.agava.yandexgames/compare/7.0.0...8.0.0
+[17.0.0] https://github.com/forcepusher/com.bananaparty.yandexgames/compare/16.1.1...17.0.0  
+[16.1.1] https://github.com/forcepusher/com.bananaparty.yandexgames/compare/16.1.0...16.1.1  
+[16.1.0] https://github.com/forcepusher/com.bananaparty.yandexgames/compare/16.0.0...16.1.0  
+[16.0.0] https://github.com/forcepusher/com.bananaparty.yandexgames/compare/15.1.1...16.0.0  
+[15.1.1] https://github.com/forcepusher/com.bananaparty.yandexgames/compare/15.1.0...15.1.1  
+[15.1.0] https://github.com/forcepusher/com.bananaparty.yandexgames/compare/15.0.0...15.1.0  
+[15.0.0] https://github.com/forcepusher/com.bananaparty.yandexgames/compare/14.0.0...15.0.0  
+[14.0.0] https://github.com/forcepusher/com.bananaparty.yandexgames/compare/13.3.0...14.0.0  
+[13.3.0] https://github.com/forcepusher/com.bananaparty.yandexgames/compare/13.2.0...13.3.0  
+[13.2.0] https://github.com/forcepusher/com.bananaparty.yandexgames/compare/13.1.0...13.2.0  
+[13.1.0] https://github.com/forcepusher/com.bananaparty.yandexgames/compare/13.0.0...13.1.0  
+[13.0.0] https://github.com/forcepusher/com.bananaparty.yandexgames/compare/12.0.1...13.0.0  
+[12.0.1] https://github.com/forcepusher/com.bananaparty.yandexgames/compare/12.0.0...12.0.1  
+[12.0.0] https://github.com/forcepusher/com.bananaparty.yandexgames/compare/11.2.1...12.0.0  
+[11.2.1] https://github.com/forcepusher/com.bananaparty.yandexgames/compare/11.2.0...11.2.1  
+[11.2.0] https://github.com/forcepusher/com.bananaparty.yandexgames/compare/11.1.0...11.2.0  
+[11.1.0] https://github.com/forcepusher/com.bananaparty.yandexgames/compare/11.0.0...11.1.0  
+[11.0.0] https://github.com/forcepusher/com.bananaparty.yandexgames/compare/10.0.0...11.0.0  
+[10.0.0] https://github.com/forcepusher/com.bananaparty.yandexgames/compare/8.3.1...10.0.0  
+[8.3.1] https://github.com/forcepusher/com.bananaparty.yandexgames/compare/8.3.0...8.3.1  
+[8.3.0] https://github.com/forcepusher/com.bananaparty.yandexgames/compare/8.2.0...8.3.0  
+[8.2.0] https://github.com/forcepusher/com.bananaparty.yandexgames/compare/8.1.0...8.2.0  
+[8.1.0] https://github.com/forcepusher/com.bananaparty.yandexgames/compare/8.0.1...8.1.0  
+[8.0.1] https://github.com/forcepusher/com.bananaparty.yandexgames/compare/8.0.0...8.0.1  
+[8.0.0] https://github.com/forcepusher/com.bananaparty.yandexgames/compare/7.0.0...8.0.0
